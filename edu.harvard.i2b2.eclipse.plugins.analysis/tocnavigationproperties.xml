@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Chart Properties" link_to="tocnavigation.xml#properties" topic="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties.htm">
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_title.htm" label="Title">
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_plot/analysis_navigation_properties_plot.htm" label="Plot">
+      <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_plot/analysis_navigation_properties_plot_domain.htm" label="Domain axis">
+      </topic>
+      <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_plot/analysis_navigation_properties_plot_range.htm" label="Range axis">
+      </topic>
+      <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_plot/analysis_navigation_properties_plot_appearance.htm" label="Appearance">
+      </topic>
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties_other.htm" label="Other">
+   </topic>
+</toc>

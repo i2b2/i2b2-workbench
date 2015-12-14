@@ -1,0 +1,52 @@
+<ns2:request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.i2b2.org/xsd/hive/msg">
+    <message_header xmlns="">
+        <i2b2_version_compatible/>
+        <hl7_version_compatible/>
+        <sending_application>
+            <application_name/>
+            <application_version/>
+        </sending_application>
+        <sending_facility>
+            <facility_name/>
+        </sending_facility>
+        <receiving_application>
+            <application_name/>
+            <application_version/>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name/>
+        </receiving_facility>
+        <datetime_of_message/>
+        <security>
+            <domain>partners</domain>
+            <username>demo</username>
+            <password>demouser</password>
+        </security>
+        <message_type>
+            <message_code/>
+            <event_type/>
+            <message_structure/>
+        </message_type>
+        <message_control_id>
+            <session_id/>
+            <message_num/>
+            <instance_num/>
+        </message_control_id>
+        <processing_id>
+            <processing_id/>
+            <processing_mode/>
+        </processing_id>
+        <accept_acknowledgement_type/>
+        <application_acknowledgement_type/>
+        <country_code/>
+    </message_header>
+    <request_header xmlns="">
+        <result_waittime_ms/>
+    </request_header>
+    <message_body xmlns="">
+        <ns3:get_name_info max="10" category="diagnosis" hiddens="false" synonyms="false" type="default"
+            blob="false" xmlns:ns3="http://www.i2b2.org/xsd/cell/ont/v2/">
+            <match_str strategy="contains">asthma</match_str>
+        </ns3:get_name_info>
+    </message_body>
+</ns2:request>

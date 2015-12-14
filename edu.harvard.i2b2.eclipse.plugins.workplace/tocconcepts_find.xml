@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Concepts" link_to="toc_find.xml#concepts_findWork">
+   <topic href="html/concepts_find/wpf_navigation/wpf_nav_intro.html" label="Navigation">
+      <topic href="html/concepts_find/wpf_navigation/wpf_nav_expand.html" label="Expand and collapse a folder">
+      </topic>
+      <topic href="html/concepts_find/wpf_navigation/wpf_nav_display.html" label="Display options">
+      </topic>
+   </topic>
+   <topic href="html/concepts_find/wpf_search/wpf_search_intro.html" label="Searching the workplace view">
+      <topic href="html/concepts_find/wpf_search/wpf_search_start.html" label="Search using &quot;Starting With&quot;">
+      </topic>
+      <topic href="html/concepts_find/wpf_search/wpf_search_end.html" label="Search using &quot;Ending With&quot;">
+      </topic>
+      <topic href="html/concepts_find/wpf_search/wpf_search_contain.html" label="Search using &quot;Containing&quot;">
+      </topic>
+      <topic href="html/concepts_find/wpf_search/wpf_search_exact.html" label="Search using &quot;Exact&quot;">
+      </topic>
+   </topic>
+</toc>

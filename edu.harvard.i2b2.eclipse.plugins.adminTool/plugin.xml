@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension
+		point="org.eclipse.ui.views">
+		<category
+			name="Managers Tool Category"
+			id="edu.harvard.i2b2.eclipse.plugins.adminTool">
+		</category>
+		<view
+			name="Managers Tool   "
+			icon="icons/core-cell.gif"
+			category="edu.harvard.i2b2.eclipse.plugins.adminTool"
+			class="edu.harvard.i2b2.eclipse.plugins.admin.utilities.views.PatientCountView"
+			id="edu.harvard.i2b2.eclipse.plugins.adminTool.views.AdminToolView">
+		</view>
+	</extension>
+	<extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="edu.harvard.i2b2.eclipse.perspective">
+			<view
+				closeable="true"
+				id="edu.harvard.i2b2.eclipse.plugins.adminTool.views.AdminToolView"
+				moveable="true"
+				ratio="0.25"
+				relationship="right"
+				relative="org.eclipse.ui.editorss"
+				standalone="false"
+				visible="false"/>
+		</perspectiveExtension>
+	</extension>
+	<extension
+		point="org.eclipse.ui.viewActions">
+		<viewContribution
+			id="edu.harvard.i2b2.eclipse.plugins.adminTool.viewActions"
+			targetID="edu.harvard.i2b2.eclipse.plugins.adminTool.views.AdminToolView">
+			<action
+         class="edu.harvard.i2b2.eclipse.plugins.adminTool.views.ViewStackToolbarActionDelegate"
+         icon="icons/xmlstack.gif"
+         id="edu.harvard.i2b2.eclipse.plugins.adminTool.viewResponseMessageStack"
+         label="ResponseMessageStack"
+         state="false"
+         style="push"
+         toolbarPath="additions"
+         tooltip="Display the XML message stack"/>
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.OptionsViewActionDelegate"
+				icon="icons/options_1.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.patientMapping.viewOptions"
+				label="Opti&amp;ons"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the options dialog"/>
+		</viewContribution>
+	</extension>
+	<extension
+		point="org.eclipse.ui.contexts">
+		<context
+			id="managersTool_view_help_context"
+			name="Managers Tool View"
+			parentId="managersTool_view_help_context">
+		</context>
+	</extension>
+	<extension
+		point="org.eclipse.help.contexts">
+  <contexts
+        file="help_contexts.xml">
+  </contexts>
+	</extension>	
+	<extension
+		point="org.eclipse.help.toc">
+		<toc
+            file="toc.xml"
+            primary="true"/>
+	</extension>      
+</plugin>

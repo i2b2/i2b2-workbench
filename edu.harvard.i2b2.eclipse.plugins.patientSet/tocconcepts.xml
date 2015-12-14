@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+    <topic href="html/concepts/ps_navigation/ps_nav_intro.html" label="Navigation">
+       <topic href="html/concepts/ps_navigation/ps_nav_rename.html" label="Rename a patient set">
+       </topic>
+       <topic href="html/concepts/ps_navigation/ps_nav_delete.html" label="Delete a patient set">
+       </topic>
+       <topic href="html/concepts/ps_navigation/ps_nav_refresh.html" label="Refresh the list">
+       </topic>
+       <topic href="html/concepts/ps_navigation/ps_nav_display.html" label="Display options">
+       </topic>
+    </topic>
+    <topic href="html/concepts/ps_use/ps_use_intro.html" label="Using a patient set">
+       <topic href="html/concepts/ps_use/ps_use_dragItem.html" label="Draggable Items">
+       </topic>
+    </topic>
+    <topic href="html/concepts/ps_search/ps_search_intro.html" label="Searching patient sets">
+       <topic href="html/concepts/ps_search/ps_search_end.html" label="Search using &quot;End With&quot;">
+       </topic>
+       <topic href="html/concepts/ps_search/ps_search_start.html" label="Search using &quot;Start With&quot;">
+       </topic>
+       <topic href="html/concepts/ps_search/ps_search_contain.html" label="Search using &quot;Containing&quot;">
+       </topic>
+       <topic href="html/concepts/ps_search/ps_search_exact.html" label="Search using &quot;Exact&quot;">
+       </topic>
+    </topic>>
+</toc>

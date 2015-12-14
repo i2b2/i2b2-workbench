@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench version="2.0">
+<workbenchAdvisor/>
+<window height="802" width="1123" x="17" y="7">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar/>
+<coolbarLayout locked="0"/>
+<page focus="true" label="&lt;Unknown Label&gt; - i2b2 Workbench">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+</editorArea>
+</editors>
+<views>
+<view id="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView" partName="Previous Queries">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView" partName="Workplace">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.ontology.views.find.findView" partName="Find Terms">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.crc.test.views.SampleView" partName="Run Query View">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView" partName="Query Tool">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.loginView" partName="Login View">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView" partName="Analysis View">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView" partName="Timeline View">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView" partName="Navigate Terms">
+<viewState/>
+</view>
+<view id="edu.harvard.i2b2.eclipse.plugins.textanalyzer.views.textAnalyzerView" partName="Text Analyzer">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView" activePerspective="edu.harvard.i2b2.eclipse.perspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="0" fixed="0" version="0.016">
+<descriptor class="edu.harvard.i2b2.eclipse.Perspective" id="edu.harvard.i2b2.eclipse.perspective" label="i2b2 Workbench"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.ontology.views.find.findView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.ontology.views.edit.editView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView"/>
+<show_view_action id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"/>
+<show_view_action id="net.nbirn.srbclient.plugin.views.ClientFolderView"/>
+<show_view_action id="org.eclipse.help.ui.HelpView"/>
+<perspective_action id="edu.harvard.i2b2.eclipse.perspective"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.crc.test.views.SampleView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView"/>
+<view id="edu.harvard.i2b2.eclipse.loginView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.ontology.views.find.findView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.textanalyzer.views.textAnalyzerView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView"/>
+<view id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView"/>
+<fastViewBars/>
+<viewLayoutRec id="edu.harvard.i2b2.eclipse.loginView" showTitle="false" standalone="true"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d13cab">
+<folder activePageID="edu.harvard.i2b2.eclipse.loginView" appearance="4" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.loginView" label="Login View"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="852" ratioRight="284" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1d13cab">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@4788f3" ratio="0.05485232" ratioLeft="39" ratioRight="672" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1d13cab">
+<folder activePageID="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView" appearance="2" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView" label="Navigate Terms"/>
+<page content="edu.harvard.i2b2.eclipse.plugins.ontology.views.find.findView" label="Find Terms"/>
+<page content="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView" label="Workplace"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1fc493" ratio="0.29166666" ratioLeft="322" ratioRight="782" relationship="2" relative="org.eclipse.ui.internal.ViewStack@4788f3">
+<folder activePageID="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView" appearance="2" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView" label="Query Tool"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@188f0f7" ratio="0.35825545" ratioLeft="230" ratioRight="412" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1fc493">
+<folder activePageID="edu.harvard.i2b2.eclipse.plugins.crc.test.views.SampleView" appearance="2" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView" label="Timeline View"/>
+<page content="edu.harvard.i2b2.eclipse.plugins.crc.test.views.SampleView" label="Run Query View"/>
+<page content="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView" label="Analysis View"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="2"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@df888a" ratio="0.8678304" ratioLeft="696" ratioRight="106" relationship="2" relative="org.eclipse.ui.internal.ViewStack@188f0f7">
+<folder activePageID="edu.harvard.i2b2.eclipse.plugins.textanalyzer.views.textAnalyzerView" appearance="2" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.plugins.textanalyzer.views.textAnalyzerView" label="Text Analyzer"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.75" ratioLeft="213" ratioRight="71" relationship="2" relative="org.eclipse.ui.internal.ViewStack@4788f3"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@250536" ratio="0.31314623" ratioLeft="212" ratioRight="465" relationship="4" relative="org.eclipse.ui.internal.ViewStack@4788f3">
+<folder activePageID="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView" appearance="2" expanded="2">
+<page content="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView" label="Previous Queries"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList/>
+</workbench>

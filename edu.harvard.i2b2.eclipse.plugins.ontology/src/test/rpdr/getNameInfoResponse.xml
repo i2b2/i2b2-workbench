@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns3:response
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns="http://www.i2b2.org/xsd/hive/"
+                xmlns:ns3="http://www.i2b2.org/xsd/hive/msg/">
+                    <message_header xmlns="">
+                        <i2b2_version_compatible/>
+                        <hl7_version_compatible/>
+                        <sending_application>
+                            <application_name/>
+                            <application_version/>
+                        </sending_application>
+                        <sending_facility>
+                            <facility_name/>
+                        </sending_facility>
+                        <receiving_application>
+                            <application_name/>
+                            <application_version/>
+                        </receiving_application>
+                        <receiving_facility>
+                            <facility_name/>
+                        </receiving_facility>
+                        <datetime_of_message/>
+                        <security>
+                            <domain/>
+                            <username/>
+                            <password/>
+                        </security>
+                        <message_type>
+                            <message_code/>
+                            <event_type/>
+                            <message_structure/>
+                        </message_type>
+                        <message_control_id>
+                            <session_id/>
+                            <message_num/>
+                            <instance_num/>
+                        </message_control_id>
+                        <processing_id>
+                            <processing_id/>
+                            <processing_mode/>
+                        </processing_id>
+                        <accept_acknowledgement_type/>
+                        <application_acknowledgement_type/>
+                        <country_code/>
+                    </message_header>
+                    <response_header xmlns="">
+                        <info url=""/>
+                        <result_status>
+                            <status type="DONE">ONT processing completed</status>
+                            <polling_url interval_ms=""/>
+                            <conditions>
+                                <condition type="" coding_system=""/>
+                            </conditions>
+                        </result_status>
+                    </response_header>
+                    <message_body xmlns="">
+                        <ns4:concepts xmlns:ns4="http://www.i2b2.org/xsd/cell/ont/v2/">
+                            <concept>
+                                <key>\\diagnosis\Injury and poisoning (800-999)\Poisoning
+                                    (960-989)\(975) Poisoning by agents primari~\(975-7) Poisoning
+                                    by antiasthmati~</key>
+                                <name>Poisoning by antiasthmatics</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ ... \ Poisoning by agents primarily acting on
+                                    the smooth and skeletal muscles and respiratory system \
+                                    Poisoning by antiasthmatics</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma</key>
+                                <name>Asthma</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-0) Extrinsic asthma</key>
+                                <name>Extrinsic asthma</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Extrinsic asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-0) Extrinsic
+                                    asthma\(493-00) Extrinsic asthma without~</key>
+                                <name>Extrinsic asthma without mention of status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Extrinsic asthma \ Extrinsic asthma without
+                                    mention of status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-0) Extrinsic
+                                    asthma\(493-01) Extrinsic asthma with st~</key>
+                                <name>Extrinsic asthma with status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Extrinsic asthma \ Extrinsic asthma with
+                                    status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-0) Extrinsic
+                                    asthma\(493-02) Extrinsic asthma with acu~</key>
+                                <name>Extrinsic asthma with acute exacerbation</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Extrinsic asthma \ Extrinsic asthma with
+                                    acute exacerbation</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-1) Intrinsic asthma</key>
+                                <name>Intrinsic asthma</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Intrinsic asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-1) Intrinsic
+                                    asthma\(493-10) Intrinsic asthma without~</key>
+                                <name>Intrinsic asthma without mention of status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Intrinsic asthma \ Intrinsic asthma without
+                                    mention of status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-1) Intrinsic
+                                    asthma\(493-11) Intrinsic asthma with st~</key>
+                                <name>Intrinsic asthma with status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Intrinsic asthma \ Intrinsic asthma with
+                                    status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-1) Intrinsic
+                                    asthma\(493-12) Intrinsic asthma with a~</key>
+                                <name>Intrinsic asthma, with acute exacerbation</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Intrinsic asthma \ Intrinsic asthma, with
+                                    acute exacerbation</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-2) Chronic obstructive
+                                    asthma</key>
+                                <name>Chronic obstructive asthma</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Chronic obstructive asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-2) Chronic obstructive
+                                    asthma\(493-20) Chronic obstructive asth~</key>
+                                <name>Chronic obstructive asthma, without mention of status
+                                    asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ ... \ Chronic obstructive diseases \ Asthma \
+                                    Chronic obstructive asthma \ Chronic obstructive asthma, without
+                                    mention of status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-2) Chronic obstructive
+                                    asthma\(493-21) Chronic obstructive asth~</key>
+                                <name>Chronic obstructive asthma, with status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Chronic obstructive asthma \ Chronic
+                                    obstructive asthma, with status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-2) Chronic obstructive
+                                    asthma\(493-22) Chronic obstructive asth~</key>
+                                <name>Chronic obstructive asthma with acute exacerbation</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Chronic obstructive asthma \ Chronic
+                                    obstructive asthma with acute exacerbation</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-8) Other forms of asthma</key>
+                                <name>Other forms of asthma</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Other forms of asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-8) Other forms of
+                                    asthma\(493-82) Cough variant asthma</key>
+                                <name>Cough variant asthma</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Other forms of asthma \ Cough variant
+                                asthma</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-9) Asthma, unspecified</key>
+                                <name>Asthma, unspecified</name>
+                                <visualattributes>FA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma, unspecified</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-9) Asthma,
+                                    unspecified\(493-90) Asthma, unspecified type~</key>
+                                <name>Asthma, unspecified without mention of status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma, unspecified \ Asthma, unspecified
+                                    without mention of status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-9) Asthma,
+                                    unspecified\(493-91) Asthma, unspecified type~</key>
+                                <name>Asthma, unspecified type, with status asthmaticus</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma, unspecified \ Asthma, unspecified
+                                    type, with status asthmaticus</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-9) Asthma,
+                                    unspecified\(493-92) Asthma, unspecified type~</key>
+                                <name>Asthma, unspecified type, with acute exacerbation</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma, unspecified \ Asthma, unspecified
+                                    type, with acute exacerbation</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(493-9) Asthma,
+                                    unspecified\(LPA30) asthmatic bronchitis</key>
+                                <name>Asthmatic bronchitis-LMR 30</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma, unspecified \ Asthmatic
+                                    bronchitis-LMR 30</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\Respiratory system (460-519)\Chronic obstructive
+                                    diseases (490-496)\(493) Asthma\(LPA29) asthma</key>
+                                <name>Asthma-LMR 29</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ Respiratory system \ Chronic obstructive
+                                    diseases \ Asthma \ Asthma-LMR 29</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\zz E-codes\Adverse effects of drugs
+                                    (E930-E949)\(E945) Agents primarily acting on~\(E945-7)
+                                    Antiasthmatics causing a~</key>
+                                <name>Antiasthmatics causing adverse effects in therapeutic use</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ ... \ Agents primarily acting on the smooth and
+                                    skeletal muscles and respiratory system causing adverse effects
+                                    in therapeutic use \ Antiasthmatics causing adverse effects in
+                                    therapeutic use</tooltip>
+                            </concept>
+                            <concept>
+                                <key>\\diagnosis\zz V-codes\Family history (V16-V19)\(V17) Family
+                                    history of certain c~\(V17-5) Family history of asthma</key>
+                                <name>Family history of asthma</name>
+                                <visualattributes>LA</visualattributes>
+                                <tooltip>Diagnoses \ V-codes \ Family history \ Family history of
+                                    certain chronic disabling diseases \ Family history of
+                                asthma</tooltip>
+                            </concept>
+                        </ns4:concepts>
+                    </message_body>
+                </ns3:response>
+     

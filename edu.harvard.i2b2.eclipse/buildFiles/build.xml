@@ -1,0 +1,71 @@
+<project basedir="../" default="all" name="Base client">
+
+	
+	<property name="Project" value="edu.harvard.i2b2.eclipse" />
+
+	<!-- ========== Executable Targets ======================================== -->
+	<import file="../../edu.harvard.i2b2.common/common_build.xml" />
+	<property name="gensrc"     value="gensrc"/>
+
+	<!-- =================================================================== -->
+	<!-- 								INIT 								 -->
+	<!-- =================================================================== -->
+	<target name="gensrcInit"  depends="common_init,common-classpath" >
+		<path id="classpath">
+			<path refid="common-classpath" />
+		</path>
+	
+	<!-- JRE 1.5 style xjc
+		<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+			<classpath refid="classpath" />
+		</taskdef>
+	-->	
+	</target>
+	
+	
+	<!-- =================================================================== -->
+	<!-- 								CLEAN 								 -->
+	<!-- =================================================================== -->
+	<target name="clean"  description="Clean all build products" >
+	    <delete dir="${dist}"/> 
+	    <delete dir="${gensrc}"/>   
+	    <delete dir="${genlib}"/>
+	    <mkdir dir="${genlib}"/>
+	    <mkdir dir="${dist}"/>
+	    <mkdir dir="${gensrc}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 								COMMON JAXB GENERATION 				 -->
+	<!-- =================================================================== -->
+<!-- JRE 1.5 style jaxb_gen
+	<target name="jaxb_gen" depends="gensrcInit" description="Generate JAXB classes for i2b2 and Patient Data messages">
+		<xjc destdir="${gensrc}" removeOldOutput="no">
+	<schema dir="../${i2b2xmlproject}/xsd/cell/pm_1.1" includes="PM_USER.xsd" />
+	<schema dir="../${i2b2xmlproject}/xsd/cell/pm_1.1" includes="i2b2_version_msg.xsd" />
+	<schema dir="../${i2b2xmlproject}/xsd/hive/msg_1.1" includes="i2b2_response.xsd" />
+			
+			
+	<binding dir="." includes="etc/xsd_1.1/i2b2_response_message_bindings.xjb" />
+	<binding dir="." includes="etc/xsd_1.1/i2b2_pm_bindings.xjb" />
+	<binding dir="." includes="etc/xsd_1.1/i2b2_pm_version_bindings.xjb" />
+		</xjc>
+	</target>
+-->
+	
+	<target name="jaxb_gen" depends="gensrcInit">
+			 <java dir="." jar="../edu.harvard.i2b2.common/lib/jaxb/jaxb-xjc.jar" fork="true" failonerror="true" >
+			     <arg line="-quiet -nv -extension ../${i2b2xmlproject}/xsd/cell/pm_1.1/PM_USER.xsd ../${i2b2xmlproject}/xsd/cell/pm_1.1/i2b2_version_msg.xsd ../${i2b2xmlproject}/xsd/hive/msg_1.1/i2b2_response.xsd 
+			     	-b etc/xsd_1.1/i2b2_pm_bindings.xjb etc/xsd_1.1/i2b2_pm_version_bindings.xjb etc/xsd_1.1/i2b2_response_message_bindings.xjb -d ${gensrc}"/>
+			     <jvmarg value="-Djava.endorsed.dirs=../edu.harvard.i2b2.common/lib/jaxb" />
+			     <classpath refid="classpath"/>
+			</java>
+	</target>
+	
+	
+	<!-- =================================================================== -->
+	<!-- 								ALL 								 -->
+	<!-- =================================================================== -->
+	<target name="all" depends="jaxb_gen">
+	</target>
+</project>

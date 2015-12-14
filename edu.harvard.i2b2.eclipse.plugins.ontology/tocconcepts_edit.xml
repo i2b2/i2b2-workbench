@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Concepts" link_to="toc_edit.xml#concepts_editTerms" topic="html/concepts_editTerms/i2b2_edit_terms_intro.htm">
+   <topic href="html/concepts_editTerms/edit_terms_navigation/edit_terms_navigation_intro.htm" label="Navigation">
+      <topic href="html/concepts_editTerms/edit_terms_navigation/edit_terms_navigation_folder.htm" label="Expand/Collapse a folder">
+      </topic>
+      <topic href="html/concepts_editTerms/edit_terms_navigation/edit_terms_navigation_popupMenu.htm" label="Pop-up menu">
+      </topic>
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/adding_terms_intro.htm" label="Adding Terms">
+      <anchor id="concepts_editTerms_wizard"/>
+      <anchor id="concepts_editTerms_synch"/>
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_edit/edit_terms_intro.htm" label="Editing Terms">
+      <topic href="html/concepts_editTerms/edit_terms_edit/edit_terms_wizard.htm" label="Edit terms wizard">
+      </topic>
+   </topic>
+</toc>

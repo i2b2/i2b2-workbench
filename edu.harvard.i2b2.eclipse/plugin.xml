@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="edu.harvard.i2b2.eclipse.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="i2b2 Workbench"
+            class="edu.harvard.i2b2.eclipse.Perspective"
+            id="edu.harvard.i2b2.eclipse.perspective">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+      		targetID="edu.harvard.i2b2.eclipse.perspective">
+      		<viewShortcut
+               id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView"/>
+	        <viewShortcut
+	            id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView"/>
+	        <viewShortcut
+	            id="edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView"/>  
+	        <viewShortcut
+	            id="edu.harvard.i2b2.eclipse.plugins.ontology.views.find.findView"/> 
+	        <viewShortcut
+	            id="edu.harvard.i2b2.eclipse.plugins.ontology.views.edit.editView"/> 
+	        <viewShortcut 
+	        	id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView"/>    
+	        <viewShortcut 
+	        	id="edu.harvard.i2b2.eclipse.plugins.previousquery.views.PreviousQueryView"/>        	    
+	        <viewShortcut 
+	        	id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"/>
+	        <viewShortcut 
+	        	id="net.nbirn.srbclient.plugin.views.ClientFolderView"/>
+	        <viewShortcut 
+	        	id="org.eclipse.help.ui.HelpView"/>
+	        <perspectiveShortcut
+	            id="edu.harvard.i2b2.eclipse.perspective"/>
+      </perspectiveExtension>	
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Login View"
+            class="edu.harvard.i2b2.eclipse.LoginView"
+            icon="icons/i2b2_hive_16.gif"
+            id="edu.harvard.i2b2.eclipse.loginView">
+      </view>	
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="edu.harvard.i2b2.eclipse.application"
+            icon="icons/i2b2_hive_16.gif"
+            name="i2b2 Workbench">
+         <property
+               name="windowImages"
+               value="icons/i2b2_hive_16.gif,icons/i2b2_hive_32.gif,icons/i2b2_hive_48.gif,icons/i2b2_hive_64.gif,icons/i2b2_hive_128.gif"/>
+         <property
+               name="aboutText"
+               value="i2b2 Workbench&#x0A;Version: 1.7.06.0001&#x0A;Build id: 20150721&#x0A;(c) Copyright i2b2 contributors and others 2005-2015.  All rights reserved.&#x0A;Visit http://www.i2b2.org/&#x0A;&#x0A;This product includes software developed by the following:&#x0A;Apache Software Foundation http://www.apache.org/&#x0A;Eclipse Foundation  http://www.eclipse.org/&#x0A;JDOM Project  http://www.jdom.org/&#x0A;Sun Microsystems http://java.sun.com/&#x0A;University of Maryland (HCIL) http://www.cs.umd.edu/hcil/"/>
+         <property
+               name="aboutImage"
+               value="icons/i2b2_hive_64.gif"/>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini"/>
+         <property
+               name="appName"
+               value="i2b2 Workbench">
+         </property>
+      </product>
+  </extension>
+   <extension
+         point="org.eclipse.ui.intro">
+         <intro
+               class="edu.harvard.i2b2.eclipse.I2B2IntroPart"
+               icon="icons/i2b2_hive_16.gif"
+               id="edu.harvard.i2b2.eclipse.intro">
+      </intro>
+      <introProductBinding
+            introId="edu.harvard.i2b2.eclipse.intro"
+            productId="edu.harvard.i2b2.eclipse.product">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            content="introContent.xml"
+            id="edu.harvard.i2b2.eclipse.configId"
+            introId="edu.harvard.i2b2.eclipse.intro">
+            <presentation
+               home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx">
+            </implementation>
+         </presentation>
+         </config>
+   </extension>
+   <extension point="org.eclipse.ui.contexts">
+	  <context
+	  	id="login_view_help_context"
+	  	name="Login View"
+	  	parentId="edu.harvard.i2b2.eclipse.LoginView">
+      </context>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+   		 	<contexts file="help_contexts.xml" />
+   	</extension>  	
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="tocTut.xml"
+            primary="true"/>
+            
+      <toc file="tocconcepts.xml"/>
+      <toc file="toc.xml" primary="true"/>
+   </extension>
+</plugin>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PMSoapService"
+    targetNamespace="http://ws.pm.i2b2.harvard.edu/wsdl"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://ws.pft.i2b2.harvard.edu/wsdl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd1="http://ws.pft.i2b2.harvard.edu/wsdl"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <message name="notesParam">
+            <part type="xsd:string" name="input" />
+        </message>
+     <message name="pdoResponse">
+            <part  type="xsd:string" name="result" />
+    </message>
+    
+    <portType name="PMSoapServicePortType">
+        <operation name="getServices">
+            <input message="tns:notesParam" name="notesParam"/>
+            <output message="tns:pdoResponse" name="pdoResponse"/>
+        </operation>
+    </portType>
+    <binding name="PMSoapServiceBinding"
+        type="tns:PMSoapServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getServices">
+            <soap:operation soapAction="getServices" style="rpc"/>
+            <input name="notesParam">
+                <soap:body namespace="http://ws.pm.i2b2.harvard.edu/wsdl"
+                    use="literal"/>
+            </input>
+            <output name="pdoResponse">
+                <soap:body namespace="http://ws.pm.i2b2.harvard.edu/wsdl"
+                    use="literal"/>
+            </output>
+        </operation>
+        
+    </binding>
+    <service name="PMSoapService">
+        <port binding="tns:PMSoapServiceBinding"
+            name="PMSoapServicePort">
+            <soap:address
+                location="http://dev.www.i2b2.org/pmcell/wsdl/pmservice.wsdl"/>
+        </port>
+    </service>
+</definitions>

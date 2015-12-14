@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache Commons Wrapper
+Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.commons_apache
+Bundle-Version: 1.0.4
+Bundle-ClassPath: commons-logging-1.0.4.jar
+Bundle-Vendor: i2b2.harvard.edu
+Bundle-Localization: plugin
+Eclipse-BuddyPolicy: registered
+Export-Package: org.apache.commons.logging,
+ org.apache.commons.logging.impl

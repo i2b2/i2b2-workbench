@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Query Tool Category"
+            id="edu.harvard.i2b2.eclipse.plugins.query">
+      </category>
+      <view
+            name="Query Tool"
+            icon="icons/core-cell.gif"
+            category="edu.harvard.i2b2.eclipse.plugins.query"
+            class="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView"
+            id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="edu.harvard.i2b2.eclipse.perspective">
+         <view
+               closeable="true"
+               id="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView"
+               moveable="true"
+               ratio="0.5"
+               relationship="top"
+               relative="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"
+               standalone="false"
+               visible="false"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="edu.harvard.i2b2.eclipse.plugins.query.viewActions"
+            targetID="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView">
+         <action
+               class="edu.harvard.i2b2.eclipse.plugins.query.views.ViewStackToolbarActionDelegate"
+               icon="icons/xmlstack.gif"
+               id="edu.harvard.i2b2.eclipse.plugins.query.viewResponseMessageStack"
+               label="ResponseMessageStack"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Display the XML message stack"/>
+         <action
+               class="edu.harvard.i2b2.eclipse.plugins.query.views.ViewOptionToolbarActionDelegate"
+               icon="icons/options_1.gif"
+               id="edu.harvard.i2b2.eclipse.plugins.query.viewOptions"
+               label="Opti&amp;ons"
+               state="false"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Display the options dialog"/>
+      </viewContribution>
+   </extension>
+     <extension point="org.eclipse.ui.contexts">
+      	<context
+      		id="queryTool_view_help_context"
+      		name="Query Tool View"
+      		parentId="edu.harvard.i2b2.eclipse.plugins.query.views.QueryView">
+      	</context>
+      </extension>
+      <extension point="org.eclipse.help.contexts">
+       <contexts
+             file="help_contexts.xml"
+             plugin="edu.harvard.i2b2.eclipse.plugins.query">
+       </contexts>
+      </extension>
+      <extension point="org.eclipse.help.toc">
+      	<toc
+      		file="toc.xml"
+      		primary="true"/>
+       <toc
+             file="tocconcepts.xml"
+             primary="false">
+       </toc>
+      </extension>
+</plugin>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc_navigate.xml#concepts_navigateTerms">
+   <topic href="html/concepts_navigateTerms/navigate_terms_navigation/navigate_terms_navigation_intro.htm" label="Navigation">
+      <topic href="html/concepts_navigateTerms/navigate_terms_navigation/navigate_terms_navigation_folder.htm" label="Expand/Collapse a folder">
+      </topic>
+      <topic href="html/concepts_navigateTerms/navigate_terms_navigation/navigate_terms_navigation_displayOptions.htm" label="Display options">
+      </topic>
+   </topic>
+   <topic href="html/concepts_navigateTerms/navigate_terms_usingTerms/navigate_terms_usingTerms_intro.htm" label="Using terms">
+      <topic href="html/concepts_navigateTerms/navigate_terms_usingTerms/navigate_terms_usingTerms_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts_navigateTerms/navigate_terms_usingTerms/navigate_terms_usingTerms_add_qtView.htm" label="Add to query tool view">
+      </topic>
+      <topic href="html/concepts_navigateTerms/navigate_terms_usingTerms/navigate_terms_usingTerms_add_wpView.htm" label="Add to workplace view">
+      </topic>
+      <topic href="html/concepts_navigateTerms/navigate_terms_usingTerms/navigate_terms_usingTerms_add_timelineView.htm" label="Add to timeline view">
+      </topic>
+   </topic>
+</toc>

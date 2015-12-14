@@ -1,0 +1,27 @@
+<project name="Query Client master build">
+    <import file="../../edu.harvard.i2b2.common/common_build.xml"/>
+    
+    <property name="Project" value="edu.harvard.i2b2.eclipse.plugins.query"/>
+    
+    <target name="build-all">
+        <!-- build i2b2common -->
+        <subant target="dist">
+            <fileset dir="../../edu.harvard.i2b2.common" includes="build.xml" />
+        </subant>
+        <!-- copy lib to genlib -->
+      <echo message="copying edu.harvard.i2b2.common/genlib"/>
+        <copy_genlibs module="../edu.harvard.i2b2.common"/>
+        	
+	
+        <!-- ant call build.xml -->
+        <subant target="jaxb_gen">
+            <fileset dir="." includes="build.xml" />
+        </subant>	
+	
+		<copy todir="../${genlib}">
+	       	      <fileset dir="../../edu.harvard.i2b2.common/${dist}">
+			         <include name="*.jar"/>
+	              </fileset>
+		</copy>
+    </target>
+	</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="jsr173_1.0_api.jar" exported="true" kind="lib"/>
+	<classpathentry path="activation.jar" exported="true" kind="lib"/>
+	<classpathentry path="jaxb1-impl.jar" exported="true" kind="lib"/>
+	<classpathentry path="jaxb-api.jar" exported="true" kind="lib"/>
+	<classpathentry path="jaxb-impl.jar" exported="true" kind="lib"/>
+	<classpathentry path="jaxb-xjc.jar" exported="true" kind="lib"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="org.eclipse.pde.core.requiredPlugins" kind="con"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

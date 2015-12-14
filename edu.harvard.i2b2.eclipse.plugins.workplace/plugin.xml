@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Workplace Category"
+            id="edu.harvard.i2b2.eclipse.plugins.workplace">
+      </category>
+      <view
+            name="Workplace"
+            icon="icons/core-cell.gif"
+            category="edu.harvard.i2b2.eclipse.plugins.workplace"
+            class="edu.harvard.i2b2.eclipse.plugins.workplace.views.WorkplaceView"
+            id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView">
+      </view>
+      <view
+            category="edu.harvard.i2b2.eclipse.plugins.workplace"
+            class="edu.harvard.i2b2.eclipse.plugins.workplace.views.find.FindView"
+            icon="icons/core-cell.gif"
+            id="edu.harvard.i2b2.eclipse.plugins.workplace.views.find.findView"
+            name="Find in Workplace">
+      </view>
+   </extension>
+      <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="edu.harvard.i2b2.eclipse.perspective">
+         <view
+         	   visible="true"
+               id="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView"
+               ratio="0.75"
+               relationship="left"
+               relative="org.eclipse.ui.editorss">
+         </view>
+      </perspectiveExtension>
+   </extension>
+      <extension
+            point="org.eclipse.ui.viewActions">
+        <viewContribution
+            id="edu.harvard.i2b2.eclipse.plugins.workplace.viewActions"
+            targetID="edu.harvard.i2b2.eclipse.plugins.workplace.views.workplaceView">
+            <action
+               class="edu.harvard.i2b2.eclipse.plugins.workplace.views.ViewStackToolbarActionDelegate"
+               icon="icons/xmlstack.gif"
+               id="edu.harvard.i2b2.eclipse.plugins.workplace.viewResponseMessageStack"
+               label="XMLMessageStack"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Display the XML message stack"/>
+      </viewContribution>
+        <viewContribution
+              id="edu.harvard.i2b2.eclipse.plugins.workplace.viewActions"
+              targetID="edu.harvard.i2b2.eclipse.plugins.workplace.views.find.findView">
+           <action
+                 class="edu.harvard.i2b2.eclipse.plugins.workplace.views.ViewStackToolbarActionDelegate"
+                 icon="icons/xmlstack.gif"
+                 id="edu.harvard.i2b2.eclipse.plugins.workplace.find.viewResponseMessageStack"
+                 label="XMLMessageStack"
+                 style="push"
+                 toolbarPath="additions"
+                 tooltip="Display the XML message stack">
+           </action>
+           <action
+                 class="edu.harvard.i2b2.eclipse.plugins.workplace.views.find.ViewOptionToolbarActionDelegate"
+                 icon="icons/options_1.gif"
+                 id="edu.harvard.i2b2.eclipse.plugins.workplace.find.viewOptions"
+                 label="Opti&amp;ons"
+                 state="false"
+                 style="push"
+                 toolbarPath="additions"
+                 tooltip="Display the options dialog">
+           </action>
+        </viewContribution>
+      </extension>
+         <extension point="org.eclipse.ui.contexts">
+	  <context
+	  	id="workplace_view_help_context"
+	  	name="Workplace View"
+	  	parentId="workplace_view_help_context">
+      </context>
+      <context
+      	id="workplaceFind_view_help_context"
+	  	name="Find Workplace View"
+	  	parentId="workplaceFind_view_help_context">
+      </context>
+   </extension>
+      <extension point="org.eclipse.help.contexts">
+   		 <contexts
+            file="help_contexts.xml"
+            plugin="edu.harvard.i2b2.eclipse.plugins.workplace"/>
+   		 <contexts
+            file="help_contexts_find.xml"
+            plugin="edu.harvard.i2b2.eclipse.plugins.workplace"/>
+   		</extension>	
+   		
+   	   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true"/>
+      <toc
+            file="tocconcepts.xml"
+            primary="false">
+      </toc>
+      <toc file="tocintroduction.xml"/>
+      <toc file="tocgettingstarted.xml"/>
+      <toc file="toctasks.xml"/>
+       <toc
+      		file="toc_find.xml"
+      		primary="true"/>
+      <toc
+            file="tocconcepts_find.xml"
+            primary="false">
+      </toc>
+   </extension>
+</plugin>

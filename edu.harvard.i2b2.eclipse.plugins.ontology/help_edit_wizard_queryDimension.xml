@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="edit_terms_view_help_wizard_queryDimension" title="Query Dimension Settings">
+      <description>Defining the query dimension settings on the third page of the wizard in the edit terms view.</description>
+      <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p3.htm" label="Wizard: Query Dimension Settings"/>
+   </context>
+</contexts>

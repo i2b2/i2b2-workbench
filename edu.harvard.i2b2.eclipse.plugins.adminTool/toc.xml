@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="i2b2 Managers Tool View Help" topic="html/i2b2_mt_index.html">
+   <topic href="html/concepts/i2b2_mt_intro.html" label="Concepts">
+   </topic>
+
+</toc>
+ <!--  
+    <topic label="Introduction">
+      <anchor id="introduction"/>
+   </topic>
+ <topic label="Basic Navigation">
+      <anchor id="navigation"/>
+   </topic>
+   <topic label="Functionality">
+      <anchor id="functionality"/>
+   </topic>
+   <topic label="Draggable Items">
+      <anchor id="dragItems"/>
+   </topic>
+   <topic label="Reference" href="html/reference.html"/>
+   -->
+

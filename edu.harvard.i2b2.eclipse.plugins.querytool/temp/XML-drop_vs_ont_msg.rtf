@@ -1,0 +1,218 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil Courier New;}{\f1\fswiss\fcharset0 Arial;}{\f2\fnil\fcharset0 Courier New;}}
+{\colortbl ;\red255\green0\blue0;}
+{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\cf1\f0\fs20\par
+\cf0\b\f1 ============================================================================\par
+Concepts\par
+============================================================================\cf1\f0\par
+\cf0\b0\f1 dropped:\par
+\cf1\f0\par
+<ns2:plugin_drag_drop xmlns:ns2="http://www.i2b2.org/xsd/hive/plugin/" xmlns:ns4="http://www.i2b2.org/xsd/hive/msg/1.1/" xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/psm/1.1/" xmlns:ns5="http://www.i2b2.org/xsd/hive/msg/result/1.1/" xmlns:ns6="http://www.i2b2.org/xsd/cell/ont/1.1/" xmlns:ns7="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/">\cf0\par
+\cf1     <ns6:concepts>\cf0\par
+\cf1         <concept>\cf0\par
+\cf1             <level>1</level>\cf0\par
+\cf1             <key>\\\\i2b2_DIAG\\i2b2\\Diagnoses\\</key>\cf0\par
+\cf1             <name>Diagnoses</name>\cf0\par
+\cf1             <synonym_cd>N</synonym_cd>\cf0\par
+\cf1             <visualattributes>FA</visualattributes>\cf0\par
+\cf1             <totalnum xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\cf0\par
+\cf1             <facttablecolumn>concept_cd</facttablecolumn>\cf0\par
+\cf1             <tablename>concept_dimension</tablename>\cf0\par
+\cf1             <columnname>concept_path</columnname>\cf0\par
+\cf1             <columndatatype>T</columndatatype>\cf0\par
+\cf1             <operator>LIKE</operator>\cf0\par
+\cf1             <dimcode>\\i2b2\\Diagnoses\\</dimcode>\cf0\par
+\cf1             <tooltip>Diagnoses</tooltip>\cf0\par
+\cf1         </concept>\cf0\par
+\cf1     </ns6:concepts>\cf0\par
+\cf1 </ns2:plugin_drag_drop>\f2\par
+\par
+\cf0\f1 updated XML:\cf1\f0\par
+    <message_body>\cf0\par
+\cf1         <ns6:concepts>\cf0\par
+\cf1             <concept>\cf0\par
+\cf1                 <level>1</level>\cf0\par
+\cf1                 <key>\\\\i2b2_DIAG\\i2b2\\Diagnoses\\</key>\cf0\par
+\cf1                 <name>Diagnoses</name>\cf0\par
+\cf1                 <synonym_cd>N</synonym_cd>\cf0\par
+\cf1                 <visualattributes>FA </visualattributes>\cf0\par
+\cf1                 <totalnum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />\cf0\par
+\cf1                 <facttablecolumn>concept_cd</facttablecolumn>\cf0\par
+\cf1                 <tablename>concept_dimension</tablename>\cf0\par
+\cf1                 <columnname>concept_path</columnname>\cf0\par
+\cf1                 <columndatatype>T</columndatatype>\cf0\par
+\cf1                 <operator>LIKE</operator>\cf0\par
+\cf1                 <dimcode>\\i2b2\\Diagnoses\\</dimcode>\cf0\par
+\cf1                 <tooltip>Diagnoses</tooltip>\cf0\par
+\cf1             </concept>\cf0\par
+\cf1         </ns6:concepts>\cf0\par
+\cf1     </message_body>\par
+\par
+\cf0\b\f1 ============================================================================\par
+Modifier\par
+============================================================================\par
+\b0 dropped:\par
+\cf1\f0 ConceptDropListener.drop: <?xml version="1.0" encoding="UTF-8" standalone="yes"?>\cf0\par
+\cf1 <ns2:plugin_drag_drop xmlns:ns2="http://www.i2b2.org/xsd/hive/plugin/" xmlns:ns4="http://www.i2b2.org/xsd/hive/msg/1.1/" xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/psm/1.1/" xmlns:ns5="http://www.i2b2.org/xsd/hive/msg/result/1.1/" xmlns:ns6="http://www.i2b2.org/xsd/cell/ont/1.1/" xmlns:ns7="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/">\cf0\par
+\cf1     <ns6:concepts>\cf0\par
+\cf1         <concept>\cf0\par
+\cf1             <level>1</level>\cf0\par
+\cf1             <key>\\\\i2b2_MEDS\\i2b2\\Medications\\</key>\cf0\par
+\cf1             <name>Medications</name>\cf0\par
+\cf1             <synonym_cd>N</synonym_cd>\cf0\par
+\cf1             <visualattributes>FA</visualattributes>\cf0\par
+\cf1             <totalnum xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\cf0\par
+\cf1             <facttablecolumn>concept_cd</facttablecolumn>\cf0\par
+\cf1             <tablename>concept_dimension</tablename>\cf0\par
+\cf1             <columnname>concept_path</columnname>\cf0\par
+\cf1             <columndatatype>T</columndatatype>\cf0\par
+\cf1             <operator>LIKE</operator>\cf0\par
+\cf1             <dimcode>\\i2b2\\Medications\\</dimcode>\cf0\par
+\cf1             <tooltip>Medications</tooltip>\cf0\par
+\cf1             <modifier>\cf0\par
+\cf1                 <level>1</level>\cf0\par
+\cf1                 <applied_path>\\i2b2\\Medications\\%</applied_path>\cf0\par
+\cf1                 <key>\\\\i2b2_MEDS\\Medication\\Instructions\\</key>\cf0\par
+\cf1                 <fullname>\\Medication\\Instructions\\</fullname>\cf0\par
+\cf1                 <name>Patient Instructions</name>\cf0\par
+\cf1                 <visualattributes>RA </visualattributes>\cf0\par
+\cf1                 <synonym_cd>N</synonym_cd>\cf0\par
+\cf1                 <totalnum xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\cf0\par
+\cf1                 <basecode>MED:INST</basecode>\cf0\par
+\cf1                 <facttablecolumn>MODIFIER_CD</facttablecolumn>\cf0\par
+\cf1                 <tablename>MODIFIER_DIMENSION</tablename>\cf0\par
+\cf1                 <columnname>MODIFIER_PATH</columnname>\cf0\par
+\cf1                 <columndatatype>T</columndatatype>\cf0\par
+\cf1                 <operator>LIKE</operator>\cf0\par
+\cf1                 <dimcode>\\Medication\\Instructions\\</dimcode>\cf0\par
+\cf1                 <tooltip>Patient Instructions</tooltip>\cf0\par
+\cf1             </modifier>\cf0\par
+\cf1         </concept>\cf0\par
+\cf1     </ns6:concepts>\cf0\par
+\cf1 </ns2:plugin_drag_drop>\cf0\par
+\f1\par
+updatedXML:\par
+\cf1\f0     <message_body>\cf0\par
+\cf1         <ns6:modifiers>\cf0\par
+\cf1             <modifier>\cf0\par
+\cf1                 <level>1</level>\cf0\par
+\cf1                 <applied_path>\\i2b2\\Medications\\%</applied_path>\cf0\par
+\cf1                 <key>\\\\i2b2_MEDS\\Medication\\Instructions\\</key>\cf0\par
+\cf1                 <fullname>\\Medication\\Instructions\\</fullname>\cf0\par
+\cf1                 <name>Patient Instructions</name>\cf0\par
+\cf1                 <visualattributes>RA </visualattributes>\cf0\par
+\cf1                 <synonym_cd>N</synonym_cd>\cf0\par
+\cf1                 <totalnum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />\cf0\par
+\cf1                 <basecode>MED:INST</basecode>\cf0\par
+\cf1                 <metadataxml>\cf0\par
+\cf1                     <ValueMetadata>\cf0\par
+\cf1                         <Version>3.2</Version>\cf0\par
+\cf1                         <CreationDateTime>2011-10-19T13:32:16.198-04:00</CreationDateTime>\cf0\par
+\cf1                         <TestID>MED:INST</TestID>\cf0\par
+\cf1                         <TestName>Patient Instructions</TestName>\cf0\par
+\cf1                         <DataType>largestring</DataType>\cf0\par
+\cf1                         <MaxStringLength />\cf0\par
+\cf1                         <Flagstouse />\cf0\par
+\cf1                         <Oktousevalues />\cf0\par
+\cf1                     </ValueMetadata>\cf0\par
+\cf1                 </metadataxml>\cf0\par
+\cf1                 <facttablecolumn>MODIFIER_CD</facttablecolumn>\cf0\par
+\cf1                 <tablename>MODIFIER_DIMENSION</tablename>\cf0\par
+\cf1                 <columnname>MODIFIER_PATH</columnname>\cf0\par
+\cf1                 <columndatatype>T</columndatatype>\cf0\par
+\cf1                 <operator>LIKE</operator>\cf0\par
+\cf1                 <dimcode>\\Medication\\Instructions\\</dimcode>\cf0\par
+\cf1                 <tooltip>Patient Instructions</tooltip>\cf0\par
+\cf1             </modifier>\cf0\par
+\cf1         </ns6:modifiers>\cf0\par
+\cf1     </message_body>\cf0\par
+\f1\par
+\b ============================================================================\par
+Concept with Value, not Modifier\par
+============================================================================\par
+\b0 Dropped\par
+\cf1\f0 <ns2:plugin_drag_drop xmlns:ns2="http://www.i2b2.org/xsd/hive/plugin/" xmlns:ns4="http://www.i2b2.org/xsd/hive/msg/1.1/" xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/psm/1.1/" xmlns:ns5="http://www.i2b2.org/xsd/hive/msg/result/1.1/" xmlns:ns6="http://www.i2b2.org/xsd/cell/ont/1.1/" xmlns:ns7="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/">\cf0\par
+\cf1     <ns6:concepts>\cf0\par
+\cf1         <concept>\cf0\par
+\cf1             <level>4</level>\cf0\par
+\cf1             <key>\\\\i2b2_LABS\\i2b2\\Labtests\\LAB\\(LLB53) Hematology\\(LLB58) Hemoglobin Electrophoresis\\HBA\\</key>\cf0\par
+\cf1             <name>Hgb A (Group:HBA)</name>\cf0\par
+\cf1             <synonym_cd>N</synonym_cd>\cf0\par
+\cf1             <visualattributes>FA</visualattributes>\cf0\par
+\cf1             <totalnum xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\cf0\par
+\cf1             <basecode>LOINC:20572-4</basecode>\cf0\par
+\cf1             <facttablecolumn>concept_cd</facttablecolumn>\cf0\par
+\cf1             <tablename>concept_dimension</tablename>\cf0\par
+\cf1             <columnname>concept_path</columnname>\cf0\par
+\cf1             <columndatatype>T</columndatatype>\cf0\par
+\cf1             <operator>like</operator>\cf0\par
+\cf1             <dimcode>\\i2b2\\Labtests\\LAB\\(LLB53) Hematology\\(LLB58) Hemoglobin Electrophoresis\\HBA\\</dimcode>\cf0\par
+\cf1             <tooltip>Labtests \\ Hematology \\ Hemoglobin Electrophoresis \\ Hgb A (Group:HBA)</tooltip>\cf0\par
+\cf1         </concept>\cf0\par
+\cf1     </ns6:concepts>\cf0\par
+\cf1 </ns2:plugin_drag_drop>\cf0\par
+\f1\par
+updated XML:\par
+\cf1\f0     <message_body>\cf0\par
+\cf1         <ns6:concepts>\cf0\par
+\cf1             <concept>\cf0\par
+\cf1                 <level>4</level>\cf0\par
+\cf1                 <key>\\\\i2b2_LABS\\i2b2\\Labtests\\LAB\\(LLB53) Hematology\\(LLB58) Hemoglobin Electrophoresis\\HBA\\</key>\cf0\par
+\cf1                 <name>Hgb A (Group:HBA)</name>\cf0\par
+\cf1                 <synonym_cd>N</synonym_cd>\cf0\par
+\cf1                 <visualattributes>FA </visualattributes>\cf0\par
+\cf1                 <totalnum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />\cf0\par
+\cf1                 <basecode>LOINC:20572-4</basecode>\cf0\par
+\cf1                 <metadataxml>\cf0\par
+\cf1                     <ValueMetadata>\cf0\par
+\cf1                         <Version>3.02</Version>\cf0\par
+\cf1                         <CreationDateTime>11/18/2005 14:55:33</CreationDateTime>\cf0\par
+\cf1                         <TestID>HBA</TestID>\cf0\par
+\cf1                         <TestName>HBA</TestName>\cf0\par
+\cf1                         <DataType>PosFloat</DataType>\cf0\par
+\cf1                         <CodeType>GRP</CodeType>\cf0\par
+\cf1                         <Loinc>20572-4</Loinc>\cf0\par
+\cf1                         <Loinc>4546-8</Loinc>\cf0\par
+\cf1                         <Flagstouse>HL</Flagstouse>\cf0\par
+\cf1                         <Oktousevalues>Y</Oktousevalues>\cf0\par
+\cf1                         <MaxStringLength />\cf0\par
+\cf1                         <LowofLowValue>93.5</LowofLowValue>\cf0\par
+\cf1                         <HighofLowValue>95</HighofLowValue>\cf0\par
+\cf1                         <LowofHighValue>98</LowofHighValue>\cf0\par
+\cf1                         <HighofHighValue>98.3</HighofHighValue>\cf0\par
+\cf1                         <LowofToxicValue />\cf0\par
+\cf1                         <HighofToxicValue />\cf0\par
+\cf1                         <EnumValues />\cf0\par
+\cf1                         <CommentsDeterminingExclusion>\cf0\par
+\cf1                             <Com />\cf0\par
+\cf1                         </CommentsDeterminingExclusion>\cf0\par
+\cf1                         <UnitValues>\cf0\par
+\cf1                             <NormalUnits>%</NormalUnits>\cf0\par
+\cf1                             <EqualUnits>%</EqualUnits>\cf0\par
+\cf1                             <ExcludingUnits />\cf0\par
+\cf1                             <ConvertingUnits>\cf0\par
+\cf1                                 <Units />\cf0\par
+\cf1                                 <MultiplyingFactor />\cf0\par
+\cf1                             </ConvertingUnits>\cf0\par
+\cf1                         </UnitValues>\cf0\par
+\cf1                         <Analysis>\cf0\par
+\cf1                             <Enums />\cf0\par
+\cf1                             <Counts />\cf0\par
+\cf1                             <New />\cf0\par
+\cf1                         </Analysis>\cf0\par
+\cf1                     </ValueMetadata>\cf0\par
+\cf1                 </metadataxml>\cf0\par
+\cf1                 <facttablecolumn>concept_cd</facttablecolumn>\cf0\par
+\cf1                 <tablename>concept_dimension</tablename>\cf0\par
+\cf1                 <columnname>concept_path</columnname>\cf0\par
+\cf1                 <columndatatype>T</columndatatype>\cf0\par
+\cf1                 <operator>like</operator>\cf0\par
+\cf1                 <dimcode>\\i2b2\\Labtests\\LAB\\(LLB53) Hematology\\(LLB58) Hemoglobin Electrophoresis\\HBA\\</dimcode>\cf0\par
+\cf1                 <tooltip>Labtests \\ Hematology \\ Hemoglobin Electrophoresis \\ Hgb A (Group:HBA)</tooltip>\cf0\par
+\cf1             </concept>\cf0\par
+\cf1         </ns6:concepts>\cf0\par
+\cf1     </message_body>\cf0\par
+\par
+\f1\par
+\par
+}
+ 

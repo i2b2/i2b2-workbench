@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc_find.xml#concepts_findTerms">
+   <topic href="html/concepts_findTerms/find_terms_intro_layout.htm" label="Layout of the Find Terms View">
+   </topic>
+   <topic href="html/concepts_findTerms/find_terms_intro_codingSystems.htm" label="Standard coding systems">
+   </topic>
+   <topic href="html/concepts_findTerms/find_terms_intro_layout_mod.htm" label="Layout of the Find Modifiers section">
+   </topic>
+   <topic href="html/concepts_findTerms/find_terms_navigation/find_terms_navigation_intro.htm" label="Navigation">
+      <topic href="html/concepts_findTerms/find_terms_navigation/find_terms_navigation_folder.htm" label="Expand/Collapse a folder">
+      </topic>
+      <topic href="html/concepts_findTerms/find_terms_navigation/find_terms_navigation_displayOptions.htm" label="Display options">
+      </topic>
+   </topic>
+   <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_intro.htm" label="Searching terms">
+      <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_name.htm" label="Search by name">
+      </topic>
+      <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_code.htm" label="Search by code">
+      </topic>
+   </topic>
+    <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_mod_intro.htm" label="Searching Modifiers">
+       <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_mod_name.htm" label="Find modifiers by name">
+       </topic>
+       <topic href="html/concepts_findTerms/find_terms_search/find_terms_search_mod_code.htm" label="Find modifiers by code">
+       </topic>
+   </topic>
+   <topic href="html/concepts_findTerms/find_terms_usingTerms/find_terms_usingTerms_intro.htm" label="Using terms">
+      <topic href="html/concepts_findTerms/find_terms_usingTerms/find_terms_usingTerms_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts_findTerms/find_terms_usingTerms/find_terms_usingTerms_add_qtView.htm" label="Add to query tool view">
+      </topic>
+      <topic href="html/concepts_findTerms/find_terms_usingTerms/find_terms_usingTerms_add_wpView.htm" label="Add to workplace view">
+      </topic>
+      <topic href="html/concepts_findTerms/find_terms_usingTerms/find_terms_usingTerms_add_timelineView.htm" label="Add to timeline view">
+      </topic>
+   </topic>>
+</toc>

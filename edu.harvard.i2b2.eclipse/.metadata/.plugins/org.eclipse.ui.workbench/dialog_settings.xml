@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ShowViewDialog">
+		<item value="280" key="DIALOG_WIDTH"/>
+		<item value="edu.harvard.i2b2.eclipse.plugins.crc.test.views.SampleView" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="141" key="DIALOG_Y_ORIGIN"/>
+		<item value="414" key="DIALOG_HEIGHT"/>
+		<item value="436" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Tahoma|8.25|0|WINDOWS|1|-11|0|0|0|400|0|0|0|0|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
+		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="edu.harvard.i2b2.eclipse.plugins.crc.test"/>
+			<item value="edu.harvard.i2b2.eclipse.plugins.textanalyzer"/>
+			<item value="edu.harvard.i2b2.eclipse.plugins.explorer"/>
+			<item value="org.eclipse.ui.internal.otherCategory"/>
+		</list>
+	</section>
+</section>

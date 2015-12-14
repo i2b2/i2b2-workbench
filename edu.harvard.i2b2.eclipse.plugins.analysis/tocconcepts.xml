@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Concepts" link_to="toc.xml#concepts">
+   <topic href="html/concepts/analysis_intro.htm" label="Introduction">
+   </topic>
+   <topic href="html/concepts/analysis_analysisTypes/analysis_analysisTypes.htm" label="Analysis Types">
+   </topic>
+   <topic href="html/concepts/analysis_generateView/analysis_generateView.htm" label="Generate and View Analysis Results">
+      <topic href="html/concepts/analysis_generateView/analysis_generateView_runQuery.htm" label="Running a Query">
+      </topic>
+      <topic href="html/concepts/analysis_generateView/analysis_generateView_add_previousQuery.htm" label="Add a Previous Query">
+      </topic>
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation.htm" label="Navigation">
+      <anchor id="navigation"/>
+   </topic>
+</toc>

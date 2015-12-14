@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Introduction" link_to="tocconcepts.xml#intro" topic="html/concepts/timeline_intro.htm">
+   <topic href="html/concepts/timeline_intro_layout_createModelTimeline.htm" label="Layout of the create model for timeline tab">
+   </topic>
+   <topic href="html/concepts/timeline_intro_layout_renderTimeline.htm" label="Layout of the render a timeline tab">
+   </topic>
+</toc>

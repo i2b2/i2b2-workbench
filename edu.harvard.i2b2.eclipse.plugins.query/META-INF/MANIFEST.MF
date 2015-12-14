@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Query Plug-in
+Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.query;singleton:=true
+Bundle-Version: 1.7.06
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ edu.harvard.i2b2.eclipse;bundle-version="1.4.0",
+ edu.harvard.i2b2.eclipse.plugins.log;bundle-version="1.2.8",
+ edu.harvard.i2b2.eclipse.plugins.webservicesAxis2;bundle-version="1.1.0",
+ edu.harvard.i2b2.eclipse.plugins.xml_support_jaxb;bundle-version="2.1.2",
+ edu.harvard.i2b2.eclipse.plugins.xml_support_jdom;bundle-version="1.0",
+ edu.harvard.i2b2.eclipse.plugins.commons_apache;bundle-version="1.0.4",
+ edu.harvard.i2b2.eclipse.plugins.jdnc_support;bundle-version="1.0.0",
+ org.eclipse.help
+Eclipse-LazyStart: true
+Export-Package: edu.harvard.i2b2.query.ui
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-RegisterBuddy: edu.harvard.i2b2.eclipse.plugins.xml_support_jaxb,
+ edu.harvard.i2b2.eclipse.plugins.log,
+ edu.harvard.i2b2.eclipse.plugins.commons_apache
+Bundle-ClassPath: .,
+ genlib/i2b2Common-core.jar
+Bundle-Vendor: i2b2.harvard.edu

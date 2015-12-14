@@ -1,0 +1,7 @@
+(10/04/2013)===================================================================================================================+
+The 16x16 spinning WORKING icon (/icons/concepts/working.gif) is taken from:
+
+http://www.andrewdavidson.com/articles/spinning-wait-icons/
+
+under the Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License (http://creativecommons.org/licenses/by-nc-sa/2.5/)
+================================================================================================================================

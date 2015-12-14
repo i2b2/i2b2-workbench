@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="workplaceFind_view_help_context" title="i2b2 Find in Workplace View">
+      <description>This view enables users to search the Workplace view.</description>
+      <topic href="html/concepts_find/wpf_intro.html" label="Concepts: Find in Workplace View"/>
+   </context>
+</contexts>

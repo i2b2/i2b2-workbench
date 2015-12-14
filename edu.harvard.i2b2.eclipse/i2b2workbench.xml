@@ -1,0 +1,76 @@
+<ns2:response xmlns:tns="http://ws.pm.i2b2.harvard.edu" xmlns:ns3="http://www.i2b2.org/xsd/cell/pm/1.1/" xmlns:ns2="http://www.i2b2.org/xsd/hive/msg/1.1/">
+    <message_header>
+        <i2b2_version_compatible>1.1</i2b2_version_compatible>
+        <hl7_version_compatible>2.4</hl7_version_compatible>
+        <sending_application>
+            <application_name>i2b2 workbench</application_name>
+            <application_version>1.2</application_version>
+        </sending_application>
+        <sending_facility>
+            <facility_name>i2b2 Hive</facility_name>
+        </sending_facility>
+        <receiving_application>
+            <application_name>PM Cell</application_name>
+            <application_version>1.0</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>i2b2 Hive</facility_name>
+        </receiving_facility>
+        <datetime_of_message>2007-08-28T09:06:25.741-04:00</datetime_of_message>
+        <message_control_id>
+            <message_num>B2XRmgahBwyQYm58F5G3</message_num>
+            <instance_num>1</instance_num>
+        </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+        <project_id xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+    </message_header>
+    <response_header>
+        <result_status>
+            <status type="DONE">PM processing completed</status>
+        </result_status>
+    </response_header>
+    <message_body>
+        <ns3:configure>
+            <environment>DEVELOPMENT</environment>
+            <helpURL>http://www.i2b2.org</helpURL>
+            <user>
+                <full_name>Demo User</full_name>
+                <user_name>demo</user_name>
+                <password>demouser</password>
+                <domain>Demo</domain>
+                <project id="Demo">
+                    <name>Demo Test Group</name>
+                    <key />
+                    <wiki>http://www.i2b2.org</wiki>
+                    <role>USER</role>
+                </project>
+            </user>
+            <cell_datas>
+                <cell_data id="CRC">
+                    <name>Data Repository</name>
+                    <url>http://webservices.i2b2.org/i2b2/rest/QueryToolService/</url>
+                    <method>REST</method>
+                </cell_data>
+                <cell_data id="ONT">
+                    <name>Ontology</name>
+                    <url>http://webservices.i2b2.org/i2b2/rest/OntologyService/</url>
+                    <method>REST</method>
+                    <param name="OntHiddens">false</param>
+                    <param name="OntSynonyms">false</param>
+                    <param name="OntMax">200</param>
+                </cell_data>
+                <cell_data id="PFT">
+                    <name>Pulmonary Function Test</name>
+                    <url>http://webservices.i2b2.org/PM/rest/PFTService/</url>
+                    <method>REST</method>
+                </cell_data>
+            </cell_datas>
+        </ns3:configure>
+    </message_body>
+</ns2:response>

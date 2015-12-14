@@ -1,0 +1,92 @@
+<ns3:response xmlns:ns3="http://www.i2b2.org/xsd/hive/msg/" xmlns:ns4="http://www.i2b2.org/xsd/cell/ont/v2/" xmlns:ns2="http://www.i2b2.org/xsd/cell/pm/">
+    <message_header>
+        <i2b2_version_compatible>1.0</i2b2_version_compatible>
+        <hl7_version_compatible>2.4</hl7_version_compatible>
+        <sending_application>
+            <application_name>Ontology Cell</application_name>
+            <application_version>1.0</application_version>
+        </sending_application>
+        <sending_facility>
+            <facility_name>i2b2 Hive</facility_name>
+        </sending_facility>
+        <receiving_application>
+            <application_name>Ontology Cell</application_name>
+            <application_version>1.0</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>i2b2 Hive</facility_name>
+        </receiving_facility>
+        <datetime_of_message>2007-07-10T09:41:23.169-04:00</datetime_of_message>
+        <security>
+            <domain>Asthma</domain>
+            <username>demo</username>
+            <password>demouser</password>
+        </security>
+        <message_control_id>
+            <message_num>5DsnFXx0820ken7vMVGA</message_num>
+            <instance_num>1</instance_num>
+        </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+    </message_header>
+    <response_header>
+        <result_status>
+            <status type="DONE" extra="true">Ontology processing completed</status>
+            <extra>boo</extra>
+        </result_status>
+    </response_header>
+    <message_body>
+        <ns4:concepts>
+            <concept>
+                <level>0</level>
+                <key>\\i2b2\i2b2</key>
+                <name>i2b2</name>
+                <synonym_cd>N</synonym_cd>
+                <visualattributes>CA </visualattributes>
+                <totalnum>0</totalnum>
+                <facttablecolumn>concept_cd</facttablecolumn>
+                <tablename>concept_dimension</tablename>
+                <columnname>concept_path</columnname>
+                <columndatatype>T</columndatatype>
+                <operator>LIKE</operator>
+                <dimcode>\i2b2</dimcode>
+                <tooltip>i2b2</tooltip>
+            </concept>
+            <concept>
+                <level>0</level>
+                <key>\\provider\RPDR\Providers</key>
+                <name>Providers</name>
+                <synonym_cd>N</synonym_cd>
+                <visualattributes>CA </visualattributes>
+                <totalnum>0</totalnum>
+                <facttablecolumn>provider_id</facttablecolumn>
+                <tablename>provider_dimension</tablename>
+                <columnname>provider_path</columnname>
+                <columndatatype>T</columndatatype>
+                <operator>IN</operator>
+                <tooltip>Providers</tooltip>
+            </concept>
+            <concept>
+                <level>0</level>
+                <key>\\rpdr\RPDR</key>
+                <name>RPDR</name>
+                <synonym_cd>N</synonym_cd>
+                <visualattributes>CA </visualattributes>
+                <totalnum>0</totalnum>
+                <facttablecolumn>concept_cd</facttablecolumn>
+                <tablename>concept_dimension</tablename>
+                <columnname>concept_path</columnname>
+                <columndatatype>T</columndatatype>
+                <operator>LIKE</operator>
+                <dimcode>\RPDR</dimcode>
+                <tooltip>RPDR</tooltip>
+                <extra>boo</extra>
+            </concept>
+        </ns4:concepts>
+    </message_body>
+</ns3:response>

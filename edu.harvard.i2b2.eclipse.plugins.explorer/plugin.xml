@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension
+		point="org.eclipse.ui.views">
+		<category
+			name="Timeline Category"
+			id="edu.harvard.i2b2.eclipse.plugins.explorer">
+		</category>
+		<view
+			name="Timeline View"
+			icon="icons/core-cell.gif"
+			category="edu.harvard.i2b2.eclipse.plugins.explorer"
+			class="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"
+			id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView">
+		</view>
+	</extension>
+	<extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="edu.harvard.i2b2.eclipse.perspective">
+			<view
+				closeable="true"
+				id="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView"
+				moveable="true"
+				ratio="0.25"
+				relationship="right"
+				relative="org.eclipse.ui.editorss"
+				standalone="false"
+				visible="false"/>
+		</perspectiveExtension>
+	</extension>
+	<extension
+		point="org.eclipse.ui.viewActions">
+		<viewContribution
+			id="edu.harvard.i2b2.eclipse.plugins.explorer.viewActions"
+			targetID="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView">
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.explorer.views.ViewStackToolbarActionDelegate"
+				icon="icons/xmlstack.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.explorer.viewResponseMessageStack"
+				label="ResponseMessageStack"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the XML message stack"/>
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.explorer.views.SearchViewActionDelegate"
+				icon="icons/search.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.explorer.viewSearch"
+				label="Sea&amp;rch"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the search dialog"/>
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.explorer.views.OptionsViewActionDelegate"
+				icon="icons/options_1.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.explorer.viewOptions"
+				label="Opti&amp;ons"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the options dialog"/>
+		</viewContribution>
+	</extension>
+	<extension
+		point="org.eclipse.ui.contexts">
+		<context
+			id="timeline_view_help_context"
+			name="Timeline View"
+			parentId="edu.harvard.i2b2.eclipse.plugins.explorer.views.ExplorerView">
+		</context>
+	</extension>
+	<extension
+		point="org.eclipse.help.contexts">
+		<contexts file="help_contexts.xml"/>
+	</extension>	
+	<extension
+		point="org.eclipse.help.toc">
+		<toc
+            file="toc.xml"
+            primary="true"/>
+  <toc
+        file="tocconcepts.xml"
+        primary="false">
+  </toc>
+  <toc
+        file="tocintro.xml"
+        primary="false">
+  </toc>
+  <toc
+        file="toctimelinecreate.xml"
+        primary="false">
+  </toc>
+  <toc
+        file="toctimelineview.xml"
+        primary="false">
+  </toc>
+	</extension>      
+</plugin>

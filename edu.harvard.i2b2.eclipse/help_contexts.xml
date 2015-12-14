@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.contexts"?> 
+<!--   The topics are labelled so that the user can choose the "process" help (Tasks, Getting Started),
+  or see the "Reference" sections. Also, the links are given in context, so that e.g. menu items
+  are shown with menu ("Team -> Foo", not "Foo"), and SVN prefixes are always included
+  ("SVN Resource History View", not "History View").
+
+  The space should be adequate, since the pop-up can be as large as required. This is in contrast to the
+  TOC files, where context is given already.
+  
+  The well-known id's for each context are defined in org.tigris.subversion.subclipse.ui.IHelpContextIds.  
+
+  --> 
+<contexts>
+<!--  Views 
+  --> 
+  <context id="login_view_help_context" title="i2b2 Workbench">
+  <description>The i2b2 Workbench Desktop</description> 
+  <topic href="html/i2b2_wb_index.htm" label="Concepts: Login View" /> 
+  </context>
+<!--  
+  <topic href="edu.harvard.i2b2.eclipse/html/concepts/views.html" label="Reference: Views" /> 
+		Here's a typical example of the text you need when adding a context id in the UI.
+		
+		<context id="">
+		<description></description>
+		<topic href="/org.tigris.subversion.subclipse.doc/html/dailywork/.html" label=""/>
+		<topic href="/org.tigris.subversion.subclipse.doc/html/reference/.html" label=""/>
+		</context>
+		
+		Seemingly dead contexts ID:
+
+		"add_to_version_control_dialog_context" - The dialog in question is never used
+
+	
+  --> 
+  </contexts>

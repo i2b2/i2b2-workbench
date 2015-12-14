@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+    <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_navigation/pm_nav_intro.html" label="Navigation">
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_navigation/pm_nav_display.html" label="Display options">
+       </topic>
+    </topic>
+    <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_viewPtMap/pm_viewPtMap_intro.html" label="Viewing Patient Mappings">
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_viewPtMap/pm_viewPtMap_dragItem.html" label="Draggable items">
+       </topic>
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_viewPtMap/pm_viewPtMap_addPtSet.html" label="Add Patient Sets">
+       </topic>
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_viewPtMap/pm_viewPtMap_addPt.html" label="Add a Patient">
+       </topic>
+    </topic>
+    <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_openPtMap/pm_openPtMap_intro.html" label="Open Patient Mapping File">
+    </topic>
+    <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_savePtMap/pm_savePtMap_intro.html" label="Saving Patient Mappings">
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_savePtMap/pm_savePtMap_auto.html" label="Automatically Save Patients">
+       </topic>
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_savePtMap/pm_savePtMap_manually.htm" label="Manually Save Patients">
+       </topic>
+    </topic>
+    <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_encryption/pm_encryption_intro.html" label="Encryption">
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_encryption/pm_encryption_key.html" label="Decryption Key">
+       </topic>
+       <topic href="../edu.harvard.i2b2.eclipse.plugins.patientMapping/html/concepts/pm_encryption/pm_encryption_converting.html" label="Converting Site IDs">
+       </topic>
+    </topic>>
+</toc>

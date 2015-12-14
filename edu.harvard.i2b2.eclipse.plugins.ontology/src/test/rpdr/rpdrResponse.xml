@@ -1,0 +1,73 @@
+<ns3:response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://www.i2b2.org/xsd/cell/ont/v2/" xmlns:ns3="http://www.i2b2.org/xsd/hive/msg/" >
+<message_header>
+<i2b2_version_compatible></i2b2_version_compatible>
+<hl7_version_compatible></hl7_version_compatible>
+<sending_application>
+ <application_name></application_name>
+ <application_version></application_version>
+</sending_application>
+<sending_facility>
+ <facility_name></facility_name>
+</sending_facility>
+<receiving_application>
+ <application_name>
+ </application_name>
+ <application_version></application_version>
+</receiving_application>
+<receiving_facility>
+<facility_name></facility_name>
+</receiving_facility>
+ <datetime_of_message></datetime_of_message>
+ <security>
+  <domain></domain>
+  <username></username>
+  <password></password>
+ </security>
+ <message_type>
+  <message_code></message_code>
+  <event_type></event_type>
+  <message_structure></message_structure>
+ </message_type>
+  <message_control_id>
+    <session_id></session_id>
+    <message_num></message_num>
+    <instance_num></instance_num>
+    </message_control_id>
+  <processing_id>
+    <processing_id></processing_id>
+    <processing_mode></processing_mode>
+  </processing_id>
+ <accept_acknowledgement_type></accept_acknowledgement_type>
+ <application_acknowledgement_type></application_acknowledgement_type>
+ <country_code></country_code>
+</message_header>
+ <response_header xmlns="">
+  <info url=""></info>
+  <result_status><status type="DONE">ONT processing complete</status>
+   <polling_url interval_ms=""></polling_url>
+   <conditions><condition type="" coding_system=""></condition></conditions>
+  </result_status>
+ </response_header>
+<message_body xmlns="">
+<ns4:concepts>
+ <concept><level>0</level><key>\\i2b2\RPDR\diagnosis</key><name>Diagnosis</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Diagnosis</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\DRG</key><name>Diagnosis Related Groups</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Diagnosis Related Groups</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\healthHistory</key><name>Health History</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Health History</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\labtests</key><name>Laboratory tests</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Laboratory tests</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\medications</key><name>Medications</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Medications</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\Microbiology</key><name>Microbiology</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Microbiology</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\HPCGG</key><name>Molecular medicine</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Molecular medicine</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\Procedures</key><name>Procedures</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Procedures</tooltip>
+ </concept>
+ <concept><level>0</level><key>\\i2b2\RPDR\Transfusion</key><name>Transfusion Services</name><synonym_cd>N</synonym_cd><visualattributes>CA</visualattributes><totalnum /><basecode /><metadataxml /><facttablecolumn /><tablename /><columnname /><columndatatype /><operator /><dimcode /><comment /><tooltip>Transfusion Services</tooltip>
+</concept>
+</ns4:concepts>
+</message_body>
+</ns3:response>

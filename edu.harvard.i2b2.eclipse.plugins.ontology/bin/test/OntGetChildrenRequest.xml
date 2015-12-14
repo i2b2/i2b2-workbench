@@ -1,0 +1,41 @@
+<i2b2:request xmlns:i2b2="http://i2b2.mgh.harvard.edu/message" xmlns:ns4="http://i2b2.mgh.harvard.edu/crc" xmlns:querytool="http://i2b2.mgh.harvard.edu/querytool" xmlns:ont="http://www.i2b2.org/xsd/cell/ont">
+    <message_header>
+        <i2b2_version_compatible>0.30</i2b2_version_compatible>
+        <hl7_version_compatible>2.40</hl7_version_compatible>
+        <sending_application>
+            <application_name>i2b2 QueryTool</application_name>
+            <application_version>0.1</application_version>
+        </sending_application>
+        <sending_facility>
+            <facility_name>LCS</facility_name>
+        </sending_facility>
+        <receiving_application>
+            <application_name>PFT Service</application_name>
+            <application_version>0.1</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>LCS</facility_name>
+        </receiving_facility>
+        <datetime_of_message>2007-01-18T14:24:53.767-05:00</datetime_of_message>
+        <message_control_id>
+            <session_id>1</session_id>
+            <message_num>1234</message_num>
+            <instance_num>0</instance_num>
+        </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+    </message_header>
+    <request_header>
+        <result_waittime_ms>120000</result_waittime_ms>
+    </request_header>
+    <message_body>
+                <ont:get_children max="300" hiddens="false" synonyms="false" type="default" blob="false">
+                    <parent>\\i2b2\i2b2\Diagnoses\c123</parent>
+                </ont:get_children> 
+    </message_body>
+</i2b2:request>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="edit_terms_view_help_wizard_enumValues" title="Enumeration Value Settings">
+      <description>Defining the enumeration values settings on the fifth page of the wizard in the edit terms view.</description>
+      <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p5_enum.htm" label="Wizard: Enumeration Settings"/>
+   </context>
+</contexts>

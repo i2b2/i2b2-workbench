@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="edit_terms_view_help_wizard_valueRangeMetadata" title="Value Range Metadata Settings">
+      <description>Defining the value range metadata settings on the fifth page of the wizard in the edit terms view.</description>
+      <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p5_num.htm" label="Wizard: Value Range Metadata Settings"/>
+   </context>
+</contexts>

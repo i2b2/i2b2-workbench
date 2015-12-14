@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+   <topic href="html/concepts/qt_create/qt_create.htm" label="Creating a query">
+      <topic href="html/concepts/qt_create/qt_create_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_operators.htm" label="Operators">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_concepts.htm" label="Add concepts">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_modifiers.htm" label="Add modifers">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_previousQuery.htm" label="Add previous query">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_ptList.htm" label="Add patient list">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_encList.htm" label="Add event list">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_queryDefinition.htm" label="Add query definition">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_grpTemplate.htm" label="Add group template">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_add_panel.htm" label="Add a panel/group">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_delete.htm" label="Delete">
+      </topic>
+      <topic href="html/concepts/qt_create/qt_create_constraints.htm" label="Setting contraints">
+         <topic href="html/concepts/qt_create/qt_create_constraints_time.htm" label="Query and panel timing constraints">
+         </topic>
+         <topic href="html/concepts/qt_create/qt_create_constraints_date.htm" label="Date constraints">
+         </topic>
+         <topic href="html/concepts/qt_create/qt_create_constraints_occur.htm" label="Occurrences constraint">
+         </topic>
+         <topic href="html/concepts/qt_create/qt_create_constraints_exclude.htm" label="Exclude constraint">
+         </topic>
+         <topic href="html/concepts/qt_create/qt_create_constraints_value.htm" label="Value contstraints">
+         </topic>
+      </topic>
+   </topic>
+   <topic href="html/concepts/qt_run/qt_run.htm" label="Running a query">
+      <topic href="html/concepts/qt_run/qt_run_analysis.htm" label="Analysis types">
+      </topic>
+      <topic href="html/concepts/qt_run/qt_run_query.htm" label="Run query">
+      </topic>
+   </topic>
+   <topic href="html/concepts/qt_save/qt_save.htm" label="Saving queries and groups">
+      <topic href="html/concepts/qt_save/qt_save_query.htm" label="Save a query">
+      </topic>
+      <topic href="html/concepts/qt_save/qt_save_grpTemplate.htm" label="Save a group template">
+      </topic>
+   </topic>
+</toc>

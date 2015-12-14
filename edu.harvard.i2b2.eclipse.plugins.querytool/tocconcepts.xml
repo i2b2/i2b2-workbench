@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Concepts" link_to="toc.xml#concepts">
+   <topic href="html/concepts/qtt_step1.html" label="Step 1: Define Population">
+   </topic>
+   <topic href="html/concepts/qtt_step2.html" label="Step 2: Define Temporal Relationships">
+   </topic>
+   <topic href="html/concepts/qtt_step3.html" label="Step 3: Review and Submit Query">
+   </topic>
+   <topic href="html/concepts/qtt_editors.html" label="Popup editors">
+   </topic>
+   <topic href="html/concepts/qtt_create/qtt_create.html" label="Creating a query">
+      <topic href="html/concepts/qtt_create/qtt_create_dragItems.html" label="Draggable items">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_operators.html" label="Operators">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_concepts.html" label="Add concepts">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_mod.html" label="Add modifiers">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_pq.html" label="Add previous query">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_ptSet.html" label="Add patient set">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_encSet.html" label="Add encounter set">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_qryDef.html" label="Add query definition">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_grpTemp.html" label="Add group template">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_add_panel.html" label="Add a panel">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_delete.html" label="Deletions">
+      </topic>
+      <topic href="html/concepts/qtt_create/qtt_create_constr.html" label="Setting constraints">
+         <topic href="html/concepts/qtt_create/qtt_create_constr_bind.html" label="Group binding constraint">
+         </topic>
+         <topic href="html/concepts/qtt_create/qtt_create_constr_dt.html" label="Date constraints">
+         </topic>
+         <topic href="html/concepts/qtt_create/qtt_create_constr_occur.html" label="Occurrences constraints">
+         </topic>
+         <topic href="html/concepts/qtt_create/qtt_create_constr_value.html" label="Value constraints">
+         </topic>
+      </topic>
+   </topic>
+   <topic href="html/concepts/qtt_run/qtt_run.html" label="Running a query">
+      <topic href="html/concepts/qtt_run/qtt_run_analysis.html" label="Analysis types">
+      </topic>
+      <topic href="html/concepts/qtt_run/qtt_run_query.html" label="Submit query">
+      </topic>
+   </topic>
+   <topic href="html/concepts/qtt_save/qtt_save.html" label="Saving queries and groups">
+      <topic href="html/concepts/qtt_save/qtt_save_pq.html" label="Saving a query">
+      </topic>
+      <topic href="html/concepts/qtt_save/qtt_save_group.html" label="Saving a group template">
+      </topic>
+   </topic>
+</toc>

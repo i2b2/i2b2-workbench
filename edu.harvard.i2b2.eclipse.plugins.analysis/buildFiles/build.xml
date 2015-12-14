@@ -1,0 +1,66 @@
+<project basedir="../" default="all" name="Analysis Client">
+
+	
+	<property name="Project" value="edu.harvard.i2b2.eclipse.plugins.analysis" />
+
+	<!-- ========== Executable Targets ======================================== -->
+	<property name="Name" value="Analysis" />
+	<import file="../../edu.harvard.i2b2.common/common_build.xml" />
+	<property name="gensrc"     value="gensrc"/>
+
+	<!-- =================================================================== -->
+	<!-- 								INIT 								 -->
+	<!-- =================================================================== -->
+	<target name="gensrcInit"  depends="common_init,common-classpath" >
+		<path id="classpath">
+			<path refid="common-classpath" />
+		</path>
+
+		<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+			<classpath refid="classpath" />
+		</taskdef>
+
+	</target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- 								CLEAN 								 -->
+	<!-- =================================================================== -->
+	<target name="clean"  description="Clean all build products" >
+    	<delete dir="${dist}"/> 
+    	<delete dir="${gensrc}"/>   
+    	<delete dir="${genlib}"/>
+    	<mkdir dir="${genlib}"/>
+    	<mkdir dir="${dist}"/>
+    	<mkdir dir="${gensrc}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 								COMMON JAXB GENERATION 				 -->
+	<!-- =================================================================== -->
+	<target name="jaxb_gen" depends="gensrcInit">
+			 <java dir="." jar="../edu.harvard.i2b2.common/lib/jaxb/jaxb-xjc.jar" fork="true" failonerror="true" >
+			     <arg line="-quiet -nv -extension ../${i2b2xmlproject}/xsd/cell/ont_1.1/ONT_QRY.xsd ../${i2b2xmlproject}/xsd/cell/ont_1.1/ONT_RESP.xsd ../${i2b2xmlproject}/xsd/cell/crc/psm_1.1/CRC_PSM_QRY.xsd ../${i2b2xmlproject}/xsd/cell/crc/pdo_1.1/CRC_PDO_QRY.xsd ../${i2b2xmlproject}/xsd/hive/msg_1.1/i2b2_response.xsd  ../${i2b2xmlproject}/xsd/hive/pdo_1.1/i2b2_PDO.xsd ../${i2b2xmlproject}/xsd/cell/crc/psm_1.1/CRC_PSM_QRY_query_definition.xsd ../${i2b2xmlproject}/xsd/hive/plugin/drag_drop.xsd ../${i2b2xmlproject}/xsd/hive/msg_1.1/i2b2_result_msg.xsd       
+			     	-b etc/xsd/i2b2_vdo_bindings.xjb etc/xsd_1.1/i2b2_pdo_bindings.xjb etc/xsd_1.1/i2b2_qry_result.xjb etc/xsd_1.1/i2b2_response_message_bindings.xjb etc/xsd/crc_psm_qry.xjb etc/xsd/crc_pdo_qry.xjb etc/xsd/crc_psm_qry_def.xjb etc/xsd/i2b2_plugin_dnd.xjb -d ${gensrc}"/>
+			     <jvmarg value="-Djava.endorsed.dirs=../edu.harvard.i2b2.common/lib/jaxb" />
+			     <classpath refid="classpath"/>
+			</java>
+	</target>
+	
+<!--	<target name="jaxb_gen" depends="gensrcInit">
+			 <java dir="." jar="../edu.harvard.i2b2.common/lib/jaxb/jaxb-xjc.jar" fork="true" failonerror="true" >
+			     <arg line="-quiet -nv -extension ../${i2b2xmlproject}/xsd/cell/ont_1.1/ONT_QRY.xsd ../${i2b2xmlproject}/xsd/cell/ont_1.1/ONT_RESP.xsd ../${i2b2xmlproject}/xsd/cell/crc/psm_1.1/CRC_PSM_QRY.xsd ../${i2b2xmlproject}/xsd/cell/crc/pdo_1.1/CRC_PDO_QRY.xsd ../${i2b2xmlproject}/xsd/hive/msg_1.1/i2b2_response.xsd  ../${i2b2xmlproject}/xsd/hive/pdo_1.1/i2b2_PDO.xsd ../${i2b2xmlproject}/xsd/cell/crc/psm_1.1/CRC_PSM_QRY_query_definition.xsd ../${i2b2xmlproject}/xsd/hive/plugin/drag_drop.xsd 
+					-b etc/xsd/i2b2_vdo_bindings.xjb etc/xsd/crc_psm_qry.xjb etc/xsd/crc_pdo_qry.xjb etc/xsd/crc_psm_qry_def.xjb etc/xsd/i2b2_response.xjb etc/xsd/i2b2_pdo.xjb etc/xsd/i2b2_plugin_dnd.xjb  -d ${gensrc}"/>
+			     <jvmarg value="-Djava.endorsed.dirs=../edu.harvard.i2b2.common/lib/jaxb" />
+			     <classpath refid="classpath"/>
+			</java>
+	</target>
+	-->	
+	
+	<!-- =================================================================== -->
+	<!-- 								ALL 								 -->
+	<!-- =================================================================== -->
+	<target name="all" depends="jaxb_gen">
+	</target>
+</project>

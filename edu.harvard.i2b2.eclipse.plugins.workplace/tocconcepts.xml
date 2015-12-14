@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+   <topic href="html/concepts/wp_navigation/wp_navigation_intro.htm" label="Navigation">
+      <topic href="html/concepts/wp_navigation/wp_navigation_expand.htm" label="Expand/Collapse afolder">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_addFolder.htm" label="Add a folder">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_renameFolder.htm" label="Rename a folder">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_annotateFolder.htm" label="Annotate a folder">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_deleteFolder.htm" label="Delete a folder">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_renameItem.htm" label="Rename items">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_annotateItem.htm" label="Annotate items">
+      </topic>
+      <topic href="html/concepts/wp_navigation/wp_navigation_deleteItem.htm" label="Delete items">
+      </topic>
+   </topic>
+   <topic href="html/concepts/wp_addItem/wp_addItem_intro.htm" label="Adding Items to Workplace View">
+      <topic href="html/concepts/wp_addItem/wp_addItem_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addFolders.htm" label="Add folders">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addConcepts.htm" label="Add concepts">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addPQ.htm" label="Add previous query">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addPtSet.htm" label="Add patient set">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addPt.htm" label="Add a single patient">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addPtCount.htm" label="Add patient count">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_addGrpTemp.htm" label="Add group template">
+      </topic>
+      <topic href="html/concepts/wp_addItem/wp_addItem_queryDefinition.htm" label="Add query definition">
+      </topic>
+   </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_intro.htm" label="Using Items in Workplace View">
+      <topic href="html/concepts/wp_useItem/wp_useItem_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addFolders.htm" label="Using folders">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addConcepts.htm" label="Using concepts">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addPQ.htm" label="Using previous query">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addPtSet.htm" label="Using patient set">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addPt.htm" label="Using a single patient">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addPtCount.htm" label="Using patient count">
+      </topic>
+      <topic href="html/concepts/wp_useItem/wp_useItem_addGrpTemp.htm" label="Using group template">
+      </topic>
+      <topic href="html/concepts/wwp_useItem/wp_useItem_queryDefinition.htm" label="Using query definition">
+      </topic>
+   </topic>
+</toc>

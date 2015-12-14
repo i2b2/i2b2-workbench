@@ -1,0 +1,62 @@
+<ns2:response xmlns:tns="http://ws.ontology.i2b2.harvard.edu" xmlns:ns3="http://www.i2b2.org/xsd/cell/ont/1.1/" xmlns:ns4="http://www.i2b2.org/xsd/cell/pm/1.1/" xmlns:ns2="http://www.i2b2.org/xsd/hive/msg/1.1/">
+    <message_header>
+        <i2b2_version_compatible>1.1</i2b2_version_compatible>
+        <hl7_version_compatible>2.4</hl7_version_compatible>
+        <sending_application>
+            <application_name>Ontology Cell</application_name>
+            <application_version>1.0</application_version>
+        </sending_application>
+        <sending_facility>
+            <facility_name>i2b2 Hive</facility_name>
+        </sending_facility>
+        <receiving_application>
+            <application_name>i2b2_QueryTool</application_name>
+            <application_version>0.2</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>PHS</facility_name>
+        </receiving_facility>
+        <datetime_of_message>2008-03-21T09:14:11.864-05:00</datetime_of_message>
+        <security>
+            <domain>Demo</domain>
+            <username>lcp</username>
+            <password>lcpuser</password>
+        </security>
+        <message_control_id>
+            <message_num>LnDNcwUsBSeGyDIicdim</message_num>
+            <instance_num>1</instance_num>
+        </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+        <project_id>asthma</project_id>
+    </message_header>
+    <response_header>
+        <result_status>
+            <status type="DONE">Ontology processing completed</status>
+        </result_status>
+    </response_header>
+    <message_body>
+        <ns3:concepts>
+            <concept>
+                <level>0</level>
+                <key>\\i2b2\i2b2</key>
+                <name>i2b2</name>
+                <synonym_cd>N</synonym_cd>
+                <visualattributes>FA </visualattributes>
+                <totalnum>0</totalnum>
+                <facttablecolumn>concept_cd</facttablecolumn>
+                <tablename>concept_dimension</tablename>
+                <columnname>concept_path</columnname>
+                <columndatatype>T</columndatatype>
+                <operator>LIKE</operator>
+                <dimcode>\i2b2</dimcode>
+                <tooltip>i2b2</tooltip>
+            </concept>
+        </ns3:concepts>
+    </message_body>
+</ns2:response>

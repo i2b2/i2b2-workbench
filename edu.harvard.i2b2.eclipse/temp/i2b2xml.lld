@@ -1,0 +1,134 @@
+%beforeSeptember1997
+%today,4-24-2012 12:00
+
+%c, Available colors:
+%c, 
+%c, ("seagreen",          "2e8b57");
+%c, ("seashell",          "fff5ee");
+%c, ("sienna",            "a0522d");
+%c, ("skyblue",           "87ceeb");
+%c, ("slateblue",         "6a5acd");
+%c, ("slategray",         "708090");
+%c, ("slategrey",         "708090");
+%c, ("snow",              "fffafa");
+%c, ("springgreen",       "00ff7f");
+%c, ("steelblue",         "4682b4");
+%c, ("tan",               "d2b48c");
+%c, ("thistle",           "d8bfd8");
+%c, ("tomato",            "ff6347");
+%c, ("turquoise",         "40e0d0");
+%c, ("violet",            "ee82ee");
+%c, ("violetred",         "d02090");
+%c, ("wheat",             "f5deb3");
+%c, ("white",             "ffffff");
+%c, ("whitesmoke",        "f5f5f5");
+%c, ("yellow",            "ffff00");
+%c, ("yellowgreen",       "9acd32");
+%c, ("lightbrown",        "fff5c8");
+%c, ("darkbrown",         "ffecaf");
+
+%person,i2b2 Timeline Application,.,2012,.,images/cath.gif
+
+%c,PERSON 1
+
+%facet,Person_#1000000004__Male__34yrold__Black,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,1-20-2004 12:00,1-20-2004 12:00,navyblue,p10, ,blank.htm,"C = ::MRI Reports De-Identified::$$1000000004$$LCS-I2B2:MRI_RPT_DID$$476298$$LCS-I2B2:D000109062$$@@2@$$"
+
+%facet,Person_#1000000005__Female__37yrold__Hispanic,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,9-9-2003 12:00,9-9-2003 12:00,navyblue,p10, ,blank.htm,"C = ::MRI Reports De-Identified::$$1000000005$$LCS-I2B2:MRI_RPT_DID$$475950$$LCS-I2B2:D000109062$$@@2@$$"
+
+%facet,Person_#1000000006__Female__29yrold__Black,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,8-10-2000 12:00,8-10-2000 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000006$$LCS-I2B2:XR_RPT_DID$$473265$$LCS-I2B2:D000109061$$@@2@$$"
+
+%facet,Person_#1000000007__Male__29yrold__Asian,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,1-4-2007 12:00,1-4-2007 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000007$$LCS-I2B2:XR_RPT_DID$$479420$$LCS-I2B2:D000109062$$@@2@$$"
+
+%facet,Person_#1000000008__Male__23yrold__Hispanic,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,4-9-2003 12:00,4-9-2003 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000008$$LCS-I2B2:XR_RPT_DID$$475500$$LCS-I2B2:D000109063$$@@2@$$"
+
+%facet,Person_#1000000009__Female__21yrold__Hispanic,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,6-14-2000 12:00,6-14-2000 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000009$$LCS-I2B2:XR_RPT_DID$$473136$$LCS-I2B2:D000109061$$@@2@$$"
+
+%facet,Person_#1000000010__Female__33yrold__Hispanic,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,4-1-2008 12:00,4-1-2008 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000010$$LCS-I2B2:XR_RPT_DID$$480980$$LCS-I2B2:D000109065$$@@2@$$"
+
+%facet,Person_#1000000075__Female__51yrold__Black,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,9-24-2009 12:00,9-24-2009 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000075$$LCS-I2B2:XR_RPT_DID$$483035$$LCS-I2B2:D000109067$$@@2@$$"
+
+%facet,Person_#1000000076__Male__62yrold__Black,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,5-7-2007 12:00,5-7-2007 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000076$$LCS-I2B2:XR_RPT_DID$$483490$$LCS-I2B2:D000109065$$@@2@$$"
+
+%facet,Person_#1000000094__Female__12yrold__Hispanic,white,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,""
+
+%facet,Reports,lightbrown,yes
+ %c,comment
+ %agg, normal,1, no
+ %-,7-8-1999 12:00,7-8-1999 12:00,navyblue,p10, ,blank.htm,"C = ::X-Ray Reports De-Identified::$$1000000094$$LCS-I2B2:XR_RPT_DID$$472416$$LCS-I2B2:D000109067$$@@2@$$"
+
+%end

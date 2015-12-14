@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Creating a timeline" link_to="tocconcepts.xml#timelineCreate" topic="html/concepts/timeline_create/timeline_create.htm">
+      <topic href="html/concepts/timeline_create/timeline_create_dragItems.htm" label="Draggable items">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_constraints.htm" label="Setting Constraints">
+         <topic href="html/concepts/timeline_create/timeline_create_constraints_date.htm" label="Date constraints">
+         </topic>
+         <topic href="html/concepts/timeline_create/timeline_create_constraints_value.htm" label="Value constraints">
+         </topic>
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_add_previousQuery.htm" label="Add previous query">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_add_patientSet.htm" label="Add patient set">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_add_grpTemplate.htm" label="Add group template">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_delete.htm" label="Delete concepts">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_move.htm" label="Move concepts">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_constraints.htm" label="Setting constraints">
+      </topic>
+      <topic href="html/concepts/timeline_create/timeline_create_displayOptions.htm" label="Display options">
+      </topic>
+</toc>

@@ -1,0 +1,112 @@
+<ns3:response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.i2b2.org/xsd/hive/"
+	xmlns:ns3="http://www.i2b2.org/xsd/hive/msg/1.1/"
+	xmlns:ns2="http://www.i2b2.org/xsd/cell/pm/1.1/">
+	<message_header xmlns="">
+		<i2b2_version_compatible></i2b2_version_compatible>
+		<hl7_version_compatible></hl7_version_compatible>
+		<sending_application>
+			<application_name>RPDR Web Services</application_name>
+			<application_version>1.0.0.0</application_version>
+		</sending_application>
+		<sending_facility>
+			<facility_name></facility_name>
+		</sending_facility>
+		<receiving_application>
+			<application_name>RPDR</application_name>
+			<application_version>1.0</application_version>
+		</receiving_application>
+		<receiving_facility>
+			<facility_name></facility_name>
+		</receiving_facility>
+		<datetime_of_message></datetime_of_message>
+		<security>
+			<domain></domain>
+			<username></username>
+			<password></password>
+		</security>
+		<message_type>
+			<message_code></message_code>
+			<event_type></event_type>
+			<message_structure></message_structure>
+		</message_type>
+		<message_control_id>
+			<session_id></session_id>
+			<message_num></message_num>
+			<instance_num></instance_num>
+		</message_control_id>
+		<processing_id>
+			<processing_id></processing_id>
+			<processing_mode></processing_mode>
+		</processing_id>
+		<accept_acknowledgement_type></accept_acknowledgement_type>
+		<application_acknowledgement_type></application_acknowledgement_type>
+		<country_code></country_code>
+	</message_header>
+	<response_header xmlns="">
+		<info url=""></info>
+		<result_status>
+			<status type="DONE">DONE</status>
+			<polling_url interval_ms=""></polling_url>
+			<conditions>
+				<condition type="" coding_system=""></condition>
+			</conditions>
+		</result_status>
+	</response_header>
+	<message_body xmlns="">
+		<ns2:configure>
+			<environment>https://rpdrdevsecure.mgh.harvard.edu/RPDRServices/</environment>
+			<helpURL>www.i2b2.org</helpURL>
+			<user>
+				<full_name>LCS Lab Test</full_name>
+				<user_name>rpdrdev3\martuser</user_name>
+				<password>***</password>
+				<domain>RPDR</domain>
+				<project id="Partners\zzp|2000P000000">
+					<name>zhaoping peng | 2000P000000</name>
+					<key></key>
+					<role>protected_access</role>
+					<param name="Title">RPDR defined protocols for development and testing.</param>
+					<param name="Approval Date">01/01/2000</param>
+					<param name="Expiration Date">01/01/2050</param>
+					<param name="Irb Institution"></param>
+				</project>
+				<project id="partners\zzp|mgh-demo-for-zzp">
+					<name>zhaoping peng | mgh-demo-for-zzp</name>
+					<key></key>
+					<role>protected_access</role>
+					<param name="Title">mgh-demo-for-zz - RPDR defined protocols for development and testing.</param>
+					<param name="Approval Date">06/09/2005</param>
+					<param name="Expiration Date">02/01/2007</param>
+					<param name="Irb Institution">MGH</param>
+				</project>
+				<project id="partners\zzp|MGH-Quality-3">
+					<name>zhaoping peng | MGH-Quality-3</name>
+					<key></key>
+					<role>protected_access</role>
+					<param name="Title">MGH-Quality-3 - RPDR defined protocols for development and testing.</param>
+					<param name="Approval Date">03/02/2006</param>
+					<param name="Expiration Date">03/02/2010</param>
+					<param name="Irb Institution">MGH</param>
+				</project>
+			</user>
+			<cell_datas>
+				<cell_data id="ONT">
+					<name>Ontology</name>
+					<url>https://rpdrdevsecure.mgh.harvard.edu/RPDRServices/RpdrOntServices.asmx</url>
+					<method>SOAP</method>
+				</cell_data>
+				<cell_data id="CRC">
+					<name>Data Repository</name>
+					<url>https://rpdrdevsecure.mgh.harvard.edu/RPDRServices/PatientDataServices.asmx</url>
+					<method>SOAP</method>
+				</cell_data>
+				<cell_data id="IM">
+					<name>Identity Management</name>
+					<url>https://rpdrdevsecure.mgh.harvard.edu/RPDRServices/IdentifiedPatientDataServices.asmx</url>
+					<method>SOAP</method>
+				</cell_data>
+			</cell_datas>
+		</ns2:configure>
+	</message_body>
+</ns3:response>

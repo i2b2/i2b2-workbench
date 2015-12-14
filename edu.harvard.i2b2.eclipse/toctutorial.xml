@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Tutorials" link_to="toc.xml#tutorial">
+	<topic label="i2b2 Workbench Tutorial"  href="html/tutorial/page1.html"> 
+		<topic label="i2b2 Workbench Desktop" href="html/tutorial/page2.html" />
+		<topic label="An Example" href="html/tutorial/page3.html" />
+		<topic label="Selecting Query Criteria" href="html/tutorial/page4.html" />
+		<topic label="Navigate Terms Tab" href="html/tutorial/page5.html" />
+		<topic label="Selecting Demographics and Diagnoses" href="html/tutorial/page6.html" />
+		<topic label="Using Find Terms Search by Names Tab to Locate Diagnoses" href="html/tutorial/page7.html" />
+		<topic label="Using Find Terms Search by Codes Tab to Locate Diagnoses" href="html/tutorial/page8.html" />
+		<topic label="Constraining Items in the Group Panels" href="html/tutorial/page10.html" />
+		<topic label="The Constraint Panel" href="html/tutorial/page11.html" />
+		<topic label="Running the Query" href="html/tutorial/page12.html" />
+		<topic label="While the Query is Running" href="html/tutorial/page13.html" />
+		<topic label="Query Results" href="html/tutorial/page14.html" />
+		<topic label="The Timeline" href="html/tutorial/page15.html" />
+		<topic label="Displaying a Previous Query" href="html/tutorial/page16.html" />
+		<topic label="Display all Patients in a Query" href="html/tutorial/page17.html" />
+		<topic label="Refining a Previous Query" href="html/tutorial/page18.html" />
+		<topic label="Rendering a Refined Query" href="html/tutorial/page19.html" />
+	</topic>
+</toc>

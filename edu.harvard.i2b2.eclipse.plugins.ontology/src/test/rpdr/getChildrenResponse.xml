@@ -1,0 +1,254 @@
+        <response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://www.i2b2.org/xsd/hive/">
+            <message_header xmlns="">
+                <i2b2_version_compatible/>
+                <hl7_version_compatible/>
+                <sending_application>
+                    <application_name/>
+                    <application_version/>
+                </sending_application>
+                <sending_facility>
+                    <facility_name/>
+                </sending_facility>
+                <receiving_application>
+                    <application_name/>
+                    <application_version/>
+                </receiving_application>
+                <receiving_facility>
+                    <facility_name/>
+                </receiving_facility>
+                <datetime_of_message/>
+                <security>
+                    <domain/>
+                    <username/>
+                    <password/>
+                </security>
+                <message_type>
+                    <message_code/>
+                    <event_type/>
+                    <message_structure/>
+                </message_type>
+                <message_control_id>
+                    <session_id/>
+                    <message_num/>
+                    <instance_num/>
+                </message_control_id>
+                <processing_id>
+                    <processing_id/>
+                    <processing_mode/>
+                </processing_id>
+                <accept_acknowledgement_type/>
+                <application_acknowledgement_type/>
+                <country_code/>
+            </message_header>
+            <response_header xmlns="">
+                <info url=""/>
+                <result_status>
+                    <status type="DONE">ONT processing completed</status>
+                    <polling_url interval_ms=""/>
+                    <conditions>
+                        <condition type="" coding_system=""/>
+                    </conditions>
+                </result_status>
+            </response_header>
+            <message_body xmlns="">
+                <concepts>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Acute Rheumatic
+                            fever (390-392)</key>
+                        <name>Acute Rheumatic fever</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Acute Rheumatic fever</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Arterial vascular
+                            disease (440-447)</key>
+                        <name>Arterial vascular disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Arterial vascular
+                        disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Cerebrovascular
+                            disease (430-438)</key>
+                        <name>Cerebrovascular disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Cerebrovascular disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Chronic Rheumatic
+                            heart disease (393-398)</key>
+                        <name>Chronic Rheumatic heart disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Chronic Rheumatic heart
+                        disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\(448) Disease of
+                            capillaries</key>
+                        <name>Disease of capillaries</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Disease of capillaries</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Diseases of
+                            pulmonary circulation (415-417)</key>
+                        <name>Diseases of pulmonary circulation</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Diseases of pulmonary
+                        circulation</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Hypertensive disease
+                            (401-405)</key>
+                        <name>Hypertensive disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Hypertensive disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Ischemic heart
+                            disease (410-414)</key>
+                        <name>Ischemic heart disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Ischemic heart disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Other forms of heart
+                            disease (420-429)</key>
+                        <name>Other forms of heart disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Other forms of heart
+                        disease</tooltip>
+                    </concept>
+                    <concept>
+                        <level>0</level>
+                        <key>\\i2b2\RPDR\Diagnosis\Circulatory system (390-459)\Venous and lymphatic
+                            disease (451-459)</key>
+                        <name>Venous and lymphatic disease</name>
+                        <synonym_cd>N</synonym_cd>
+                        <visualattributes>FA</visualattributes>
+                        <totalnum/>
+                        <basecode/>
+                        <metadataxml/>
+                        <facttablecolumn/>
+                        <tablename/>
+                        <columnname/>
+                        <columndatatype/>
+                        <operator/>
+                        <dimcode/>
+                        <comment/>
+                        <tooltip>Diagnoses \ Circulatory system \ Venous and lymphatic
+                        disease</tooltip>
+                    </concept>
+                </concepts>
+            </message_body>
+        </response>
+

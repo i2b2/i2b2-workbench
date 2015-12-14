@@ -1,0 +1,133 @@
+<project basedir="." default="build-all" name="Client">
+
+	
+<!--	<property name="Project" value="edu.harvard.i2b2.eclipse.pm" /> -->
+
+	<!-- ========== Executable Targets ======================================== -->
+	<import file="../edu.harvard.i2b2.common/common_build.xml" />
+	<property name="gensrc"     value="gensrc"/>
+
+   <target name="build-all">
+        <!-- build i2b2common -->
+        <subant target="dist">
+        	<fileset dir="../edu.harvard.i2b2.common" includes="build.xml" />
+        </subant>
+    	<!-- copy dist/common-core to client's genlib -->
+		<copy todir="../edu.harvard.i2b2.eclipse/${genlib}">
+		       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+				         <include name="*.jar"/>
+		              </fileset>
+		</copy>
+   	
+		<copy todir="../edu.harvard.i2b2.eclipse.plugins.ontology/${genlib}">
+	       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+			         <include name="*.jar"/>
+	              </fileset>
+		</copy>
+   	
+		<copy todir="../edu.harvard.i2b2.eclipse.plugins.workplace/${genlib}">
+	       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+			         <include name="*.jar"/>
+	              </fileset>
+		</copy>
+
+		<copy todir="../edu.harvard.i2b2.eclipse.plugins.createTables/${genlib}">
+	       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+			         <include name="*.jar"/>
+	              </fileset>
+		</copy>
+   	
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.query/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+
+   	
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.previousQuery/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.explorer/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+	
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.analysis/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.adminTool/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.querytool/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+       	      	
+
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.patientSet/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+	
+	<copy todir="../edu.harvard.i2b2.eclipse.plugins.patientMapping/${genlib}">
+       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+		         <include name="*.jar"/>
+              </fileset>
+	</copy>
+
+		<copy todir="../edu.harvard.i2b2.eclipse.plugins.crcxmljaxb/${genlib}">
+		       	      <fileset dir="../edu.harvard.i2b2.common/${dist}">
+				         <include name="*.jar"/>
+		              </fileset>
+		</copy>
+   		
+    	<!-- ant call client's build.xml for jaxb_gen -->
+		<subant target="all">
+				<fileset dir="../edu.harvard.i2b2.common" includes="build.xml" />
+	    </subant>
+    	<subant target="jaxb_gen">
+    		<fileset dir="../edu.harvard.i2b2.eclipse/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.ontology/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.workplace/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.explorer/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.query/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.previousQuery/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.analysis/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.querytool/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.adminTool/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.patientMapping/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.patientSet/buildFiles" includes="build.xml" />
+    	</subant>	
+
+    </target>
+	
+	<target name="clean-all">
+		<subant target="clean">
+			<fileset dir="../edu.harvard.i2b2.common" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.ontology/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.workplace/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.explorer/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.query/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.previousQuery/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.analysis/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.querytool/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.adminTool/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.patientMapping/buildFiles" includes="build.xml" />
+			<fileset dir="../edu.harvard.i2b2.eclipse.plugins.patientSet/buildFiles" includes="build.xml" />
+		</subant>	
+	</target> 
+	
+</project>

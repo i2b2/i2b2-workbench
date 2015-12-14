@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JDOM support wrapper Plug-in
+Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.xml_support_jdom
+Bundle-Version: 1.0
+Bundle-ClassPath: jdom-contrib.jar,
+ jdom.jar
+Bundle-Vendor: i2b2.harvard.edu
+Bundle-Localization: plugin
+Export-Package: .,
+ org.jdom,
+ org.jdom.adapters,
+ org.jdom.contrib.beans,
+ org.jdom.contrib.helpers,
+ org.jdom.contrib.ids,
+ org.jdom.contrib.input,
+ org.jdom.contrib.input.scanner,
+ org.jdom.contrib.output,
+ org.jdom.contrib.schema,
+ org.jdom.filter,
+ org.jdom.input,
+ org.jdom.output,
+ org.jdom.transform,
+ org.jdom.xpath

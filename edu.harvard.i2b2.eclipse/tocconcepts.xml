@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+   <topic href="html/concepts/wb_intro_startWB.htm" label="Starting the i2b2 Workbench">
+   </topic>
+   <topic href="html/concepts/wb_intro_layout_wb.htm" label="Layout of i2b2 Workbench">
+   </topic>
+   <topic href="html/concepts/wb_menus/wb_menus_intro.htm" label="Menus">
+      <topic href="html/concepts/wb_menus/wb_menus_file.htm" label="File menu">
+      </topic>
+      <topic href="html/concepts/wb_menus/wb_menus_window.htm" label="Window menu">
+      </topic>
+      <topic href="html/concepts/wb_menus/wb_menus_help.htm" label="Help menu">
+      </topic>
+   </topic>
+   <topic href="html/concepts/wb_perspectivesViews/wb_perspectivesViews.htm" label="i2b2 Perspectives and views">
+   </topic>
+   <topic href="html/concepts/wb_navigation/wb_navigation_intro.htm" label="Navigation">
+      <topic href="html/concepts/wb_navigation/wb_navigation_move.htm" label="Moving views">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_add.htm" label="Adding views">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_remove.htm" label="Removing views">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_maxMinRestore.htm" label="Maximize/Minimize/Restore views">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_options.htm" label="Options">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_search.htm" label="Search">
+      </topic>
+      <topic href="html/concepts/wb_navigation/wb_navigation_xmlMsg.htm" label="XML messages">
+      </topic>
+   </topic>>
+</toc>

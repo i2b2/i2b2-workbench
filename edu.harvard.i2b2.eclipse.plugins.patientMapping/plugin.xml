@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension
+		point="org.eclipse.ui.views">
+		<category
+			name="Patient Mapping Category"
+			id="edu.harvard.i2b2.eclipse.plugins.patientMapping">
+		</category>
+		<view
+			name="Patient Mapping View"
+			icon="icons/core-cell.gif"
+			category="edu.harvard.i2b2.eclipse.plugins.patientMapping"
+			class="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.PatientMappingView"
+			id="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.PatientMappingView">
+		</view>
+	</extension>
+	<extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="edu.harvard.i2b2.eclipse.perspective">
+			<view
+				closeable="true"
+				id="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.PatientMappingView"
+				moveable="true"
+				ratio="0.25"
+				relationship="right"
+				relative="org.eclipse.ui.editorss"
+				standalone="false"
+				visible="false"/>
+		</perspectiveExtension>
+	</extension>
+	<extension
+		point="org.eclipse.ui.viewActions">
+		<viewContribution
+			id="edu.harvard.i2b2.eclipse.plugins.patientMapping.viewActions"
+			targetID="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.PatientMappingView">
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.ViewStackToolbarActionDelegate"
+				icon="icons/xmlstack.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.patientMapping.viewResponseMessageStack"
+				label="ResponseMessageStack"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the XML message stack"/>
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.SearchViewActionDelegate"
+				icon="icons/search.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.patientMapping.viewSearch"
+				label="Sea&amp;rch"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the search dialog"/>
+			<action
+				class="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.OptionsViewActionDelegate"
+				icon="icons/options_1.gif"
+				id="edu.harvard.i2b2.eclipse.plugins.patientMapping.viewOptions"
+				label="Opti&amp;ons"
+				state="false"
+				style="push"
+				toolbarPath="additions"
+				tooltip="Display the options dialog"/>
+		</viewContribution>
+	</extension>
+	<extension
+		point="org.eclipse.ui.contexts">
+		<context
+			id="patientmapping_view_help_context"
+			name="Patient Mapping View"
+			parentId="edu.harvard.i2b2.eclipse.plugins.patientMapping.views.PatientMappingView">
+		</context>
+	</extension>
+	<extension
+		point="org.eclipse.help.contexts">
+		<contexts file="help_contexts.xml"/>
+  <contexts
+        file="help_contexts.xml"
+        plugin="edu.harvard.i2b2.eclipse.plugins.patientMapping">
+  </contexts>
+	</extension>	
+	<extension
+		point="org.eclipse.help.toc">
+		<toc
+            file="toc.xml"
+            primary="true"/>
+  <toc
+        file="tocconcepts.xml"
+        primary="false">
+  </toc>
+	</extension>      
+</plugin>

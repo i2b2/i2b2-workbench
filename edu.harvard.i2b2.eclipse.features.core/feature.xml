@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="edu.harvard.i2b2.eclipse.features.core"
+      label="i2b2 Core Features"
+      version="1.7.06"
+      provider-name="harvard.edu"
+      plugin="edu.harvard.i2b2.eclipse">
+
+   <description url="http://www.i2b2.org">
+      i2b2 Workbench core features, version 1.7.06
+   </description>
+
+   <copyright url="http://www.i2b2.org">
+      /*
+* Copyright (c) 2006-2015 Massachusetts General Hospital 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the i2b2 Software License
+* v2.1 which accompanies this distribution.  
+*/
+   </copyright>
+
+   <license url="http://www.i2b2.org">
+      i2b2 Software License (&quot;Software License&quot;)
+Version 2.1 - 1/15/2009
+This Software License covers downloads from the i2b2 project
+(&quot;i2b2&quot;) maintained by the Brigham and Women&apos;s Hospital, Inc.
+(&quot;BWH&quot;).
+Your downloading, copying, modifying, displaying, distributing
+or use of any software and/or data from i2b2 (collectively, the
+&quot;Software&quot;) constitutes acceptance of all of the terms and conditions
+of this Software License.  If you do not agree to such terms
+and conditions, you have no right to download, copy, modify,
+display, distribute or use the Software.  
+1. As used in this Software License, &quot;you&quot; means the individual
+downloading and/or using, reproducing, modifying, displaying
+and/or distributing the Software and the institution or entity
+which employs or is otherwise affiliated with such individual
+in connection therewith.  The BWH hereby grants you, with right
+to sublicense, with respect to BWH&apos;s rights in the software,
+and related technical data, if any, which is the subject of this
+Software License, a royalty-free, non-exclusive license to use,
+reproduce, make derivative works of, display and distribute the
+Software, provided that: 
+(a) You accept and adhere to all of the terms and conditions
+of this Software License; 
+(b) In connection with any copy of or sublicense of all or any
+portion of the Software, all of the terms and conditions in this
+Software License shall appear in and shall apply to such copy
+and such sublicensee, including without limitation all source
+and executable forms and on any user documentation, prefaced
+with the following words: &quot;All or portions of this licensed product
+(such portions are the &quot;Software&quot;) have been obtained under license
+from The Brigham and Women&apos;s Hospital, Inc. and are subject to
+the following terms and conditions:&quot;
+(c) You preserve and maintain all applicable attributions, copyright
+notices and licenses included in or applicable to the Software.
+2. Modifications to the Software shall mean any addition to or
+deletion from the substance or structure of either the Software
+or any previous Modifications.  When Software is released as
+a series of files, a Modification is:  (i) any addition to or
+deletion from the contents of a file containing the Software
+or previous Modifications; or (ii) any new file that contains
+any part of the Software or previous Modifications.  
+(a) You agree that you will deliver, and you will cause all sublicensees
+to deliver, to BWH copies of all Modifications that are made
+to the Software, on or before the date on which the Modifications
+are distributed to any third party, and you hereby grant to BWH,
+and will cause all of your sublicensees to grant to BWH, a non-exclusive,
+royalty-free, irrevocable, non-terminable license to use, reproduce,
+make derivative works of, display, perform, and distribute any
+and all Modifications in source code and binary code form for
+any purpose and to sublicense such rights to others.
+(b) You agree that all Modifications of the Software must be
+clearly identified and marked as such, and must not be misrepresented
+as being the original Software.
+(c) You agree to consider making, but are under no obligation
+to make, the source code of any of your Modifications to the
+Software freely available to others on an open source basis.
+3. The license granted under this Software License includes without
+limitation the right to (i) incorporate the Software into proprietary
+programs (subject to any restrictions applicable to such programs),
+(ii) add your own copyright statement to your Modifications of
+the Software, and (iii) provide additional or different license
+terms and conditions in your sublicenses of Modifications of
+the Software; provided that in each case your use, reproduction
+or distribution of such modifications otherwise complies with
+the conditions stated in this Software License.
+4. This Software License does not grant any rights with respect
+to third party software, except those rights that BWH has been
+authorized by a third party to grant to you, and accordingly
+you are solely responsible for (i) obtaining any permissions
+from third parties that you need to use, reproduce, make derivative
+works of, display and distribute the Software, and (ii) informing
+your sublicensees, including without limitation your end-users,
+of their obligations to secure any such required permissions.
+5. The Software has been designed for research purposes only
+and has not been reviewed or approved by the Food and Drug Administration
+or by any other agency.  YOU ACKNOWLEDGE AND AGREE THAT CLINICAL
+APPLICATIONS ARE NEITHER RECOMMENDED NOR ADVISED.  Any commercialization
+of the Software is at the sole risk of the party or parties engaged
+in such commercialization.  You further agree to use, reproduce,
+make derivative works of, display and distribute the Software
+in compliance with all applicable governmental laws, regulations
+and orders, including without limitation those relating to export
+and import control.  
+6. The Software is provided &quot;AS IS&quot; and neither BWH nor any contributor
+to the software (each a &quot;Contributor&quot;) shall have any obligation
+to provide maintenance, support, updates, enhancements or modifications
+thereto. You acknowledge and agree that you are responsible for
+your selection, testing, modification, use and distribution of
+the Software, in any form, and that you hereby expressly waive
+any claim for any loss, damage, or injury that may occur as a
+result of your use or distribution of the Software. You agree
+that you are responsible for obtaining and will maintain insurance
+providing coverage (including but not limited to general liability
+and product liability insurance) that is appropriate in light
+of the waivers and assumptions of liability set forth in this
+Software License. You furthermore waive any right of recovery
+against BWH or any Contributor (including any right of subrogation
+against BWH or any Contributor or any insurer of BWH or any Contributor)
+for loss or damage arising out of or incident to your use or
+distribution of the Software. 
+7. BWH AND ALL CONTRIBUTORS SPECIFICALLY DISCLAIM ALL EXPRESS
+AND IMPLIED WARRANTIES OF ANY KIND INCLUDING, BUT NOT LIMITED
+TO, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NON-INFRINGEMENT.  IN NO EVENT SHALL BWH OR ANY CONTRIBUTOR
+BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL,
+EXEMPLARY OR CONSEQUENTIAL DAMAGES HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY ARISING IN ANY WAY RELATED TO THE SOFTWARE,
+EVEN IF BWH OR ANY CONTRIBUTOR HAS BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES.  TO THE MAXIMUM EXTENT NOT PROHIBITED BY LAW
+OR REGULATION, YOU FURTHER ASSUME ALL LIABILITY FOR YOUR USE,
+REPRODUCTION, MAKING OF DERIVATIVE WORKS, DISPLAY, LICENSE OR
+DISTRIBUTION OF THE SOFTWARE AND AGREE TO INDEMNIFY AND HOLD
+HARMLESS BWH AND ALL CONTRIBUTORS (AND ALL RELATED INDIVIDUALS
+AND ENTITIES) FROM AND AGAINST ANY AND ALL CLAIMS, SUITS, ACTIONS,
+DEMANDS AND JUDGMENTS ARISING THEREFROM OR FROM ANY MODIFICATIONS
+OF THE SOFTWARE DELIVERED TO BWH HEREUNDER.  
+8. None of the names, logos or trademarks of BWH or any of BWH&apos;s
+affiliates or any of the Contributors, or any funding agency,
+may be used to endorse or promote products produced in whole
+or in part by operation of the Software or derived from or based
+on the Software without specific prior written permission from
+the applicable party.  
+9. Any use, reproduction or distribution of the Software which
+is not in accordance with this Software License shall automatically
+revoke all rights granted to you under this Software License
+and render Paragraphs 1 and 2 of this Software License null and
+void.  
+10. This Software License does not grant any rights in or to
+any intellectual property owned by BWH or any Contributor except
+those rights expressly granted hereunder.  
+Version 2.1 - 1/15/08
+   </license>
+
+   <includes
+         id="org.eclipse.rcp"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="com.ibm.icu"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.runtime.compatibility.auth"/>
+      <import plugin="org.eclipse.core.commands"/>
+      <import plugin="org.eclipse.core.expressions"/>
+      <import plugin="org.eclipse.core.jobs"/>
+      <import plugin="org.eclipse.core.contenttype"/>
+      <import plugin="org.eclipse.equinox.common"/>
+      <import plugin="org.eclipse.equinox.preferences"/>
+      <import plugin="org.eclipse.equinox.registry"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipse.rcp"/>
+      <import plugin="org.eclipse.swt"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.intro"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.update.configurator"/>
+      <import plugin="org.apache.lucene"/>
+      <import plugin="org.eclipse.help.appserver"/>
+      <import plugin="org.eclipse.help.base"/>
+      <import plugin="org.eclipse.help.ui"/>
+      <import plugin="org.eclipse.help.webapp"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="edu.harvard.i2b2.eclipse"/>
+      <import plugin="edu.harvard.i2b2.eclipse.plugins.log"/>
+      <import plugin="javax.servlet"/>
+      <import plugin="javax.servlet.jsp"/>
+      <import plugin="org.apache.commons.el"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.apache.ant"/>
+      <import plugin="org.eclipse.core.databinding.observable" version="1.3.0" match="compatible"/>
+      <import plugin="org.eclipse.core.databinding.property" version="1.3.0" match="compatible"/>
+      <import plugin="org.eclipse.ecf.identity"/>
+      <import plugin="org.eclipse.osgi.services"/>
+      <import plugin="org.eclipse.equinox.concurrent"/>
+      <import plugin="org.eclipse.ecf"/>
+      <import plugin="org.eclipse.equinox.frameworkadmin"/>
+      <import plugin="org.eclipse.equinox.http.servlet"/>
+      <import plugin="org.mortbay.jetty.util"/>
+      <import plugin="org.mortbay.jetty.server"/>
+      <import plugin="org.apache.jasper"/>
+      <import plugin="org.eclipse.equinox.jsp.jasper"/>
+      <import plugin="org.eclipse.equinox.http.jetty"/>
+      <import plugin="org.eclipse.core.databinding.property" version="1.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.databinding.observable" version="1.2.0" match="compatible"/>
+      <import plugin="edu.harvard.i2b2.eclipse.plugins.webservicesAxis2"/>
+   </requires>
+
+   <plugin
+         id="com.ibm.icu"
+         download-size="0"
+         install-size="0"
+         version="4.2.1.v20100412"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.commons_apache"
+         download-size="0"
+         install-size="0"
+         version="1.0.4"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.explorer"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.jdnc_support"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.log"
+         download-size="0"
+         install-size="0"
+         version="1.2.8"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.ontology"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.previousQuery"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.query"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.webservicesAxis2"
+         download-size="0"
+         install-size="0"
+         version="1.1.0"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.workplace"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.xml_support_jaxb"
+         download-size="0"
+         install-size="0"
+         version="2.1.2"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.xml_support_jdom"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"/>
+
+   <plugin
+         id="javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="2.5.0.v200910301333"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet.jsp"
+         download-size="0"
+         install-size="0"
+         version="2.0.0.v200806031607"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.el"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.v201004212143"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.logging"
+         download-size="0"
+         install-size="0"
+         version="1.0.4.v201005080501"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.jasper"
+         download-size="0"
+         install-size="0"
+         version="5.5.17.v201004212143"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.lucene"
+         download-size="0"
+         install-size="0"
+         version="1.9.1.v20100518-1140"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.lucene.analysis"
+         download-size="0"
+         install-size="0"
+         version="1.9.1.v20100518-1140"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.commands"
+         download-size="0"
+         install-size="0"
+         version="3.6.0.I20100512-1500"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.contenttype"
+         download-size="0"
+         install-size="0"
+         version="3.4.100.v20100505-1235"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.databinding"
+         download-size="0"
+         install-size="0"
+         version="1.3.100.I20100601-0800"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.expressions"
+         download-size="0"
+         install-size="0"
+         version="3.4.200.v20100505"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.jobs"
+         download-size="0"
+         install-size="0"
+         version="3.5.1.R36x_v20100824"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.net"
+         download-size="0"
+         install-size="0"
+         version="1.2.100.I20100511-0800"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.net.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="1.0.100.I20100511-0800"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime"
+         download-size="0"
+         install-size="0"
+         version="3.6.0.v20100505"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime.compatibility.auth"
+         download-size="0"
+         install-size="0"
+         version="3.2.200.v20100517"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.runtime.compatibility.registry"
+         download-size="0"
+         install-size="0"
+         version="3.3.0.v20100520"
+         fragment="true"/>
+
+   <plugin
+         id="org.eclipse.ecf"
+         download-size="0"
+         install-size="0"
+         version="3.1.0.v20100906-1425"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ecf.filetransfer"
+         download-size="0"
+         install-size="0"
+         version="4.0.0.v20100906-1425"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ecf.identity"
+         download-size="0"
+         install-size="0"
+         version="3.1.0.v20100906-1425"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ecf.ssl"
+         download-size="0"
+         install-size="0"
+         version="1.0.100.v20100906-1425"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.app"
+         download-size="0"
+         install-size="0"
+         version="1.3.1.R36x_v20100803"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.common"
+         download-size="0"
+         install-size="0"
+         version="3.6.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.frameworkadmin"
+         download-size="0"
+         install-size="0"
+         version="2.0.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.frameworkadmin.equinox"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100505"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.http.jetty"
+         download-size="0"
+         install-size="0"
+         version="2.0.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.http.registry"
+         download-size="0"
+         install-size="0"
+         version="1.1.1.R36x_v20101103"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.http.servlet"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.jsp.jasper"
+         download-size="0"
+         install-size="0"
+         version="1.0.201.R36x_v20101103"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.jsp.jasper.registry"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.preferences"
+         download-size="0"
+         install-size="0"
+         version="3.3.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.registry"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.ui"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100503"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.simpleconfigurator"
+         download-size="0"
+         install-size="0"
+         version="1.0.200.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help"
+         download-size="0"
+         install-size="0"
+         version="3.5.0.v20100524"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.appserver"
+         download-size="0"
+         install-size="0"
+         version="3.1.400.v20100427"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.base"
+         download-size="0"
+         install-size="0"
+         version="3.5.3.v201102101200"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.ui"
+         download-size="0"
+         install-size="0"
+         version="3.5.3.r36_20101116"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.webapp"
+         download-size="0"
+         install-size="0"
+         version="3.5.3.r36_20101130"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.M20110210-1200"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.databinding"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.I20100601-0800"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.osgi"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.R36x_v20110210"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.osgi.services"
+         download-size="0"
+         install-size="0"
+         version="3.2.100.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rcp"
+         download-size="0"
+         install-size="0"
+         version="3.6.0.v201102101200"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.v3659c"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.win32.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.v3659c"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.M20110203-1100"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.forms"
+         download-size="0"
+         install-size="0"
+         version="3.5.2.r36_v20100702"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.intro"
+         download-size="0"
+         install-size="0"
+         version="3.4.0.v20100427"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.workbench"
+         download-size="0"
+         install-size="0"
+         version="3.6.2.M20110210-1200"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.configurator"
+         download-size="0"
+         install-size="0"
+         version="3.3.100.v20100512"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.core"
+         download-size="0"
+         install-size="0"
+         version="3.2.402.R36x_v20100629"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.core.win32"
+         download-size="0"
+         install-size="0"
+         version="3.2.200.v20100512"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.ui"
+         download-size="0"
+         install-size="0"
+         version="3.2.300.v20100512"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.analysis"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="org.mortbay.jetty.server"
+         download-size="0"
+         install-size="0"
+         version="6.1.23.v201004211559"
+         unpack="false"/>
+
+   <plugin
+         id="org.mortbay.jetty.util"
+         download-size="0"
+         install-size="0"
+         version="6.1.23.v201004211559"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.ant"
+         download-size="0"
+         install-size="0"
+         version="1.7.1.v20100518-1145"/>
+
+   <plugin
+         id="org.eclipse.equinox.concurrent"
+         download-size="0"
+         install-size="0"
+         version="1.0.100.v20100503"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.adminTool"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.patientMapping"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.patientSet"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+   <plugin
+         id="edu.harvard.i2b2.eclipse.plugins.querytool"
+         download-size="0"
+         install-size="0"
+         version="1.7.6"
+         unpack="false"/>
+
+</feature>

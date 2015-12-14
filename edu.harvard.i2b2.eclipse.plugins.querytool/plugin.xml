@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Temporal Query Tool"
+            id="edu.harvard.i2b2.eclipse.plugins.querytool">
+      </category>
+      <view
+            name="Temporal Query Tool"
+            icon="icons/core-cell.gif"
+            category="edu.harvard.i2b2.eclipse.plugins.querytool"
+            class="edu.harvard.i2b2.eclipse.plugins.querytool.views.QueryToolView"
+            id="edu.harvard.i2b2.eclipse.plugins.querytool.views.QueryToolView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="edu.harvard.i2b2.eclipse.plugins.querytool.views.QueryToolView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension point="org.eclipse.ui.viewActions">
+         <viewContribution
+            id="edu.harvard.i2b2.eclipse.plugins.querltool.viewActions"
+            targetID="edu.harvard.i2b2.eclipse.plugins.querytool.views.QueryToolView">
+         <action
+               class="edu.harvard.i2b2.eclipse.plugins.querytool.views.ViewStackToolbarActionDelegate"
+               icon="icons/xmlstack.gif"
+               id="edu.harvard.i2b2.eclipse.plugins.querytool.viewXMLMessageStack"
+               label="XMLMessageStack"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Display the XML message stack"/>
+         <action
+               class="edu.harvard.i2b2.eclipse.plugins.querytool.views.ViewOptionToolbarActionDelegate"
+               icon="icons/options_1.gif"
+               id="edu.harvard.i2b2.eclipse.plugins.querytool.viewOptions"
+               label="Options"
+               state="false"
+               style="push"
+               toolbarPath="additions"
+               tooltip="Display the options dialog"/>               
+      </viewContribution>
+   
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="queryToolTemporal_view_help_context"
+            name="Temporal Query Tool View"
+            parentId="queryToolTemporal_view_help_context">
+      </context>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="help_contexts.xml">
+      </contexts>
+   </extension>
+   <extension point="org.eclipse.help.toc">
+       <toc
+      		file="toc.xml"
+      		primary="true"/>
+       <toc
+             file="tocconcepts.xml"
+             primary="false">
+       </toc>
+   </extension>
+
+</plugin>

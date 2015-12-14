@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="i2b2 Workbench Help" topic="html/i2b2_wb_index.htm">
+   <topic label="Getting Started" href="html/gettingstarted.html"/>
+   <topic href="html/concepts/wb_intro.htm" label="Concepts">
+      <anchor id="concepts"/>
+   </topic>
+   <topic label="Reference" href="html/reference.html"/>
+   <topic label="Tutorial">
+      <anchor id="tutorial"/>
+   </topic>
+</toc>

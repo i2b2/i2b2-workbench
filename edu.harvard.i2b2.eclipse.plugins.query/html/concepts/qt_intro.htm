@@ -1,0 +1,1106 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>i2b2 Query Tool View</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+h1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h2
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h4
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoIndex1, li.MsoIndex1, div.MsoIndex1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex2, li.MsoIndex2, div.MsoIndex2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex3, li.MsoIndex3, div.MsoIndex3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex4, li.MsoIndex4, div.MsoIndex4
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex5, li.MsoIndex5, div.MsoIndex5
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex6, li.MsoIndex6, div.MsoIndex6
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex7, li.MsoIndex7, div.MsoIndex7
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex8, li.MsoIndex8, div.MsoIndex8
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoIndex9, li.MsoIndex9, div.MsoIndex9
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.5in;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	font-variant:small-caps;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Times New Roman";}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Arial;}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Arial;}
+p.MsoIndexHeading, li.MsoIndexHeading, div.MsoIndexHeading
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	font-size:10.0pt;
+	font-family:Calibri;
+	font-weight:bold;}
+p.MsoTof, li.MsoTof, div.MsoTof
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+span.MsoFootnoteReference
+	{vertical-align:super;}
+span.MsoEndnoteReference
+	{vertical-align:super;}
+p.MsoEndnoteText, li.MsoEndnoteText, div.MsoEndnoteText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Arial;}
+p.MsoToa, li.MsoToa, div.MsoToa
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoMacroText, li.MsoMacroText, div.MsoMacroText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+p.MsoToaHeading, li.MsoToaHeading, div.MsoToaHeading
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.55in;
+	margin-bottom:.0001pt;
+	text-indent:-.1in;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:center;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{margin:0in;
+	margin-bottom:.0001pt;
+	background:navy;
+	font-size:10.0pt;
+	font-family:Tahoma;}
+p
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+tt
+	{font-family:"Courier New";}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:Tahoma;}
+p.jdheading1, li.jdheading1, div.jdheading1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;}
+p.jdnormal, li.jdnormal, div.jdnormal
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.jdchapternumber, li.jdchapternumber, div.jdchapternumber
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	font-size:72.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;}
+p.jdchapterheading, li.jdchapterheading, div.jdchapterheading
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	text-align:right;
+	line-height:150%;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:18.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;}
+p.jdheading2, li.jdheading2, div.jdheading2
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.jdheading3, li.jdheading3, div.jdheading3
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.jdtable, li.jdtable, div.jdtable
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Arial;}
+p.jdnormalindent1, li.jdnormalindent1, div.jdnormalindent1
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.jdlistnumbers1, li.jdlistnumbers1, div.jdlistnumbers1
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.BulletedListJD, li.BulletedListJD, div.BulletedListJD
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.Normal2, li.Normal2, div.Normal2
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.NormalIndent1, li.NormalIndent1, div.NormalIndent1
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.StyleBulletedListJDArial11pt, li.StyleBulletedListJDArial11pt, div.StyleBulletedListJDArial11pt
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:Arial;}
+p.StyleHeading1Right, li.StyleHeading1Right, div.StyleHeading1Right
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:right;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.StyleHeading412pt, li.StyleHeading412pt, div.StyleHeading412pt
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.Style1, li.Style1, div.Style1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:18.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;}
+p.SuperTitle, li.SuperTitle, div.SuperTitle
+	{margin-top:48.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	border:none;
+	padding:0in;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p.jdwebheading1, li.jdwebheading1, div.jdwebheading1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Calibri;
+	font-weight:bold;}
+p.jdwebheading2, li.jdwebheading2, div.jdwebheading2
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:14.0pt;
+	font-family:Cambria;
+	color:#365F91;}
+p.jdwebheading3, li.jdwebheading3, div.jdwebheading3
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:Cambria;}
+p.jdwebnormal, li.jdwebnormal, div.jdwebnormal
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdwebheading4, li.jdwebheading4, div.jdwebheading4
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:Cambria;
+	text-transform:uppercase;}
+p.jdwebfiguretitle, li.jdwebfiguretitle, div.jdwebfiguretitle
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Calibri;
+	font-weight:bold;}
+p.jdwebheading5, li.jdwebheading5, div.jdwebheading5
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:Cambria;
+	font-weight:bold;}
+p.jdwebtable, li.jdwebtable, div.jdwebtable
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Calibri;}
+p.jdwebchapterheading, li.jdwebchapterheading, div.jdwebchapterheading
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Helvetica;
+	font-weight:bold;}
+p.jdwebbullets, li.jdwebbullets, div.jdwebbullets
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdweblistnumbers, li.jdweblistnumbers, div.jdweblistnumbers
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdwebheading7, li.jdwebheading7, div.jdwebheading7
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:9.0pt;
+	font-family:Cambria;
+	text-transform:uppercase;}
+p.jdwebheading8, li.jdwebheading8, div.jdwebheading8
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:9.0pt;
+	font-family:Cambria;
+	text-transform:uppercase;
+	font-style:italic;
+	text-decoration:underline;}
+p.jdwebtablelistnumber, li.jdwebtablelistnumber, div.jdwebtablelistnumber
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.15in;
+	text-indent:-.15in;
+	font-size:10.0pt;
+	font-family:Calibri;}
+p.jdwebemphasis, li.jdwebemphasis, div.jdwebemphasis
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	font-size:11.0pt;
+	font-family:Calibri;
+	font-style:italic;}
+p.jdwebfiguredescription, li.jdwebfiguredescription, div.jdwebfiguredescription
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Calibri;}
+p.StylejdwebfiguretitleNotBold, li.StylejdwebfiguretitleNotBold, div.StylejdwebfiguretitleNotBold
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Calibri;}
+p.jdwebheading6, li.jdwebheading6, div.jdwebheading6
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:Cambria;
+	text-decoration:underline;}
+p.jdwebnormalindent, li.jdwebnormalindent, div.jdwebnormalindent
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.Stylejdlistnumbers1CalibriBefore0ptAfter0pt, li.Stylejdlistnumbers1CalibriBefore0ptAfter0pt, div.Stylejdlistnumbers1CalibriBefore0ptAfter0pt
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdweblistbullet, li.jdweblistbullet, div.jdweblistbullet
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.75in;
+	text-indent:-.25in;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.StylejdwebnormalLeft05, li.StylejdwebnormalLeft05, div.StylejdwebnormalLeft05
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdtocheading, li.jdtocheading, div.jdtocheading
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:12.0pt;
+	font-family:Helvetica;
+	font-weight:bold;}
+p.Stylejdweblistnumbersindent, li.Stylejdweblistnumbersindent, div.Stylejdweblistnumbersindent
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.jdweblistletters, li.jdweblistletters, div.jdweblistletters
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	font-size:11.0pt;
+	font-family:Calibri;}
+span.jdwebnormalChar
+	{font-family:Calibri;}
+span.jdwebfiguretitleChar
+	{font-family:Calibri;
+	font-weight:bold;}
+span.StylejdwebfiguretitleNotBoldChar
+	{font-family:Calibri;
+	font-weight:bold;}
+span.Heading1Char
+	{font-family:Arial;
+	font-weight:bold;}
+span.Heading2Char
+	{font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+<div class=Section1>
+
+<p class=jdwebchapterheading><a name="_Toc247093837">i2b2 Query Tool View</a></p>
+
+<p class=jdwebnormal>The Query Tool view is designed to simplify the process of
+retrieving information from the database associated to the i2b2 Workbench.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading1><a name="_Toc247093838">Introduction</a></p>
+
+<p class=jdwebnormal>This section describes the layout and contents of this
+view</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<div style='border:none;border-bottom:solid #4F81BD 1.0pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=jdwebheading2><a name="_Toc247093839">Layout of the Query Tool View</a></p>
+
+</div>
+
+<p class=jdwebnormal>The <b>Query Tool view</b> is used to define and run a “select
+query” that will retrieve information from the database associated to the i2b2
+Workbench.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal style='page-break-after:avoid'><img width=624 height=304
+src="qt_intro_files/image001.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>The Query Tool view can be broken down into several
+sections which are defined below.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3><a name="_Toc247093840">Query Name</a></p>
+
+<p class=jdwebnormal>The name of a query will be assigned when it is run and
+will display in the <b>Query Name</b> field.  </p>
+
+<p class=jdwebnormal>The only time a query name will appear prior to running
+the query is when you drag a <b>previous query</b> from either <b>Previous
+Query </b>or <b>Workplace views</b> and drop it into the Query Name field.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal style='page-break-after:avoid'><img width=445 height=27
+src="qt_intro_files/image002.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3>Clear Button</p>
+
+<p class=jdwebnormal>The <b>Clear button</b> <span style='color:silver'>(<img
+width=18 height=23 src="qt_intro_files/image003.gif">)</span> located next to
+the Query Name field will reset the view to the default; this includes deleting
+the concepts listed in the panel and removing any constraints that have been
+defined.  </p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3><a name="_Toc247093846">Output Selection </a></p>
+
+<p class=jdwebnormal>In the output selection area you will define the Query
+Timing and select what to return when running the query.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=158 height=239 src="qt_intro_files/image004.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4>Analysis Types</p>
+
+<p class=jdwebnormal>Select what to return when running the query. There are
+several options available for selection and they can be selected in any
+combination.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=158 height=151 src="qt_intro_files/image005.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
+ style='margin-left:23.4pt;border-collapse:collapse'>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Patient list</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a set of patients who met the search criteria.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Event list</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a set of encounters for those patients who met
+  the search criteria.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Number of patients </b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides the total number of patients who met the search
+  criteria.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Gender patient breakdown</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a breakdown of the patients by their gender.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Vital Status patient breakdown</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a breakdown of the patients by their vital
+  status.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Race patient breakdown</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a breakdown of the patients by their race.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Age patient breakdown</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a breakdown of the patients by their age</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=216 valign=top style='width:2.25in;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable><b>Timeline</b></p>
+  </td>
+  <td width=391 valign=top style='width:293.4pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=jdwebtable>Provides a set of patients who met the defined criteria
+  and automatically generates a timeline in the timeline view.</p>
+  </td>
+ </tr>
+</table>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><b><i><span style='color:navy'>Note</span></i></b>: The
+only difference between the Patient list and Timeline options is the Patient
+list will not generate a timeline when the query has completed running.  The
+Timeline option will automatically generate a timeline in the timeline view.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4>Query Timing</p>
+
+<p class=jdwebnormal>The <b>Query Timing</b> is defined on the query level and
+depending on what is selected will set the default for the panel timing.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=158 height=86 src="qt_intro_files/image006.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3><a name="_Toc247093841">Panel</a></p>
+
+<p class=jdwebnormal>A panel is the section of the Query Tool view that
+contains information about a group of terms.  The panel can be broken down into
+the following sections.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal style='page-break-after:avoid'><img width=490 height=200
+src="qt_intro_files/image007.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093842">Group Heading</a></p>
+
+<p class=jdwebnormal>The heading is a label to easily identify the collection
+of terms. Each heading will contain “Group” followed by a sequential number. </p>
+
+<p class=jdwebnormalindent>Example: Group 1, Group 2, Group 3, etc.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093843">Selection Criteria</a></p>
+
+<p class=jdwebnormal>This area of the panel is used to define date selections
+and other constraints. </p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4>Panel Timing</p>
+
+<p class=jdwebnormal>This <b>panel timing</b> defines the constraint on the
+panel level and uses the patient’s visit information in determining
+eligibility. </p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093844">Group List</a></p>
+
+<p class=jdwebnormal>This section contains the terms that will be used during
+the process of querying the database.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093845">Information Box</a></p>
+
+<p class=jdwebnormal>The content in the information box will change depending
+on whether or not a term is listed in the panel / group.</p>
+
+<p class=jdweblistletters>a.)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>No Term(s) listed</p>
+
+<p class=jdwebnormal style='margin-left:1.5in'><span style='font-size:10.0pt'>Drag
+terms from Navigate, Find and Workplace into this group</span></p>
+
+<p class=jdwebnormal style='margin-left:1.5in'>&nbsp;</p>
+
+<p class=jdweblistletters>b.)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Terms(s) listed</p>
+
+<p class=jdwebnormal style='margin-left:1.5in'><span style='font-size:10.0pt'>The
+terms of this group are joined then intersected with other groups</span></p>
+
+<p class=jdwebnormalindent>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3>Toolbar</p>
+
+<p class=jdwebnormal>The <b>toolbar</b> is the bottom section of the Query Tool
+view and it contains several buttons that perform various actions.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=583 height=139 src="qt_intro_files/image008.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093847">Patients Returned Box</a></p>
+
+<p class=jdwebnormal>In the bottom right corner of the query view is the <b>Patients
+Returned</b> box.  Once a query has been run, the number of patients meeting
+the search criteria will appear in this box.  This is a display only box.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal style='page-break-after:avoid'><img width=155 height=21
+src="qt_intro_files/image009.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093848">Get Everyone Checkbox</a></p>
+
+<p class=jdwebnormal>In the bottom left corner of the query view is the <b>Get Everyone</b>
+checkbox.  A check in this box will ignore any search criteria you may have
+entered and return a list of <b><i>all</i></b> the patients in the database.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=105 height=23 src="qt_intro_files/image010.gif"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading4><a name="_Toc247093849">Run Query / Cancel / Get All
+Patients Button</a></p>
+
+<p class=jdwebnormal>On the toolbar for the Query Tool view there is a single button
+for running and canceling a query as well as getting all patients. Depending on
+the circumstances defined below the label on this button and its associated
+action will change to one of the following: (1<b>) Run Query</b> (2) <b>Cancel</b>
+and (3) <b>Get All Patients</b>.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading5><a name="_Toc247093850">Run Query Button</a></p>
+
+<p class=jdwebnormal>Clicking on the button when the <b>Run Query Above</b>
+label is displayed will run your query with the defined search criteria.  This
+is the default option.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=563 height=42 src="qt_intro_files/image011.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading5><a name="_Toc247093851">Cancel Button</a></p>
+
+<p class=jdwebnormal>Once you start running a query, the label will change to <b>Cancel</b>. 
+Clicking on the button when it says <b>Cancel</b> will cancel the query and
+free up the workbench so that you can continue to do other things.  </p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><b><i><span style='color:navy'>Note</span></i></b>:
+Clicking on Cancel in the Query Tool will only cancel the workbench piece of
+the process.  To cancel the server side you need to go to Previous Query, right
+click on the query name and select cancel from the menu.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=563 height=41 src="qt_intro_files/image012.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading5><a name="_Toc247093852">Get All Patients Button</a></p>
+
+<p class=jdwebnormal>A check in the <b>Get Everyone checkbox</b> will change
+the label to <b>Get All Patients</b>.  Clicking on the button when it says <b>Get
+All Patients</b> will run a query to retrieve all patients in the database. 
+Any selection criteria you entered will be ignored.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=563 height=43 src="qt_intro_files/image013.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebheading3>Options</p>
+
+<p class=jdwebnormal>Users can define how many terms to display when expanding
+a folder in the panel and how log to wait before a query will time out. These
+settings are defined in the Query Tool Options, which can be accessed by
+clicking on the <b>Options button</b> <span style='color:silver'>(<img
+width=10 height=10 src="qt_intro_files/image014.gif">)</span>.</p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal><img width=350 height=140 src="qt_intro_files/image015.jpg"></p>
+
+<p class=jdwebnormal>&nbsp;</p>
+
+<p class=jdwebnormal style='margin-left:0in'>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

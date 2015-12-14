@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Navigation" link_to="tocconcepts.xml#navigation" topic="html/concepts/analysis_navigation/analysis_navigation.htm">
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_clear.htm" label="Clear Graphic Analyses">
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_save.htm" label="Save image">
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_zoom.htm" label="Zoom in and out">
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_properties/analysis_navigation_properties.htm" label="Chart Properties">
+      <anchor id="properties"/>
+   </topic>
+   <topic href="html/concepts/analysis_navigation/analysis_navigation_tooltips.htm" label="Tooltips">
+   </topic>
+</toc>

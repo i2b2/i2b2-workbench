@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gensrc"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/iText-2.1.3.jar"/>
+	<classpathentry kind="lib" path="src/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="src/jfreechart-1.0.12-experimental.jar"/>
+	<classpathentry kind="lib" path="src/jfreechart-1.0.12-swt.jar"/>
+	<classpathentry kind="lib" path="src/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="src/junit.jar"/>
+	<classpathentry kind="lib" path="src/servlet.jar"/>
+	<classpathentry kind="lib" path="src/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="genlib/i2b2Common-core.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

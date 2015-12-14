@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts" link_to="toc.xml#concepts">
+    <topic href="html/concepts/pq_navigation/pq_navigation_intro.htm" label="Navigation">
+       <topic href="html/concepts/pq_navigation/pq_navigation_rename.htm" label="Rename a previous query">
+       </topic>
+       <topic href="html/concepts/pq_navigation/pq_navigation_delete.htm" label="Delete a previous query">
+       </topic>
+       <topic href="html/concepts/pq_navigation/pq_navigation_refresh.htm" label="Refresh the list">
+       </topic>
+       <topic href="html/concepts/pq_navigation/pq_navigation_cancel.htm" label="Cancel a previous query">
+       </topic>
+       <topic href="html/concepts/pq_navigation/pq_navigation_displayOptions.htm" label="Display options">
+       </topic>
+    </topic>
+    <topic href="html/concepts/pq_usingPQ/pq_usingPQ_intro.htm" label="Using previous queries">
+       <topic href="html/concepts/pq_usingPQ/pq_usingPQ_dragItems.htm" label="Draggable items">
+       </topic>
+       <topic href="html/concepts/pq_usingPQ/pq_usingPQ_add_qtView.htm" label="Add to query tool view">
+       </topic>
+       <topic href="html/concepts/pq_usingPQ/pq_usingPQ_add_wpView.htm" label="Add to workplace view">
+       </topic>
+       <topic href="html/concepts/pq_usingPQ/pq_usingPQ_add_timelineView.htm" label="Add to timeline view">
+       </topic>
+       <topic href="html/concepts/pq_usingPQ/pq_usingPQ_add_analysisView.htm" label="Add to analysis view">
+       </topic>
+    </topic>>
+</toc>

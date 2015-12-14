@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Add terms wizard" link_to="tocconcepts_edit.xml#concepts_editTerms_wizard" topic="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_intro.htm">
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p1.htm" label="Page 1: Settings">
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p2.htm" label="Page 2: Synonym Settings">
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p3.htm" label="Page 3: Query Dimension Settings">
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p4.htm" label="Page 4: Value Metadata Settings">
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p5_intro.htm" label="Page 5: Enumeration and Value Range Metadata Settings">
+      <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p5_enum.htm" label="Enumeration Metadata Settings">
+      </topic>
+      <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p5_num.htm" label="Value Range Metadata Settings">
+      </topic>
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p6.htm" label="Page 6: Unit Value Metadata Settings">
+   </topic>
+   <topic href="html/concepts_editTerms/edit_terms_add/edit_terms_wizard/adding_terms_wizard_p7.htm" label="Page 7: Summary">
+   </topic>
+</toc>

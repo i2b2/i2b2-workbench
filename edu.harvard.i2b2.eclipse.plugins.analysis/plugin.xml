@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Analysis Category"
+            id="edu.harvard.i2b2.eclipse.plugins.analysis">
+      </category>
+      <view
+            name="Analysis View"
+            icon="icons/core-cell.gif"
+            category="edu.harvard.i2b2.eclipse.plugins.analysis"
+            class="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView"
+            id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="edu.harvard.i2b2.eclipse.perspective">
+         <view
+               closeable="true"
+               id="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView"
+               moveable="true"
+               ratio="0.25"
+               relationship="right"
+               relative="org.eclipse.ui.editorss"
+               standalone="false"
+               visible="false"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="edu.harvard.i2b2.eclipse.plugins.analysis.viewActions"
+            targetID="edu.harvard.i2b2.eclipse.plugins.analysis.views.AnalysisView">
+            <action
+                  class="edu.harvard.i2b2.eclipse.plugins.analysis.views.ViewStackToolbarActionDelegate"
+                  icon="icons/xmlstack.gif"
+                  id="edu.harvard.i2b2.eclipse.plugins.analysis.viewResponseMessageStack"
+                  label="ResponseMessageStack"
+                  state="false"
+                  style="push"
+                  toolbarPath="additions"
+                  tooltip="Display the XML message stack"/>
+      </viewContribution>
+   </extension>
+	<extension point="org.eclipse.ui.contexts">
+		<context
+			id="analysis_view_help_context"
+			name="Analysis View">
+		</context>
+	</extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts
+        file="help_contexts.xml"
+        plugin="edu.harvard.i2b2.eclipse.plugins.analysis"/>
+	</extension>	
+	<extension point="org.eclipse.help.toc">
+		<toc
+            file="toc.xml"
+            primary="true"/>
+  <toc
+        file="tocconcepts.xml"
+        primary="false">
+  </toc>
+  <toc
+        file="tocnavigation.xml"
+        primary="false">
+  </toc>
+  <toc
+        file="tocnavigationproperties.xml"
+        primary="false">
+  </toc>
+	</extension>      
+</plugin>

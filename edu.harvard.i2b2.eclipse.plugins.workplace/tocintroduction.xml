@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Introduction" link_to="toc.xml#introduction"> 
+	<topic label="i2b2 Workbench Perspective" href="html/introduction/pft-perspective.html">
+		<topic label="PFT View" href="html/introduction/pft-view.html">
+			<topic label="Report Tab" href="html/introduction/report-tab.html"/>
+		</topic>
+	</topic> 
+</toc>

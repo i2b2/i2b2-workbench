@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Getting Started" link_to="toc.xml#gettingstarted"> 
+	<topic label="Open Perspective" href="html/gettingstarted/openperspective.html"/> 
+	<topic label="Extract PFT Results from Sample" href="html/gettingstarted/extractfromsample.html"/>
+</toc>
