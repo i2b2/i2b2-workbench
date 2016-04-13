@@ -35,7 +35,10 @@ public class TreeComposite extends Composite
     this.browser = new NodeBrowser(this, inputFlag, this.slm);
   }
   
-
+  public NodeBrowser getBrowser(){
+	  return browser;
+  }
+  
   
 } 
 

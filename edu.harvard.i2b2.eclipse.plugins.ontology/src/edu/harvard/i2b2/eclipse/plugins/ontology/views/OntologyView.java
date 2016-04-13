@@ -42,7 +42,7 @@ import edu.harvard.i2b2.ontclient.datavo.psm.query.AnalysisPluginMetadataTypeTyp
  * @author Lori Phillips   
  */
 
-public class OntologyView extends ViewPart {
+public class OntologyView extends ViewPart implements ICommonMethod {
 
 	public static final String ID = "edu.harvard.i2b2.eclipse.plugins.ontology.views.ontologyView";
 	public static final String THIS_CLASS_NAME = OntologyView.class.getName();
@@ -184,6 +184,20 @@ public class OntologyView extends ViewPart {
 		compositeQueryTree.setFocus();
 	}
 	
-
+	/**
+	 * This is a callback that will allow the i2b2 views to communicate with
+	 * each other.
+	 */
+	public void doSomething(Object obj) {
+		String msg = (String) obj;
+		
+		TreeNode node = dragTree.getBrowser().populateRootNode();
+		dragTree.getBrowser().getViewer().setInput(node);
+		
+	}
+	
+	public void processQuery(String id) {
+		dragTree.getBrowser().populateRootNode();
+	}
 	
 }

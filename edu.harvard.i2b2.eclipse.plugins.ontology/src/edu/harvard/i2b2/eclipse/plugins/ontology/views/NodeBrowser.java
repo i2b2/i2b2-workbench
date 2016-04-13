@@ -585,7 +585,7 @@ public class NodeBrowser extends ApplicationWindow
 	  this.rootNode.getChildren().clear();
   }
   
-  private TreeNode populateRootNode()
+  public TreeNode populateRootNode()
   {	  	  
 	  TreeNode root = new TreeNode(0,"Standard Query Items",
 			  "Standard Query Items", "CA");
@@ -613,6 +613,10 @@ public class NodeBrowser extends ApplicationWindow
 			rootNode.expandFindTree(viewer, parts, parent).start();	
 		}
 		
+	}
+	
+	public TreeViewer getViewer(){
+		return this.viewer;
 	}
   
 //  IAction countAction = new CountAction();
