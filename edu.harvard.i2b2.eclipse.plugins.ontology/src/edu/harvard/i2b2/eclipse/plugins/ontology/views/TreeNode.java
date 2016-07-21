@@ -304,12 +304,16 @@ public class TreeNode
 				if(!modifiers.isEmpty()){	
 					Iterator<ModifierType> it = modifiers.iterator();
 					while(it.hasNext()){
-
 						ConceptType concept = this.getData();
 						TreeData data = new TreeData(concept);
-
-						data.setModifier(	(ModifierType)it.next());
-						concepts.getConcept().add(data);
+						ModifierType modifier = (ModifierType)it.next();
+						if(concept.getVisualattributes().contains("I")){
+							String visAttrib = modifier.getVisualattributes();
+							visAttrib = visAttrib.replace("A", "I");
+							modifier.setVisualattributes(visAttrib);
+						}
+							
+						data.setModifier(modifier);		
 					}
 				}
 
