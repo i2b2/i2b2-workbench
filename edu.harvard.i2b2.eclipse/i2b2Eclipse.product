@@ -32,7 +32,8 @@ University of Maryland (HCIL) http://www.cs.umd.edu/hcil/
       <vmArgs>-Dorg.osgi.framework.bootdelegation=*
 -Djava.endorsed.dirs=endorsed_lib
 -Xms40m
--Xmx480m</vmArgs>
+-Xmx480m
+      </vmArgs>
    </launcherArgs>
 
    <windowImages i16="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_16.gif" i32="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_32.gif" i48="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_48.gif" i64="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif" i128="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_128.gif"/>
@@ -191,5 +192,10 @@ Version 2.1 - 1/15/08
       <feature id="edu.harvard.i2b2.eclipse.features.core" version="1.7.06"/>
    </features>
 
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="3" />
+   </configurations>
 
 </product>
