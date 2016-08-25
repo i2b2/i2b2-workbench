@@ -1,0 +1,10 @@
+
+### edu.harvard.i2b2.eclipse.plugins.analysis ###
+
+.metadata
+.settings/
+bin/
+gensrc/
+temp/
+.cvsignore
+.project

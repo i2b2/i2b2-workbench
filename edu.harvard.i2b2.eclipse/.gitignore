@@ -1,0 +1,8 @@
+
+### edu.harvard.i2b2.eclipse ###
+
+.metadata
+.settings/
+.project/
+bin/
+temp/

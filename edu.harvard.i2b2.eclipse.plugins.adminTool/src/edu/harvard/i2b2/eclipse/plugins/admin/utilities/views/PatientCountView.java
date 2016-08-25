@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2015 Massachusetts General Hospital 
+ * Copyright (c) 2006-2016 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v1.0 
  * which accompanies this distribution. 
@@ -861,7 +861,7 @@ public class PatientCountView extends ViewPart{
 					vocabType.setMaxReturnRecords(100);
 					//vocabType.setProcessTypeCd("ONT_PATIENT_COUNT_UPDATE");
 					vocabType.setProcessId(currentRun.getProcessId());
-					//"<get_ont_process_status_request max_return_records=Ó100Ó></get_ont_process_status_request>";
+					//"<get_ont_process_status_request max_return_records=ï¿½100ï¿½></get_ont_process_status_request>";
 					theResult = OntServiceDriver.getStatusReport(vocabType);	
 					if (theResult != null)
 					{
@@ -924,7 +924,7 @@ public class PatientCountView extends ViewPart{
 						vocabType.setMaxReturnRecords(100);
 						vocabType.setProcessTypeCd("ONT_PATIENT_COUNT_UPDATE");
 						//vocabType.setProcessId("3");
-						//"<get_ont_process_status_request max_return_records=Ó100Ó></get_ont_process_status_request>";
+						//"<get_ont_process_status_request max_return_records=ï¿½100ï¿½></get_ont_process_status_request>";
 						theResult = OntServiceDriver.getStatusReport(vocabType);	
 						if (theResult == null)
 							theResult = "No ONT response generated";
@@ -977,7 +977,7 @@ public class PatientCountView extends ViewPart{
 						{
 							vocabType.setOperationType("synchronize_all");						
 						}
-						//"<get_ont_process_status_request max_return_records=Ó100Ó></get_ont_process_status_request>";
+						//"<get_ont_process_status_request max_return_records=ï¿½100ï¿½></get_ont_process_status_request>";
 						theResult = OntServiceDriver.updatePatientCount(vocabType);	
 						if (theResult == null)
 							theResult = "No ONT response generated";
@@ -1057,7 +1057,7 @@ public class PatientCountView extends ViewPart{
 					vocabType.setMaxReturnRecords(100);
 					vocabType.setProcessTypeCd("ONT_PATIENT_COUNT_UPDATE");
 					//vocabType.setProcessId("3");
-					//"<get_ont_process_status_request max_return_records=Ó100Ó></get_ont_process_status_request>";
+					//"<get_ont_process_status_request max_return_records=ï¿½100ï¿½></get_ont_process_status_request>";
 					theResult = OntServiceDriver.getStatusReport(vocabType);	
 					if (theResult == null)
 						theResult = "No ONT response generated";

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Admin Tool  Plug-in
 Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.adminTool;singleton:=true
-Bundle-Version: 1.7.06
+Bundle-Version: 1.7.08
 Bundle-ClassPath: .,
  genlib/i2b2Common-core.jar
 Bundle-Vendor: i2b2.harvard.edu

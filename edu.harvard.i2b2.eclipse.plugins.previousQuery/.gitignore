@@ -1,0 +1,16 @@
+
+### edu.harvard.i2b2.eclipse.plugins.previousQuery ###
+
+.metadata
+.settings/
+bin/
+temp/
+.project
+.cvsignore
+
+### from .cvsignore ###
+gensrc
+dist
+genlib
+lib
+test

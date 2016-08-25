@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Workplace Plug-in
 Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.workplace; singleton:=true
-Bundle-Version: 1.7.06
+Bundle-Version: 1.7.08
 Bundle-Vendor: i2b2.harvard.edu
 Bundle-Localization: plugin
 Eclipse-LazyStart: true
