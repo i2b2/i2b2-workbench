@@ -1,0 +1,18 @@
+
+### edu.harvard.i2b2.common ###
+
+.metadata
+.settings/
+.project/
+bin/
+temp/
+
+/.classpath
+
+/i2b2.log
+
+/i2b2log.html
+/genlib/
+/gensrc/
+/lib/
+/.cvsignore
