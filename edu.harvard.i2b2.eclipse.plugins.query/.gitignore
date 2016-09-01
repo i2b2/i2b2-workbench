@@ -10,3 +10,6 @@ temp/
 
 ### from .cvsignore ###
 genlib
+/.classpath
+/genlib/
+/gensrc/

@@ -6,3 +6,6 @@
 bin/
 temp/
 .project
+/.classpath
+/genlib/
+/gensrc/

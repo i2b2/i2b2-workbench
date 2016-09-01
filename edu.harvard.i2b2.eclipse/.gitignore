@@ -6,4 +6,11 @@
 .project/
 bin/
 temp/
+
 /.classpath
+
+/i2b2.log
+
+/i2b2log.html
+/genlib/
+/gensrc/

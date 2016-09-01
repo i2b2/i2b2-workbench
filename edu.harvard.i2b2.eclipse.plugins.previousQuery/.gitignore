@@ -7,6 +7,10 @@ bin/
 temp/
 .project
 .cvsignore
+/.classpath
+/build.properties
+/genlib/
+/gensrc/
 
 ### from .cvsignore ###
 gensrc
@@ -14,3 +18,4 @@ dist
 genlib
 lib
 test
+

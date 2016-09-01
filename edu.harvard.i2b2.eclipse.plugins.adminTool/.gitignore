@@ -3,6 +3,13 @@
 
 .metadata
 .settings/
-.project/
-bin/
+/bin/
+/classes/
+/genlib/
+/gensrc/
+
+/lib/
+/.classpath
+/.project
 temp/
+
