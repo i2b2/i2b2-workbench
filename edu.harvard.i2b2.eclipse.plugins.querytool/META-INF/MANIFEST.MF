@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.core.runtime,
  edu.harvard.i2b2.eclipse.plugins.jdnc_support;bundle-version="1.0.0",
  org.eclipse.help;bundle-version="3.5.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  genlib/i2b2Common-core.jar
 Import-Package: org.eclipse.ui.forms.events,
