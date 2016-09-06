@@ -1,0 +1,9 @@
+
+### edu.harvard.i2b2.eclipse.plugins.createTables ###
+
+.metadata
+.settings/
+bin/
+gensrc/
+temp/
+.project

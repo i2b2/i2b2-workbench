@@ -1,0 +1,15 @@
+
+### edu.harvard.i2b2.eclipse.plugins.query ###
+
+.metadata
+.settings/
+bin/
+temp/
+.project
+.cvsignore
+
+### from .cvsignore ###
+genlib
+/.classpath
+/genlib/
+/gensrc/

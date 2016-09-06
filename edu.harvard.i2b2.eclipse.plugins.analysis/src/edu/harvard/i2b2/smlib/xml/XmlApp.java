@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2015 Massachusetts General Hospital 
+ * Copyright (c) 2006-2016 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution.
@@ -9,7 +9,7 @@
  *   
  *     
  */
-// XmlApp.java: base class for Ælfred demos.
+// XmlApp.java: base class for ï¿½lfred demos.
 // NO WARRANTY! See README, and copyright below.
 // $Id: XmlApp.java,v 1.3 2010/07/06 14:04:25 mem61 Exp $
 

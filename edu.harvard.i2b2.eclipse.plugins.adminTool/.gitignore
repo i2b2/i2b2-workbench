@@ -1,0 +1,15 @@
+
+### edu.harvard.i2b2.eclipse.plugins.adminTool ###
+
+.metadata
+.settings/
+/bin/
+/classes/
+/genlib/
+/gensrc/
+
+/lib/
+/.classpath
+/.project
+temp/
+

@@ -14,13 +14,14 @@ import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IWorkbenchWindow;
+/*
 import org.eclipse.update.search.BackLevelFilter;
 import org.eclipse.update.search.EnvironmentFilter;
 import org.eclipse.update.search.UpdateSearchRequest;
 import org.eclipse.update.search.UpdateSearchScope;
 import org.eclipse.update.ui.UpdateJob;
 import org.eclipse.update.ui.UpdateManagerUI;
-
+*/
 /**
  * @author wp066
  *
@@ -43,13 +44,14 @@ public class UpdateAction extends org.eclipse.jface.action.Action implements IAc
 		BusyIndicator.showWhile(window.getShell().getDisplay(), 
 				new Runnable() {
 					public void run() {
-						UpdateJob job = new UpdateJob("Search for updates",
-								getSearchRequest());
-						UpdateManagerUI.openInstaller(window.getShell(), job);
+	//					UpdateJob job = new UpdateJob("Search for updates",
+	//							getSearchRequest());
+	//					UpdateManagerUI.openInstaller(window.getShell(), job);
 					}
 		});
 	}
 	
+	/*
 	private UpdateSearchRequest getSearchRequest() {
 		
 		UpdateSearchRequest result = new UpdateSearchRequest(
@@ -69,6 +71,6 @@ public class UpdateAction extends org.eclipse.jface.action.Action implements IAc
 		result.setScope(scope);
 		return result;
 	}
-	
+	*/
 
 }

@@ -1,0 +1,15 @@
+
+### edu.harvard.i2b2.eclipse.plugins.workplace ###
+
+.metadata
+.settings/
+bin/
+temp/
+.project
+.cvsignore
+
+### from .cvsignore ###
+gensrc
+
+
+genlib

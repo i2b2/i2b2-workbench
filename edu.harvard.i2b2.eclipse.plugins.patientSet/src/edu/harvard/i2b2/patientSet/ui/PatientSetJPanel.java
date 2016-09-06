@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2015 Massachusetts General Hospital 
+ * Copyright (c) 2006-2016 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -924,9 +924,9 @@ public class PatientSetJPanel extends javax.swing.JPanel implements
 									// if (UserInfoBean.getInstance().isRoleInProject(
 									// "DATA_OBFSC")) {
 									// resultData.name(resultname + " - "
-									// + resultData.patientCount() + "± Patients");
+									// + resultData.patientCount() + "ï¿½ Patients");
 									// resultData.tooltip(resultData.patientCount()
-									// + "± Patients");
+									// + "ï¿½ Patients");
 									// } else {
 									if (queryResultInstanceType.getDescription() != null) {
 										resultname = queryResultInstanceType
@@ -3052,9 +3052,9 @@ public class PatientSetJPanel extends javax.swing.JPanel implements
 						// if (UserInfoBean.getInstance().isRoleInProject(
 						// "DATA_OBFSC")) {
 						// resultData.name(resultname + " - "
-						// + resultData.patientCount() + "± Patients");
+						// + resultData.patientCount() + "ï¿½ Patients");
 						// resultData.tooltip(resultData.patientCount()
-						// + "± Patients");
+						// + "ï¿½ Patients");
 						// } else {
 						if (queryResultInstanceType.getDescription() != null) {
 							resultname = queryResultInstanceType

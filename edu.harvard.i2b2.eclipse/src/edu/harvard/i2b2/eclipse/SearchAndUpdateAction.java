@@ -6,13 +6,14 @@ import java.net.URL;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.ui.IWorkbenchWindow;
+/*
 import org.eclipse.update.search.BackLevelFilter;
 import org.eclipse.update.search.EnvironmentFilter;
 import org.eclipse.update.search.UpdateSearchRequest;
 import org.eclipse.update.search.UpdateSearchScope;
 import org.eclipse.update.ui.UpdateJob;
 import org.eclipse.update.ui.UpdateManagerUI;
-
+*/
 public class SearchAndUpdateAction extends org.eclipse.jface.action.Action implements IAction {
 
 	private IWorkbenchWindow window;
@@ -32,13 +33,13 @@ public class SearchAndUpdateAction extends org.eclipse.jface.action.Action imple
 		BusyIndicator.showWhile(window.getShell().getDisplay(), 
 				new Runnable() {
 					public void run() {
-						UpdateJob job = new UpdateJob("Search for new features",
-								getSearchRequest());
-						UpdateManagerUI.openInstaller(window.getShell(), job);
+//						UpdateJob job = new UpdateJob("Search for new features",
+//								getSearchRequest());
+//						UpdateManagerUI.openInstaller(window.getShell(), job);
 					}
 		});
 	}
-	
+/*	
 	private UpdateSearchRequest getSearchRequest() {
 		
 		UpdateSearchRequest result = new UpdateSearchRequest(
@@ -58,5 +59,6 @@ public class SearchAndUpdateAction extends org.eclipse.jface.action.Action imple
 		result.setScope(scope);
 		return result;
 	}
+	*/
 }
 

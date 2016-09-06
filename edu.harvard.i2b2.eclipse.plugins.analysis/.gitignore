@@ -1,0 +1,14 @@
+
+### edu.harvard.i2b2.eclipse.plugins.analysis ###
+
+.metadata
+/.settings/
+/bin/
+/classes/
+/genlib/
+/gensrc/
+
+/.cvsignore
+..project
+/.classpath
+temp/

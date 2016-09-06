@@ -1,0 +1,11 @@
+
+### edu.harvard.i2b2.eclipse.plugins.patientMapping ###
+
+.metadata
+.settings/
+bin/
+temp/
+.project
+/.classpath
+/genlib/
+/gensrc/
