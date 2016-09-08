@@ -314,6 +314,7 @@ public class TreeNode
 						}
 							
 						data.setModifier(modifier);		
+						concepts.getConcept().add(data);
 					}
 				}
 
