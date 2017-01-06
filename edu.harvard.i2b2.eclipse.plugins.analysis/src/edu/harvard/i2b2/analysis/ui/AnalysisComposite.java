@@ -240,6 +240,9 @@ public class AnalysisComposite extends Composite {
 					label1.addListener(SWT.Resize, new Listener() {
 						public void handleEvent(Event event) {
 							int width = label1.getBounds().width;
+							// tdw9: added check for null to prevent NullPointerException that can hang the application
+							if (Display.getCurrent().getActiveShell() == null )
+								return;
 							GC gc = new GC(Display.getCurrent()
 									.getActiveShell());
 
@@ -248,7 +251,9 @@ public class AnalysisComposite extends Composite {
 								gc.setFont(label1.getFont());
 								Point pt = gc.stringExtent(queryName);
 
-								if (pt.x <= width) {
+								// tdw9: added "width == 0" to prevent calling substring with negative numbers below (may causese hanging)
+								if (pt.x <= width || width == 0) 
+								{
 									label1.setText(queryName);
 									gc.dispose();
 									return;
