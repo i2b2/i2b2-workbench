@@ -75,9 +75,6 @@
                name="aboutImage"
                value="icons/i2b2_hive_64.gif"/>
          <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini"/>
-         <property
                name="appName"
                value="i2b2 Workbench">
          </property>

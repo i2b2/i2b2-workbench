@@ -2,13 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: i2b2 Workbench
 Bundle-SymbolicName: edu.harvard.i2b2.eclipse; singleton:=true
-Bundle-Version: 1.7.06
+Bundle-Version: 1.7.08
 Bundle-Activator: edu.harvard.i2b2.eclipse.Activator
 Bundle-Vendor: i2b2.harvard.edu
 Bundle-Localization: plugin
 Require-Bundle: com.ibm.icu,
  org.eclipse.core.runtime,
- org.eclipse.core.runtime.compatibility.auth,
  org.eclipse.core.commands,
  org.eclipse.core.expressions,
  org.eclipse.core.jobs,
@@ -25,8 +24,6 @@ Require-Bundle: com.ibm.icu,
  org.eclipse.ui.intro,
  org.eclipse.ui.workbench,
  org.eclipse.update.configurator,
- org.apache.lucene,
- org.eclipse.help.appserver,
  org.eclipse.help.base,
  org.eclipse.help.ui,
  org.eclipse.help.webapp,
@@ -36,13 +33,14 @@ Require-Bundle: com.ibm.icu,
  edu.harvard.i2b2.eclipse.plugins.xml_support_jaxb;bundle-version="2.1.2",
  edu.harvard.i2b2.eclipse.plugins.xml_support_jdom;bundle-version="1.0",
  edu.harvard.i2b2.eclipse.plugins.commons_apache;bundle-version="1.0.4",
- org.eclipse.update.core;bundle-version="3.2.200",
- org.eclipse.update.ui;bundle-version="3.2.100"
-Eclipse-LazyStart: true
+ org.apache.lucene.core;bundle-version="3.5.0",
+ org.eclipse.equinox.ds;bundle-version="1.4.400",
+ org.eclipse.equinox.event;bundle-version="1.3.200",
+ javax.servlet;bundle-version="3.1.0"
 Eclipse-RegisterBuddy: edu.harvard.i2b2.eclipse.plugins.xml_support_jaxb,
  edu.harvard.i2b2.eclipse.plugins.log,
- edu.harvard.i2b2.eclipse.plugins.common_apache,
+ edu.harvard.i2b2.eclipse.plugins.common_apache
 Bundle-ClassPath: genlib/i2b2Common-core.jar,
  .
 Export-Package: edu.harvard.i2b2.eclipse
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
