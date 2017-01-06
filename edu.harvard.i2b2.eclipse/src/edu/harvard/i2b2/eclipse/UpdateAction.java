@@ -14,15 +14,21 @@ import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IWorkbenchWindow;
+/*
 import org.eclipse.update.search.BackLevelFilter;
 import org.eclipse.update.search.EnvironmentFilter;
 import org.eclipse.update.search.UpdateSearchRequest;
 import org.eclipse.update.search.UpdateSearchScope;
 import org.eclipse.update.ui.UpdateJob;
 import org.eclipse.update.ui.UpdateManagerUI;
+*/
 
 /**
  * @author wp066
+ * 
+ * 2017/1/4/ tdw9: removed references to org.eclipse.update.*
+ *                 removed code that uses these references
+ *                 due the fact that Eclipse 4 no longer has these packages
  *
  */
 public class UpdateAction extends org.eclipse.jface.action.Action implements IAction {
@@ -40,6 +46,7 @@ public class UpdateAction extends org.eclipse.jface.action.Action implements IAc
 	}
 	
 	public void run() {
+		/*
 		BusyIndicator.showWhile(window.getShell().getDisplay(), 
 				new Runnable() {
 					public void run() {
@@ -48,8 +55,10 @@ public class UpdateAction extends org.eclipse.jface.action.Action implements IAc
 						UpdateManagerUI.openInstaller(window.getShell(), job);
 					}
 		});
+		*/
 	}
-	
+
+	/* tdw9: 
 	private UpdateSearchRequest getSearchRequest() {
 		
 		UpdateSearchRequest result = new UpdateSearchRequest(
@@ -69,6 +78,6 @@ public class UpdateAction extends org.eclipse.jface.action.Action implements IAc
 		result.setScope(scope);
 		return result;
 	}
-	
+	*/
 
 }

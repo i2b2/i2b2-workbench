@@ -6,12 +6,22 @@ import java.net.URL;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.ui.IWorkbenchWindow;
+/*
 import org.eclipse.update.search.BackLevelFilter;
 import org.eclipse.update.search.EnvironmentFilter;
 import org.eclipse.update.search.UpdateSearchRequest;
 import org.eclipse.update.search.UpdateSearchScope;
 import org.eclipse.update.ui.UpdateJob;
 import org.eclipse.update.ui.UpdateManagerUI;
+*/
+
+/**
+ * 
+ * 2017/1/4/ tdw9: removed references to org.eclipse.update.*
+ *                 removed code that uses these references
+ *                 due the fact that Eclipse 4 no longer has these packages
+ *
+ */
 
 public class SearchAndUpdateAction extends org.eclipse.jface.action.Action implements IAction {
 
@@ -28,7 +38,9 @@ public class SearchAndUpdateAction extends org.eclipse.jface.action.Action imple
 		"edu.harvard.i2b2.newFeatures");
 	}
 	
-	public void run() {
+	public void run() 
+	{
+		/*
 		BusyIndicator.showWhile(window.getShell().getDisplay(), 
 				new Runnable() {
 					public void run() {
@@ -37,8 +49,10 @@ public class SearchAndUpdateAction extends org.eclipse.jface.action.Action imple
 						UpdateManagerUI.openInstaller(window.getShell(), job);
 					}
 		});
+		*/
 	}
 	
+	/*
 	private UpdateSearchRequest getSearchRequest() {
 		
 		UpdateSearchRequest result = new UpdateSearchRequest(
@@ -58,5 +72,6 @@ public class SearchAndUpdateAction extends org.eclipse.jface.action.Action imple
 		result.setScope(scope);
 		return result;
 	}
+	*/
 }
 
