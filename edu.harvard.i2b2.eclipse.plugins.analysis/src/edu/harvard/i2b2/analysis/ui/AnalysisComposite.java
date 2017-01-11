@@ -446,10 +446,10 @@ public class AnalysisComposite extends Composite {
 												treeItem1
 														.setImage(SWTResourceManager
 																.getImage("edu/harvard/i2b2/analysis/ui/leaf.jpg"));
+												if (composite1.getChildren().length > 0)
+													composite1.getChildren()[0].dispose();
 
 												JFreeChart chart = createNoDataChart(createEmptyDataset());
-												composite1.getChildren()[0]
-														.dispose();
 												ChartComposite frame = new ChartComposite(
 														composite1, SWT.NONE,
 														chart, true, true,
@@ -527,14 +527,18 @@ public class AnalysisComposite extends Composite {
 				// 255,
 				// 0));
 
+				//s tdw9: disabling drawing empty chart
+				
 				getDisplay().syncExec(new Runnable() {
 					public void run() {
 						JFreeChart chart = createEmptyChart(createEmptyDataset());
-						/* final ChartComposite frame = */new ChartComposite(
+						// final ChartComposite frame = 
+						new ChartComposite(
 								composite1, SWT.NONE, chart, true, true, false,
 								true, true);
 					}
-				});
+				}); 
+				
 			}
 
 		}
@@ -693,8 +697,46 @@ public class AnalysisComposite extends Composite {
 
 		sashForm.setWeights(new int[] { 30, 70 });
 		sashForm.setSashWidth(1);
+		
 	}
 
+	
+// tdw9: added suspendChart and redrawChart methods to deal with resizing events which freezes MAC	
+	public void suspendChart()
+	{
+		// remove chart
+		if ( composite1.getChildren().length > 0 )
+			composite1.getChildren()[0].dispose();
+	}
+
+	public void redrawChart()
+	{
+		// grab selected data from tree and redraw the chart
+		if ( tree1.getSelection().length == 0)
+		{
+			drawEmptyChart();
+			return;
+		}
+		TreeItem item = tree1.getSelection()[0];
+		if ( item == null || item.isDisposed() )
+			drawEmptyChart();		
+		else
+			setSelection((QueryResultData) item.getData());
+	}
+	
+	public void drawEmptyChart()
+	{
+			if (composite1.getChildren().length > 0) // tdw9: disposing old chart and UI if it exists
+				composite1.getChildren()[0].dispose();
+			JFreeChart chart = createEmptyChart(createEmptyDataset());
+			// final ChartComposite frame = 
+			ChartComposite comp = new ChartComposite( composite1, SWT.NONE, chart, true, true, false, true, true);
+			comp.pack();
+			composite1.layout();
+			getDisplay().update();
+			return;
+	}
+	
 	public void setupEventTree(ArrayList<ObservationType> oset,
 			EventSet eventSet) {
 		tree1.removeAll();
@@ -752,7 +794,7 @@ public class AnalysisComposite extends Composite {
 			String category = umResultType.getData().get(i).getColumn();
 			// if (UserInfoBean.getInstance().isRoleInProject("DATA_OBFSC"))
 			// {
-			// category+="±";
+			// category+="ï¿½";
 			// }
 			String value = umResultType.getData().get(i).getValue();
 			double num = Double.parseDouble(value);
@@ -922,9 +964,10 @@ public class AnalysisComposite extends Composite {
 				label1.setText("Query Name: " + data.name());
 
 				JFreeChart chart = createWaitingChart(createEmptyDataset());
+				if (composite1.getChildren().length > 0) // tdw9: disposing old chart and UI if it exists
+					composite1.getChildren()[0].dispose();
 				ChartComposite frame = new ChartComposite(composite1, SWT.NONE,
 						chart, true, true, false, true, true);
-				composite1.getChildren()[0].dispose();
 				frame.pack();
 				composite1.layout();
 				getDisplay().update();
@@ -1136,7 +1179,7 @@ public class AnalysisComposite extends Composite {
 					// (UserInfoBean.getInstance().isRoleInProject("DATA_OBFSC"
 					// ))
 					// {
-					// description+="±";
+					// description+="ï¿½";
 					// }
 					chart = createChart(
 							createDataset(umResultType, description),
@@ -1167,9 +1210,10 @@ public class AnalysisComposite extends Composite {
 			@SuppressWarnings("unchecked")
 			public void run() {
 				JFreeChart chart = createWaitingChart(createEmptyDataset());
+				if (composite1.getChildren().length > 0 )
+					composite1.getChildren()[0].dispose();
 				ChartComposite frame = new ChartComposite(composite1, SWT.NONE,
 						chart, true, true, false, true, true);
-				composite1.getChildren()[0].dispose();
 				frame.pack();
 				composite1.layout();
 				getDisplay().update();
@@ -1249,7 +1293,7 @@ public class AnalysisComposite extends Composite {
 					// (UserInfoBean.getInstance().isRoleInProject("DATA_OBFSC"
 					// ))
 					// {
-					// description+="±";
+					// description+="ï¿½";
 					// }
 					chart = createChart(
 							createDataset(umResultType, description),
