@@ -9,6 +9,15 @@
  *		Shawn Murphy, MD, PH.D (MGH)
  */
 
+/*
+ * Modified by hkpark
+ * Added Zooming function by mouse wheel
+ * 
+ * Replaced "Person_#" to "ID: #" (Starting string of a patient information)
+ * added a new variable, ptStr, for future variation
+ * 
+ */
+
 package edu.harvard.i2b2.explorer.ui;
 
 import java.awt.*;
@@ -57,7 +66,7 @@ import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 
 @SuppressWarnings("serial")
 public class TimeLinePanel extends ScrollingPanel implements ActionListener,
-		MouseListener, MouseMotionListener, AWTEventListener {
+		MouseListener, MouseMotionListener, MouseWheelListener, AWTEventListener {
 
 	public void eventDispatched(AWTEvent event) {
 		System.out.println("mouse idle");
@@ -69,6 +78,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	public boolean relabeling = true;
 	public boolean slide = false; // make it public to be accessed by facet.java
 	public boolean search = false;
+	//added by hkpark
+	public String ptStr = "ID: #";
 	private boolean stream = false, rubber = false;
 	private int inClick = 0;
 	private int outClick = 0;
@@ -87,6 +98,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	private int cur_clicked_x;
 	private int cur_clicked_y;
 	
+	// added by hkpark
+	private int wheelZoomCounter=0;
+	
 	// private UserInfoBean uib = null;
 	Image offScreenImage;
 	boolean threadTest = false;
@@ -99,6 +113,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	// private LiteLabel infoTipLabel = null;
 	private LiteLabel infoTipLabel = null;
 	private InfoJFrame infoFrame = null;
+	private TextViewerFrame textFrame = null;
 	private MenuItem linkMenuItem[] = new MenuItem[20];
 	private MenuItem attrMenuItem[] = new MenuItem[3];
 	private int item = 0;
@@ -306,11 +321,12 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.addMouseWheelListener(this);
 
 		for (i = 0, lwinWidth = 0; i < n_key; i++) {
 			afacetRecord = (Facet) (recordTable.get(new Integer(i)));
 			keyLabels[i] = (String) (afacetRecord.getKey());
-			if (keyLabels[i].startsWith("Person_#")) {
+			if (keyLabels[i].startsWith(ptStr)) {
 				continue;
 			}
 			strWidth = (int) (fontMetrics.stringWidth(keyLabels[i]));
@@ -446,7 +462,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						}
 
 						String title = tempFacet.title();
-						if (title.indexOf("Person_#") < 0) {
+						if (title.indexOf(ptStr) < 0) {
 							return;
 						}
 
@@ -542,7 +558,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 				}
 
-				GenRecord selectedRecord = inRegion(x, y, true, false);
+				//GenRecord selectedRecord = inRegion(x, y, true, false);
+				final GenRecord selectedRecord = inRegion(x, y, true, false);
 				if (selectedRecord != null) {
 
 					String msg = selectedRecord.getInputLine();
@@ -593,6 +610,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						// note = "No notes found";
 						return;
 					}
+					
+									
+					
 					// blobdata string array contents:
 					// [0] is note
 					// [1] is valueTypeCd
@@ -694,8 +714,15 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else {
 						java.awt.EventQueue.invokeLater(new Runnable() {
 							public void run() {
-								new TextViewerFrame(note, dndXmlData)
-										.setVisible(true);
+								getOfg();
+								//new TextViewerFrame(note, dndXmlData)
+								if(textFrame != null) {
+									textFrame.setVisible(false);
+									textFrame.dispose();
+									textFrame = null;
+								}
+								textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
+								textFrame.setVisible(true);
 							}
 						});
 
@@ -719,6 +746,14 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					 * } catch (PartInitException e) { // TODO Auto-generated
 					 * catch block e.printStackTrace(); } } }); }
 					 */
+					
+					// added by hkpark
+					//if(selectedRecord.mark_status.equalsIgnoreCase("N"))
+					//	selectedRecord.mark_status="R";
+					//else 
+					if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
+						selectedRecord.mark_status="R";
+					repaint();
 
 					return;
 				}
@@ -862,14 +897,43 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						infoFrame = null;
 					}
 					
-					infoFrame = new InfoJFrame(this, ob);
+					infoFrame = new InfoJFrame(this, ob, selectedRecord);
 					//infoFrame.setUndecorated(true);
 					//infoFrame.setInfo(conceptName + "\n"
 							//+ makeReadableCodeString(concept_cd) + "\n" + msgs[1]
 									//+ "\n" + xtras[5].replaceAll("@2@", "\n"));
 					//infoFrame.setLocation(400, 300);
-					infoFrame.setBounds(this.getLocationOnScreen().x+x-150, this.getLocationOnScreen().y + y
-							+ 15, 381, 162);
+					
+					// modified by hkpark
+					// size change 
+					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+					int infoFramePos_x, infoFramePos_y;
+					int margin = 10;
+					// relocate the info box when its boundary exceeds window area					
+					if((int)screenSize.getWidth()-margin < this.getLocationOnScreen().x+x-150+381)
+						infoFramePos_x = this.getLocationOnScreen().x+x-150 - (381-150)-margin;//((this.getLocationOnScreen().x+x-150+381)-(int)screenSize.getWidth() - 5);
+					else if((this.getLocationOnScreen().x+x-150) < margin)
+						infoFramePos_x = margin;
+					else
+						infoFramePos_x = this.getLocationOnScreen().x+x-150;
+					
+					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin)
+						infoFramePos_y = this.getLocationOnScreen().y + y - 200-margin;
+					else
+						infoFramePos_y = this.getLocationOnScreen().y + y + margin;
+					
+					/*
+					else
+						infoFrame.setBounds(this.getLocationOnScreen().x+x-150, this.getLocationOnScreen().y + y
+								+ 15, 381, 200);
+					*/
+					infoFrame.setBounds(infoFramePos_x, infoFramePos_y, 381, 200);
+					
+					if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
+						selectedRecord.mark_status="R";
+					repaint();
+					infoFrame.repaint();
+							
 					//infoFrame.setUndecorated(true);
 					infoFrame.setVisible(true);
 									
@@ -900,6 +964,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						// if( !e.isMetaDown() && !e.isShiftDown() &&
 						// !e.isControlDown()) { // zoom in
 						lastInX = x;
+						System.out.println("hkpark] zoomCounter: "+zoomCounter+", zoom_steps: "+zoom_steps
+								+", outClick: "+outClick+", inClick:"+inClick);
 						zoomIn(i, x, y);
 						if (!nothingSelected(x, y) && (e.getClickCount() == 2)
 								&& !e.isShiftDown() && !e.isControlDown()) { // double
@@ -917,6 +983,78 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			}
 		}
 	}
+	
+	// added by hkpark
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		int i = 0;
+		int x = e.getX();
+		int y = e.getY();
+		int notches = e.getWheelRotation();
+		
+	    
+		System.out.println("hkpark: notches: "+notches);
+		if (x > 102) { // mouse wheel scroll on the backgroup to zoom in & out
+			if(inClick==3) // hkpark. to avoid bug. maybe need to fix again
+							// The inClick value does not change to 0 when zooming by scroll.
+							// Therefore, when scrolling much at once, inClick increases to more than 100 and zooming error occurs
+			{
+				inClick=0;
+			}
+			else{
+			if (notches < 0) { // Mouse wheel moved UP
+				relabeling = true;				
+				System.out.println("hkpark: zoomIn - Scroll amount: " + e.getScrollAmount() + " unit increments per notch");
+				zoomIn(i, x, y);
+				lastInX = x;
+				lastInY = y;	
+			}
+		    else {	// Mouse wheel moved DOWN 
+		    	System.out.println("hkpark: zoomOut - Scroll amount: " + e.getScrollAmount() + " unit increments per notch");
+				zoomOut(i, x, y);
+				lastOutX = x;		
+				lastOutY = y;
+		    }		
+			/*
+			if (rubber) {
+				rubber = false;
+				stream = true;
+				repaint();
+			}
+			*/
+			}
+			System.out.println("hkpark] zoomCounter: "+zoomCounter+", zoom_steps: "+zoom_steps
+					+", outClick: "+outClick+", inClick:"+inClick);
+								
+		}
+		
+	}
+
+		
+
+	/*
+	 * public class DragLabel extends JLabel { public DragLabel(String s) {
+	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
+	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
+	 * 
+	 * // component, action, listener
+	 * this.dragSource.createDefaultDragGestureRecognizer( this,
+	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
+	 * dragSource; private DragGestureListener dgListener; private
+	 * DragSourceListener dsListener; }
+	 * 
+	 * public class DGListener implements DragGestureListener { public void
+	 * dragGestureRecognized(DragGestureEvent e){
+	 * 
+	 * try { Transferable transferable = ... //initial cursor, transferable,
+	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
+	 * dsListener); // or if dragSource is an instance variable: //
+	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
+	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
+	 * System.err.println( idoe ); } }
+	 * 
+	 * }
+	 */
+	
 
 	public void mouseDragged(MouseEvent e) {
 		System.out.println("mouse Dragged");
@@ -1035,7 +1173,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						int[] xCoordinates = { 1, 5, 10 };
 						int[] yCoordinates = { currentY + 2, currentY + 12,
 								currentY + 2 };
-
+						
 						ofg.fillPolygon(xCoordinates, yCoordinates, 3);
 					}
 
@@ -1220,6 +1358,30 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		}
 	}
 
+	/*
+	 * public class DragLabel extends JLabel { public DragLabel(String s) {
+	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
+	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
+	 * 
+	 * // component, action, listener
+	 * this.dragSource.createDefaultDragGestureRecognizer( this,
+	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
+	 * dragSource; private DragGestureListener dgListener; private
+	 * DragSourceListener dsListener; }
+	 * 
+	 * public class DGListener implements DragGestureListener { public void
+	 * dragGestureRecognized(DragGestureEvent e){
+	 * 
+	 * try { Transferable transferable = ... //initial cursor, transferable,
+	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
+	 * dsListener); // or if dragSource is an instance variable: //
+	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
+	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
+	 * System.err.println( idoe ); } }
+	 * 
+	 * }
+	 */
+	
 	public static void setApplet(NewApplet inApplet) {
 		theApplet = inApplet;
 	}
@@ -1239,7 +1401,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				//}
 
 				String title = tempFacet.fullName();
-				if (title.indexOf("Person_#") < 0) {
+				//modified by hkpark
+				if (title.indexOf(ptStr) < 0) {
 					hide_labels();
 					/*if(infoTipLabel == null) {
 						infoTipLabel = new InfoDialog();
@@ -1858,6 +2021,30 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		return (aScale.scaleMax(checkThis.getEnddate()));
 	}
 
+	/*
+	 * public class DragLabel extends JLabel { public DragLabel(String s) {
+	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
+	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
+	 * 
+	 * // component, action, listener
+	 * this.dragSource.createDefaultDragGestureRecognizer( this,
+	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
+	 * dragSource; private DragGestureListener dgListener; private
+	 * DragSourceListener dsListener; }
+	 * 
+	 * public class DGListener implements DragGestureListener { public void
+	 * dragGestureRecognized(DragGestureEvent e){
+	 * 
+	 * try { Transferable transferable = ... //initial cursor, transferable,
+	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
+	 * dsListener); // or if dragSource is an instance variable: //
+	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
+	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
+	 * System.err.println( idoe ); } }
+	 * 
+	 * }
+	 */
+	
 	public void grep(String searchString) {
 		n_key = recordTable.size();
 		Facet tempFacet;
@@ -1891,6 +2078,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		/* START MODIFICATION - Partha 11/22 */
 		zoom_ratio = ((Integer) ResourceTable.get("zoom_ratio")).intValue();
 		zoom_steps = ((Integer) ResourceTable.get("zoom_steps")).intValue();
+		//System.out.println("hkpark] zoom_steps: "+zoom_steps);
 
 		MyDate temp = coordToDate(x);
 
@@ -1910,7 +2098,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		System.out.println("ValidDateMin : " + xmin);
 		int xmax = dateToCoord(validDateMax);
 		System.out.println("dateMax ;" + xmax);
-
+		// if condition added by hkpark
+		// to avoid mouse wheel zooming error
+		if(xmin>0 && xmax>0)
+	{		
 		newMin = coordToDate(xmin + (int) (zoom_ratio * 0.08 * (x - xmin)));
 		newMax = coordToDate(xmax - (int) (zoom_ratio * 0.08 * (xmax - x)));
 		lastPosnMax[zoomCounter + 1] = new MyDate(newMax.getMonth(), newMax
@@ -1967,6 +2158,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					 * the newMin and the newMax take in zoomIn so that they can
 					 * be reversed in zoomOut
 					 */
+	}
 
 	}
 
@@ -2387,7 +2579,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				}
 
 				String title = tempFacet.title();
-				if (title.indexOf("Person_#") < 0) {
+				if (title.indexOf(ptStr) < 0) {
 					return;
 				}
 
@@ -2479,11 +2671,14 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 				});
 
+				
+				
 				return;
 			}
 		}
 
-		GenRecord selectedRecord = inRegion(cur_clicked_x, cur_clicked_y, true, false);
+		//GenRecord selectedRecord = inRegion(cur_clicked_x, cur_clicked_y, true, false);
+		final GenRecord selectedRecord = inRegion(cur_clicked_x, cur_clicked_y, true, false);
 		if (selectedRecord != null) {
 
 			String msg = selectedRecord.getInputLine();
@@ -2635,8 +2830,14 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			else {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 					public void run() {
-						new TextViewerFrame(note, dndXmlData)
-								.setVisible(true);
+						if(textFrame != null) {
+							textFrame.setVisible(false);
+							textFrame.dispose();
+							textFrame = null;
+						}
+					//	new TextViewerFrame(note, dndXmlData)
+						textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
+						textFrame.setVisible(true);
 					}
 				});
 
@@ -2660,7 +2861,13 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			 * } catch (PartInitException e) { // TODO Auto-generated
 			 * catch block e.printStackTrace(); } } }); }
 			 */
-
+			
+			// added by hkpark
+			if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
+				selectedRecord.mark_status="R";
+			repaint();
+			//
+			
 			return;
 		}
 	}
@@ -2669,6 +2876,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		key = UserInfoBean.getInstance().getKey();
 		if (key == null || key.length() == 0)
 			getKey();
+		
 		NoteCryptUtil util = new NoteCryptUtil(key);
 		if (util == null) {
 			JOptionPane.showMessageDialog(this, "Not a valid key");
@@ -2888,29 +3096,5 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		IWorkbenchPage[] pages = windows[0].getPages();
 		return (ViewPart) pages[0].findView(viewId);
 	}
-
-	/*
-	 * public class DragLabel extends JLabel { public DragLabel(String s) {
-	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
-	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
-	 * 
-	 * // component, action, listener
-	 * this.dragSource.createDefaultDragGestureRecognizer( this,
-	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
-	 * dragSource; private DragGestureListener dgListener; private
-	 * DragSourceListener dsListener; }
-	 * 
-	 * public class DGListener implements DragGestureListener { public void
-	 * dragGestureRecognized(DragGestureEvent e){
-	 * 
-	 * try { Transferable transferable = ... //initial cursor, transferable,
-	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
-	 * dsListener); // or if dragSource is an instance variable: //
-	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
-	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
-	 * System.err.println( idoe ); } }
-	 * 
-	 * }
-	 */
 
 }

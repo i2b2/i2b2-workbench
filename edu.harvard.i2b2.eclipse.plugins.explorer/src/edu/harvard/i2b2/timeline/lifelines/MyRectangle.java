@@ -10,7 +10,8 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Rectangle;
 
 public class MyRectangle extends Rectangle {
 

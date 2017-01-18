@@ -11,12 +11,24 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.util.Hashtable;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimelineSearchFrame;
-import edu.harvard.i2b2.timeline.external.*;
+import edu.harvard.i2b2.timeline.external.HorizontalSlider;
+import edu.harvard.i2b2.timeline.external.TabPanel;
+import edu.harvard.i2b2.timeline.external.fPanel;
+import edu.harvard.i2b2.timeline.external.symSlider;
 
 /**
  * ControlPanel class is used to define various algorithm options that users can

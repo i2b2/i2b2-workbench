@@ -20,7 +20,7 @@ package edu.harvard.i2b2.timeline.lifelines;
  *
  * @author  wp066
  */
-import java.util.*;
+import java.util.ArrayList;
 
 public class PatientNameFrame extends javax.swing.JFrame {
 	private String[] strings;

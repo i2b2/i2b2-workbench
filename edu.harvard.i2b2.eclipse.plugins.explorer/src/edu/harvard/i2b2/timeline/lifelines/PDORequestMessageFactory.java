@@ -22,9 +22,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 //import edu.harvard.i2b2.querytool.datavo.JAXBUtil;
 import edu.harvard.i2b2.common.util.jaxb.DTOFactory;
 import edu.harvard.i2b2.common.util.jaxb.JAXBUtil;
-import edu.harvard.i2b2.eclipse.UserInfoBean;
-import edu.harvard.i2b2.explorer.data.Messages;
-import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.ApplicationType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.BodyType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.FacilityType;
@@ -42,6 +39,9 @@ import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.ObjectFactory;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoQryHeaderType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoRequestTypeType;
+import edu.harvard.i2b2.eclipse.UserInfoBean;
+import edu.harvard.i2b2.explorer.data.Messages;
+import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 
 public class PDORequestMessageFactory {
 

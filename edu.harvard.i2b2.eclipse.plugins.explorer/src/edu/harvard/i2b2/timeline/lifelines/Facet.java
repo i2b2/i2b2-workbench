@@ -11,8 +11,16 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.util.*;
-import java.awt.*;
+import java.awt.Checkbox;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Panel;
+import java.awt.Rectangle;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
@@ -59,6 +67,7 @@ public class Facet extends Panel {
 			boolean openFacet) { // last part
 		// of argumemt list added 1/12/98 by dan, note Color is used not MyColor
 		// (as in loadRecord)
+		
 		title = token;
 		this.backgroundColor = backgroundColor;
 		this.enabled = openFacet;
@@ -311,9 +320,14 @@ public class Facet extends Panel {
 			}
 
 			FacetLine temp;
+			String fontNm="Tahoma"; //"Arial Narrow";	//"Tahoma"; // TimesRoman
+			int gap=3, fontSz=11;
 			Graphics g = displayPanel.getOfg();
+			Graphics2D g2d = (Graphics2D) g;	// added by hkpark		    
+		    GradientPaint gradient;	// added by hkpark
 			int[] xCoordinates = { 1, 5, 10 };
-			int[] yCoordinates = { currentY + 2, currentY + 12, currentY + 2 };
+			//int[] yCoordinates = { currentY + 2, currentY + 12, currentY + 2};
+			int[] yCoordinates = { currentY + 4 + gap, currentY + 12 + gap, currentY + 4 + gap };
 
 			if (facetLines == null) {
 				// 3/10/98 need to remove these codes after fitlabel function,
@@ -325,9 +339,10 @@ public class Facet extends Panel {
 				g.fillRect(currentRect.x, currentRect.y, currentRect.width,
 						currentRect.height);
 				g.setColor(Color.black);
-				g.fillPolygon(xCoordinates, yCoordinates, 3);
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
-				g.drawString(title, 15, currentY + 12);
+				//g.fillPolygon(xCoordinates, yCoordinates, 3);
+				g.setFont(new Font(fontNm, Font.PLAIN, fontSz));
+				//g.drawString(title, 15, currentY + 12);
+				g.drawString(fullName, 15, currentY + 12 + gap); // modified by hkpark
 			} else {
 				if (relabeling || enabled_count == 0) { // || (record.
 					// searchoption_timeline
@@ -352,14 +367,92 @@ public class Facet extends Panel {
 				currentRect = new Rectangle(0, currentY, displayPanel
 						.getFullWidth(), getHeight() + 5);
 				// +5 added to fill in the gap, but not yet exact dan 1/12/98
-				g.setColor(backgroundColor);
-				g.fillRect(currentRect.x, currentRect.y, currentRect.width,
-						currentRect.height);
-				g.setColor(Color.black);
-
-				g.fillPolygon(xCoordinates, yCoordinates, 3);
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
-				g.drawString(title, 15, currentY + 12); // 1/13/98 by dan...
+				
+				// Modified by hkpark
+				// Changed background color from solid to gradation one
+				//g.setColor(backgroundColor);
+				//g.fillRect(currentRect.x, currentRect.y, currentRect.width,
+				//		currentRect.height);
+										
+				//added by hkpark. to change patient info string color
+				//System.out.println("hkpark] prnt title");//added by hkpark
+				Color idBgColor1, idBgColor2, dataBgColor;
+				//Option 1
+				/*
+				idBgColor1=Color.decode("0x1d5e9a");
+				idBgColor2=Color.decode("0x0d2c48");
+				dataBgColor=Color.decode("0xe8dcb2");
+				*/
+				
+				//Option 2
+				/*
+				idBgColor1=Color.decode("0x1d5e9a");
+				idBgColor2=Color.decode("0x0d2c48");
+				dataBgColor=Color.decode("0xf3f3f3");
+				*/
+				
+				//Option 3
+				/*
+				idBgColor1=Color.decode("0x1e5056");
+				idBgColor2=Color.decode("0x0d2c48");
+				dataBgColor=Color.decode("0xf4f6f6");
+				*/
+				//Option 4				
+				idBgColor1=Color.decode("0x6a87a2");
+				idBgColor2=Color.decode("0x0d2c48");
+				dataBgColor=Color.decode("0xf3f3f3");
+				
+				if(title.startsWith("ID"))
+				{
+					//gradient = new GradientPaint(currentRect.x, currentRect.y, Color.decode("0xa0bfe9"),
+			    	//		currentRect.x, currentRect.y + currentRect.height, backgroundColor);
+					//gradient = new GradientPaint(currentRect.x, currentRect.y, Color.decode("0xe2eef2"),
+			    	//		currentRect.x, currentRect.y + currentRect.height, Color.decode("0x76aec2"));
+					
+					gradient = new GradientPaint(currentRect.x, currentRect.y, idBgColor1,
+					    			currentRect.x, currentRect.y + currentRect.height, idBgColor2);
+					g2d.setPaint(gradient);
+				    g2d.fill(new Rectangle(currentRect.x, currentRect.y, currentRect.width,currentRect.height));				
+					
+					g.setColor(Color.white);
+					//g.setColor(Color.black);
+					g.setFont(new Font(fontNm, Font.BOLD, fontSz));
+				}
+				else
+				{
+					/*
+					gradient = new GradientPaint(currentRect.x, currentRect.y, dataBgColor2,
+					 
+			    			currentRect.x+ currentRect.width, currentRect.y + currentRect.height, dataBgColor1);
+					g2d.setPaint(gradient);
+				    g2d.fill(new Rectangle(currentRect.x, currentRect.y, currentRect.width,currentRect.height));	
+				    */
+					
+				    //g.setColor(backgroundColor);
+					g.setColor(dataBgColor);
+				    g.fillRect(currentRect.x, currentRect.y, currentRect.width,
+											currentRect.height);
+					//g.fillRoundRect(currentRect.x, currentRect.y, currentRect.width,
+					//				currentRect.height, 15, 15);
+					
+						    
+					g.setColor(Color.black);
+					g.setFont(new Font(fontNm, Font.PLAIN, fontSz));
+				}
+				
+				//changed y position by hkprk
+				//g.fillPolygon(xCoordinates, yCoordinates, 3);									
+				//g.drawString(title, 15, currentY + 12); // 1/13/98 by dan...
+				
+				//g.fillPolygon(xCoordinates, yCoordinates, 3);
+				//g.drawString(title, 15, currentY + 12 + gap);
+				//g.drawString(title, 5, currentY + 12 + gap);
+				g.drawString(fullName, 5, currentY + 12 + gap);
+				//g.setColor(Color.black); //added by hkpark. to reset the font color for other data
+											// not sure if this line works as intended.. should check
+				//
+				
+				
 				// show labels even when
 				// open, loses some vertical space, maybe use abbreviation here
 				// eventually
@@ -373,7 +466,8 @@ public class Facet extends Panel {
 						// later, adjust timeline
 						temp.setSavedLabelXY();
 						if (data)
-							temp.drawData(currentY, displayPanel, false);
+							//temp.drawData(currentY, currentY, displayPanel, false);
+							temp.drawData(currentY + 5, displayPanel, false); // hkpark. added 5 to adjust gap to concept name(title)
 						if (label)
 							temp.drawLabel(currentY, displayPanel, stream);
 
@@ -381,7 +475,12 @@ public class Facet extends Panel {
 						System.out.println("sorry no solution yet");
 					} else {
 						if (data)
-							temp.drawData(currentY, displayPanel, false);
+						{
+							if(title.startsWith("ID"))
+								continue;
+							//temp.drawData(currentY, displayPanel, false);
+							temp.drawData(currentY + 5, displayPanel, false); // hkpark. added 5 to adjust gap to concept name(title)
+						}
 						if (label)
 							temp.drawLabel(currentY, displayPanel, stream);
 
@@ -400,14 +499,15 @@ public class Facet extends Panel {
 				for (int i = 0; i < facetLines.size(); i++) {
 					temp = (FacetLine) (facetLines.elementAt(i));
 					if (data)
-						temp.drawData(currentY, displayPanel, true);
+						//temp.drawData(currentY, displayPanel, true);
+						temp.drawData(currentY + 5, displayPanel, true); // hkpark. added 5 to adjust gap to concept name(title)
 					currentY += Record.SILPIXEL;
 				}
 			}
 			g.setColor(Color.black);
 		}
 	}
-
+	
 	/**
 	 * Check weather any event contains the point (x,y)
 	 */

@@ -10,7 +10,11 @@
  */
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Panel;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 

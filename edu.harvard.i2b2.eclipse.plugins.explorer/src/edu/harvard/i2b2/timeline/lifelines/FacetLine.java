@@ -11,12 +11,17 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
-import edu.harvard.i2b2.timeline.labeling.*;
+import edu.harvard.i2b2.timeline.labeling.AngleLayout;
+import edu.harvard.i2b2.timeline.labeling.LiteGroup;
+import edu.harvard.i2b2.timeline.labeling.LiteLabel;
 
 /**
  * facetLine class defines a group of events that are aligned horizontally
@@ -41,6 +46,12 @@ public class FacetLine {
 	public String getTitle() {
 		return title;
 	}
+	/*
+	// added by hkpark
+	public String getFullTitle() {
+		return fullName;
+	}
+	*/
 
 	public FacetLine(String title, Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
@@ -257,6 +268,7 @@ public class FacetLine {
 		Aggregate temp;
 		Graphics offScreenGraphics = displayArea.getOfg();
 		int fh = fm.getHeight() + fm.getMaxAscent() + fm.getMaxDescent();
+
 
 		if (Record.angle_label) {
 			show_labels();

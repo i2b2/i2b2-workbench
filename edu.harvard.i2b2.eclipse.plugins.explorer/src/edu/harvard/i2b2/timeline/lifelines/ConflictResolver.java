@@ -11,7 +11,7 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.util.*;
+import java.util.Vector;
 
 public class ConflictResolver {
 

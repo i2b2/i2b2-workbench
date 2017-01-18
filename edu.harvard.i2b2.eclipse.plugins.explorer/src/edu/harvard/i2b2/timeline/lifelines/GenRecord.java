@@ -9,10 +9,18 @@
  *		
  */
 
+/*
+ * modified by hkpark
+ * 
+ */
+
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
 
@@ -24,6 +32,10 @@ public class GenRecord {
 	protected MyDate start_date;
 	protected MyDate end_date;
 	private String type;
+	// added by hkpark
+	// to mark review process and to display in different color
+	// "R" : Read (values could be changed in the future) 
+	public String mark_status = "N";
 	public static ConflictResolver xOverlap1 = null, xOverlap2 = null;
 	public boolean fit = false, beforefit = false, selected = true;
 	public int labelX, labelY;

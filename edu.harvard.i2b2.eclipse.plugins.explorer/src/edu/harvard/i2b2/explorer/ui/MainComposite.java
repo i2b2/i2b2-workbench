@@ -54,6 +54,8 @@ import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DragDetectEvent;
 import org.eclipse.swt.events.DragDetectListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -81,6 +83,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tracker;
 import org.eclipse.swt.widgets.Combo;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -156,6 +159,7 @@ public class MainComposite extends Composite {
 	private int curRowNumber = 0;
 	private ArrayList<ArrayList<ConceptTableRow>> rowData = null;
 	private java.awt.Container oAwtContainer;
+	private Button refreshButton; // added by hkpark
 	private Button rightArrowButton;
 	private Button leftArrowButton;
 
@@ -219,6 +223,8 @@ public class MainComposite extends Composite {
 	private Combo filterCombo;
 	private Label label1;
 	private String filter = "none";
+	//added by hkpark
+	private String rsltStr;
 
 	public void lastRequestMessage(String msg) {
 		lastRequestMessage = msg;
@@ -430,10 +436,23 @@ public class MainComposite extends Composite {
 		patientset.setText("Patient Set: ");
 		patientset.setBounds(5, 9, 60, 22);
 
+		// text box to show visualized query name
+		// e.g., Patient set for "Color--Cholest@00:10:07"
 		patientSetText = new Text(patientNumsComposite, SWT.SINGLE | SWT.BORDER);
 		patientSetText.setText("");
 		patientSetText.setEditable(false);
 		patientSetText.setBounds(70, 5, 300, 35);
+		
+		//added by hkpark		
+		refreshButton = new Button(patientNumsComposite, SWT.PUSH);
+		refreshButton.setText("Refresh");
+		refreshButton.setEnabled(true);
+		refreshButton.setBounds(380, 5, 38, 22);
+		refreshButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				refreshMiniVisualization(oAwtContainer);					
+			}				
+		});
 
 		leftArrowButton = new Button(patientNumsComposite, SWT.PUSH);
 		leftArrowButton.setText("<<<");
@@ -628,7 +647,7 @@ public class MainComposite extends Composite {
 
 					PerformVisualizationQuery(oAwtContainer, "All", minPatient,
 							maxPatient, bDisplayAllData);
-				} else {
+				} else {					
 					int min = Integer.parseInt(patientMinNumText.getText());
 					int max = Integer.parseInt(patientMaxNumText.getText());
 					int start = new Integer(patientMinNumText.getText())
@@ -641,7 +660,8 @@ public class MainComposite extends Composite {
 					//patientMinNumText.setText("" + (start + inc));
 					leftArrowButton.setEnabled(true);
 					PerformVisualizationQuery(oAwtContainer, patientRefId, min,
-							max - 1, bDisplayAllData);
+							max - 1, bDisplayAllData);					
+							
 				}
 				// getDisplay().syncExec(new Runnable() {
 				// public void run() {
@@ -663,14 +683,18 @@ public class MainComposite extends Composite {
 
 		addListener(SWT.Resize, new Listener() {
 			public void handleEvent(Event event) {
+				int gap = 65;
 				int w = getBounds().width;
-				patientSetText.setBounds(70, 5, w - 357, 24);
-				leftArrowButton.setBounds(w - 281, 5, 38, 24);
-				patNum1.setBounds(w - 239, 9, 31, 24);
-				patientMinNumText.setBounds(w - 204, 5, 45, 24);
-				patNum2.setBounds(w - 149, 9, 57, 24);
-				patientMaxNumText.setBounds(w - 92, 5, 45, 24);
-				rightArrowButton.setBounds(w - 42, 5, 37, 24);
+				patientSetText.setBounds(70, 5, w - 357 -gap, 24);
+				leftArrowButton.setBounds(w - 281-gap, 5, 38, 24);
+				patNum1.setBounds(w - 239-gap, 9, 31, 24);
+				patientMinNumText.setBounds(w - 204-gap, 5, 45, 24);
+				patNum2.setBounds(w - 149-gap, 9, 57, 24);
+				patientMaxNumText.setBounds(w - 92-gap, 5, 45, 24);
+				rightArrowButton.setBounds(w - 42-gap, 5, 37, 24);
+				// added by hkpark
+				refreshButton.setBounds(w+6-gap, 5, 50, 24); 
+				refreshMiniVisualization(oAwtContainer);
 			}
 		});
 
@@ -747,7 +771,6 @@ public class MainComposite extends Composite {
 		oModelQueryComposite.addDragDetectListener(new DragDetectListener() {
 
 			public void dragDetected(DragDetectEvent arg0) {
-
 			}
 
 		});
@@ -1679,6 +1702,7 @@ public class MainComposite extends Composite {
 
 			@SuppressWarnings("unchecked")
 			public void drop(DropTargetEvent event) {
+				System.out.println("hkpark] drop..");
 				if (event.data == null) {
 					event.detail = DND.DROP_NONE;
 					return;
@@ -1798,6 +1822,7 @@ public class MainComposite extends Composite {
 						}
 						// event.detail = DND.DROP_NONE;
 					}
+					System.out.println("hkpark] populate table (dropTargetAdapter())");
 					populateTable(nodeXmls);
 
 				}
@@ -2298,6 +2323,8 @@ public class MainComposite extends Composite {
 		oGridLayout0.marginWidth = 1;
 		oGridLayout0.marginHeight = 5;
 		comp2.setLayout(oGridLayout0);
+		
+		
 
 		if (false) {
 			Composite composite = new Composite(comp2, SWT.NO_BACKGROUND
@@ -2414,7 +2441,7 @@ public class MainComposite extends Composite {
 						try {
 							String minText = patientMinNumText.getText();
 							minPatient = Integer.parseInt(minText);
-						} catch (Exception e1) {
+							} catch (Exception e1) {
 							minPatient = -1;
 						}
 
@@ -2443,7 +2470,8 @@ public class MainComposite extends Composite {
 						PerformVisualizationQuery(oAwtContainer, patientRefId,
 								min, max - 1, bDisplayAllData);
 					}
-
+					
+					///
 					// getDisplay().syncExec(new Runnable() {
 					// public void run() {
 					// if(returnedNumber >= 0) {
@@ -2481,7 +2509,13 @@ public class MainComposite extends Composite {
 		return parent;
 	}
 
-	
+	// added by hkpark
+	Listener listenerComp = new Listener() {
+	   
+	    public void handleEvent(Event event) {
+	        System.out.println("Resize received on Comp, current size: ");
+	    }
+	};
 	
 	//=============================================================================================================
 	//=============================================================================================================
@@ -3179,6 +3213,7 @@ public class MainComposite extends Composite {
 
 	@SuppressWarnings("unchecked")
 	private void parseDropConcepts(List conceptChildren, DropTargetEvent event) {
+		System.out.println("hkpark] parseDropConcepts..");
 		for (Iterator itr = conceptChildren.iterator(); itr.hasNext();) {
 			Element conceptXml = (org.jdom.Element) itr.next();
 			String conceptText = conceptXml.getText().trim();
@@ -3437,7 +3472,8 @@ public class MainComposite extends Composite {
 					String result = DBLib.getResultSetFromI2B2Xml(xmlContent,
 							minPatient, maxPatient, bDisplayAll, oConnection,
 							writeFile, bDisplayDemographics);
-
+					rsltStr = result; //hkpark
+					
 					DBLib.closeConnection(oConnection);
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3476,7 +3512,7 @@ public class MainComposite extends Composite {
 					log.error(e.getMessage());
 					bNoError = false;
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (1): " + new Date());
 			}
 		};
 
@@ -3549,7 +3585,7 @@ public class MainComposite extends Composite {
 					String result = DBLib.getResultSetFromI2B2Xml(xmlContent,
 							patientIds, bDisplayAll, oConnection, writeFile,
 							bDisplayDemographics);
-
+					rsltStr=result; //hkpark
 					DBLib.closeConnection(oConnection);
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3581,7 +3617,7 @@ public class MainComposite extends Composite {
 					log.error(e.getMessage());
 					bNoError = false;
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (2): " + new Date());
 			}
 		};
 
@@ -3624,6 +3660,16 @@ public class MainComposite extends Composite {
 
 					Properties properties = new Properties();
 					String writeFileStr = "";
+					/*
+					 * Content in "i2b2workbench.properties" 
+					 *  writeTimelineFile=yes
+						applicationName=i2b2
+						messageversion=1.1
+						demoUser=no
+						I2b2.1=i2b2demo,REST,http://services.i2b2.org/i2b2/services/PMService/
+						#I2b2.2=YourSite,REST,http://jbossHost:jbossPort/i2b2/services/PMService/
+
+					 */
 					String filename = "i2b2workbench.properties";
 					try {
 						properties.load(new FileInputStream(filename));
@@ -3647,6 +3693,9 @@ public class MainComposite extends Composite {
 							patientRefId, minPatient, minPatient + maxPatient,
 							bDisplayAll, writeFile, bDisplayDemographics,
 							explorer, filter);
+					//added by hkpark
+					rsltStr=result;
+					///
 
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3687,7 +3736,7 @@ public class MainComposite extends Composite {
 					}
 
 					p.stop();
-					p.setVisible(false);
+					p.setVisible(false); //remove waiting image
 					if (result == null
 							|| result.equalsIgnoreCase("memory error")
 							|| result.equalsIgnoreCase("error")) {
@@ -3702,7 +3751,7 @@ public class MainComposite extends Composite {
 					bNoError = false;
 					e.printStackTrace();
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (3): " + new Date());
 			}
 		};
 
@@ -3730,7 +3779,7 @@ public class MainComposite extends Composite {
 			} else {
 				record1.init(result);
 			}
-			theRecord = record1;
+			theRecord = record1.getRecord();
 			if (returnedNumber >= 0) {
 				getDisplay().syncExec(new Runnable() {
 					public void run() {
@@ -3749,7 +3798,12 @@ public class MainComposite extends Composite {
 			log.error("done"); //
 		}
 	}
-
+	
+	//added by hkpark
+	public void refreshMiniVisualization(java.awt.Container poAwtContainer) {
+		PerformMiniVisualization(oAwtContainer, rsltStr,true);
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void DestroyMiniVisualization(final java.awt.Container poAwtContainer) {
 		try {
@@ -4206,7 +4260,7 @@ public class MainComposite extends Composite {
 			color = new RGB(178, 34, 34);
 		}
 		else if(n%4 == 0) {
-			color = new RGB(184, 134, 11);
+			color = new RGB(160,82,45); ////RGB(208,32,144); // violet red //RGB(106,90,205); //violet //RGB(122,27,151); 
 		}
 		else {
 			//color = new RGB(0, 0, 128);

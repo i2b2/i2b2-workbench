@@ -12,10 +12,15 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 
 /*
@@ -185,6 +190,12 @@ public class LoadRecord {
 						// comma
 
 						String name = readBlanks(line_tokens);
+						//////////////////////
+				        // added by hkpark
+				        // convert _ to a blank space for better display
+				        // (currently, blank in LLD file is parsed as a delimiter)
+						name = name.replace('_', ' ');  
+								
 
 						if (useCommas)
 							token = line_tokens.nextToken(); // adding extra for
@@ -213,9 +224,20 @@ public class LoadRecord {
 						storyList = new Hashtable();
 						
 						String title = name;
-						if(name.indexOf("Person_#") < 0 && name.length() > 15) {
+											
+					
+						// modified by hkpark
+						// To show full patient information
+						//(Changed patient information start with "ID" instead of "Person")
+						//
+						// if(name.indexOf("Person_#") < 0 && name.length() > 15) {
+						///*
+						if(name.indexOf("ID: #") < 0 && name.length() > 15) {
 							title = name.substring(0, 15) + "...";
 						}
+						//*/
+						// Display full name string,removed "..."
+						//title = name;
 						currentFacet = new Facet(title, facetList,
 								backgroundColor.getColor(), open);
 						
@@ -697,7 +719,9 @@ public class LoadRecord {
 			token = line_tokens.nextToken(); // read blank spaces at beginning
 			// of line plus first token?
 		}
-		return token;
+		
+	    return token;
+          
 	}
 
 	public String readBlanks(StringTokenizer line_tokens, String delimeter) {
@@ -709,7 +733,7 @@ public class LoadRecord {
 			// beginning of line
 			// plus first token?
 		}
-		return token;
+	    return token;	    
 	}
 
 }

@@ -87,19 +87,19 @@
 package edu.harvard.i2b2.timeline.lifelines;
 
 import java.applet.Applet;
-import java.awt.Frame;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Panel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Panel;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
 import java.util.Date;
 
 public class Lib {

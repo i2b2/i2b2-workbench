@@ -11,7 +11,13 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Panel;
+import java.awt.ScrollPane;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.StringReader;
@@ -331,6 +337,29 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		}
 	}
 
+	//added by hkpark
+	public void redrawTabPanel() {
+		theTabPanel = new MainPanel((int) getSize().width,
+				(int) (getSize().height), this, LoadRecord.getToday());
+		theTabPanel.setLayout(null);
+		add(theTabPanel); // snm comment out
+		theTabPanel.setBounds(0, 0, (int) getSize().width,
+				(int) (getSize().height));/* modified 12/02 - Partha */
+		// tabpanel actually goes to www for data within timelinepanel, actually
+		// this
+		// method sets the applet for the timelinepanel (so can use showstatus,
+		// showdocument,
+		// newapplet methods... actually applet methods, but are using inside a
+		// non applet
+		// derived class
+		theTabPanel.setApplet(this);
+	}
+	
+	//added by hkpark
+	public Record getRecord() {
+		return this;
+	}
+	
 	public void resetTabPanel() {
 		remove(theTabPanel);
 		theTabPanel = new MainPanel((int) (getSize().width * 0.98),

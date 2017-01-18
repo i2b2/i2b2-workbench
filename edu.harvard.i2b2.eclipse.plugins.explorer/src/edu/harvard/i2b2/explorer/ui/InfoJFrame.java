@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2015 Massachusetts General Hospital 
+ * Copyright (c) 2006-2016 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -12,26 +12,50 @@
 package edu.harvard.i2b2.explorer.ui;
 
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.ImageIcon;
 
 import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
+import edu.harvard.i2b2.timeline.lifelines.GenRecord;
+import edu.harvard.i2b2.timeline.lifelines.TextViewerFrame;
 
 public class InfoJFrame extends javax.swing.JFrame {
 	
 	private TimeLinePanel panel_;
 	private String notes;
+	private int markStar; 
+	private GenRecord thisRecord=null; 
+	private ImageIcon iconBlank, iconStarred;
 
     /**
      * Creates new form InfoJFrame
+     * 
      */
-    public InfoJFrame(TimeLinePanel panel, ObservationType ob) {
+    public InfoJFrame(TimeLinePanel panel, ObservationType ob, GenRecord selectedRecord) {
     	panel_ = panel;
+        thisRecord=selectedRecord;
+        if(thisRecord!=null)
+        {
+	        if(thisRecord.mark_status.equalsIgnoreCase("S"))
+				markStar=1;
+	        else
+	        	markStar=-1;
+        }
         initComponents();
+        
         //jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //jTable1.setTableHeader(null);
         //jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -73,11 +97,29 @@ public class InfoJFrame extends javax.swing.JFrame {
 		jTable1.setValueAt("Concept CD", 0, 0);
 		jTable1.setValueAt(ob.getConceptCd().getValue(), 0, 1);
 		
+		// hkpark
+		// modified date format
+		Date start_date, end_date;
+		DateFormat  formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		
 		jTable1.setValueAt("Start Date", 1, 0);
-		jTable1.setValueAt(ob.getStartDate(), 1, 1);
+		if(ob.getStartDate() == null)
+			jTable1.setValueAt(null, 1, 1);
+		else
+		{
+			start_date = ob.getStartDate().toGregorianCalendar().getTime();
+			jTable1.setValueAt(formatter.format(start_date), 1, 1);
+		}
 		
 		jTable1.setValueAt("End Date", 2, 0);
-		jTable1.setValueAt(ob.getEndDate(), 2, 1);
+		if(ob.getEndDate() == null)
+			jTable1.setValueAt(null, 2, 1);
+		else
+		{
+			end_date = ob.getEndDate().toGregorianCalendar().getTime();
+			jTable1.setValueAt(formatter.format(end_date), 2, 1);
+		}		
+		///
 		
 		jTable1.setValueAt("Event ID", 3, 0);
 		jTable1.setValueAt(ob.getEventId().getValue(), 3, 1);
@@ -107,9 +149,13 @@ public class InfoJFrame extends javax.swing.JFrame {
 		jTable1.getColumnModel().getColumn(0).setPreferredWidth(8);
 		jTable1.getColumnModel().getColumn(1).setPreferredWidth(total-8);
     }
-
+    
+    
     private void initComponents() {
-
+    	//setUndecorated(true);
+    	getContentPane().setBackground(Color.decode("0xfaf4ce")); //eae9e6")); //f0e8dc")); //f6e5da"));//b4af95"));
+    	getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
+    	//this.getContentPane().set
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -120,7 +166,7 @@ public class InfoJFrame extends javax.swing.JFrame {
         setLayout(null);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
-
+        
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -159,7 +205,11 @@ public class InfoJFrame extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         add(jPanel1);
-        jPanel1.setBounds(0, 30, 380, 130);
+        //jPanel1.setBounds(0, 30, 380, 130);
+       // jPanel1.setBorder(BorderFactory.createLineBorder(Color.black));
+        //modified by hkpark
+         //jPanel1.setBounds(0, 30, 380, 200);
+        jPanel1.setBounds(7, 30, 366, 162);
 
         jCloseButton.setText("Close");
         jCloseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +228,32 @@ public class InfoJFrame extends javax.swing.JFrame {
         });
         add(jNotesButton);
         jNotesButton.setBounds(210, 5, 100, 20);
+        
+        java.awt.Image imgBlnkStar = this.getToolkit().getImage(
+				InfoJFrame.class.getResource("/icons/outlinedStar.gif"));
+		iconBlank = new ImageIcon(imgBlnkStar);	
+		java.awt.Image imgStarred = this.getToolkit().getImage(
+				InfoJFrame.class.getResource("/icons/yellowOutlinedStar.gif"));
+		iconStarred = new ImageIcon(imgStarred);			
+        if(markStar==1)
+		{
+			//starTagMsg="Starred";
+        	jStarButton = new JButton(iconStarred);
+		}
+		else
+		{
+			//starTagMsg="Tag Star";
+			//jStarButton.setIcon(iconBlank);
+			jStarButton = new JButton(iconBlank);
+		}
+        jStarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStarButtonActionPerformed(evt);
+            }
+        });
+        add(jStarButton);
+        jStarButton.setBounds(330, 8, 15, 15);
+        
     }// 
 
     private void jNotesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNotesButtonActionPerformed
@@ -192,6 +268,25 @@ public class InfoJFrame extends javax.swing.JFrame {
         dispose();
     }
     
+	private void jStarButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		markStar=markStar*-1;
+		if(markStar==1)
+			thisRecord.mark_status="S";
+		else
+			thisRecord.mark_status="R";
+		panel_.repaint();
+		update_jStarButton();		
+	}
+	
+	private void update_jStarButton()
+	{
+		if(markStar==1)
+			jStarButton.setIcon(iconStarred);
+		else
+			jStarButton.setIcon(iconBlank);
+		jStarButton.updateUI();
+	}
+	
     /**
      * @param args the command line arguments
      */
@@ -201,7 +296,13 @@ public class InfoJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InfoJFrame(null, null).setVisible(true);
+                //new InfoJFrame(null, null).setVisible(true);
+            	//hkpark
+            	//modified.
+            	//check if it is correct
+            	System.out.println("hkpark} invokeLater");
+            	new InfoJFrame(null, null, null).setVisible(true);
+            	//new InfoJFrame(null, null, selectedRecord).setVisible(true);
             }
         });
     }
@@ -213,6 +314,7 @@ public class InfoJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jCloseButton;
     private javax.swing.JButton jNotesButton;
+    private javax.swing.JButton jStarButton;
     private javax.swing.JScrollPane jScrollPane1;
     //private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel jPanel1;

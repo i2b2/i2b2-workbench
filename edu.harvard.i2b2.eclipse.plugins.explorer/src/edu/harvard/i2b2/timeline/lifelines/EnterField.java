@@ -11,7 +11,9 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
+import java.awt.Event;
+import java.awt.Graphics;
+import java.awt.TextField;
 
 
 public class EnterField extends TextField {

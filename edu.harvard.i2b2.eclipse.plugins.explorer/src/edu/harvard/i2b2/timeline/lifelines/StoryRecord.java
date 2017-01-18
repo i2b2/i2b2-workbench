@@ -11,15 +11,24 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+//import java.awt.Component.*; //added by hkpark
+//import java.awt.event.*; //hkpark
+//import javax.swing.*; //added by hkpark
+import java.util.Hashtable;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
 
+
 /**
  * storyRecord class defines event
  */
+// added 'extends JComponent' by hkpark
 public class StoryRecord extends GenRecord {
 	private String cause = "";
 	private Color rectColor;
@@ -420,9 +429,25 @@ public class StoryRecord extends GenRecord {
 					diff2 = rwinWidth - 1;
 				if (!silhouette) {
 					if (rectWidth == 1 || (getInputLine().indexOf("Value") < 0)) {
-						g.setColor(currentColor);
+						
+						// modified by hkpark
+						//g.setColor(currentColor);
+						//System.out.println("hkpark] mark_status: " + this.mark_status);
+						
+						if (this.mark_status==null) 
+							g.setColor(currentColor);
+						else if(this.mark_status.equalsIgnoreCase("R"))		// seen(read) note(R)
+							g.setColor(Color.GRAY);
+						else if(this.mark_status.equalsIgnoreCase("S"))		// starred note(S)
+							g.setColor(Color.decode("0xf9a51e")); //Color.decode("0xf041ad"));
+							//g.setColor(Color.orange);
+						else
+							g.setColor(currentColor);
+										
 						g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
 								- diff1 + 3) : (diff2 - diff1), rectWidth); // was
+						
+						
 						// diff2-diff1
 						// +
 						// 1

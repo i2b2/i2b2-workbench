@@ -10,8 +10,8 @@
  */
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.util.Hashtable;
 
 public class MyColor {
 

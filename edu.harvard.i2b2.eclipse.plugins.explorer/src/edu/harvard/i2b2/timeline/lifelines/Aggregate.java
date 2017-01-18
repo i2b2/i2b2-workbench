@@ -11,10 +11,11 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
-import edu.harvard.i2b2.timeline.external.*;
+import edu.harvard.i2b2.timeline.external.RegExp;
 
 /**
  * aggregate class defines a group of events that are closely related
