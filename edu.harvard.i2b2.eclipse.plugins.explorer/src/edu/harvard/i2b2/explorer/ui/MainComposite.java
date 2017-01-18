@@ -2411,11 +2411,14 @@ public class MainComposite extends Composite {
 							tabFolder.setSelection(0);
 						}
 					});
-					MessageBox mBox = new MessageBox(table.getShell(),
-							SWT.ICON_INFORMATION | SWT.OK);
-					mBox.setText("Please Note ...");
-					mBox.setMessage("The set up table is empty.");
-					mBox.open();
+					if (tabFolder.getSelectionIndex() == 1) // if user is accessing the drawing tab
+					{
+						MessageBox mBox = new MessageBox(table.getShell(),
+								SWT.ICON_INFORMATION | SWT.OK);
+						mBox.setText("Please Note ...");
+						mBox.setMessage("The set up table is empty.");
+						mBox.open();
+					}
 					return;
 				}
 
