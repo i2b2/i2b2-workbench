@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2010 Massachusetts General Hospital 
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -7,6 +7,7 @@
  * Contributors: 
  *   	
  * 		Wensong Pan
+ * 		Heekyong Park (hpark25)
  *     
  */
 /*
@@ -20,12 +21,6 @@ package edu.harvard.i2b2.timeline.lifelines;
  *
  * @author  wp066
  */
-
-/*
- * Modified by hkpark
- * added Star feature
- */
-
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -63,7 +58,6 @@ import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
 public class TextViewerFrame extends javax.swing.JFrame {
 	private String note_ = null;
 	private String pdoData_ = null;
-	//added by hkpark
 	private int markStar; 
 	private GenRecord thisRecord=null; 
 	private TimeLinePanel tmLnDisplay;
@@ -89,9 +83,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 		initComponents();
 		jTextArea2.setText(note.replaceAll("/n", "\n"));
-		// jTextArea2.setBackground(new Color(240,240,240));//Color.lightGray);
-		// Font currentFont = getFont();
-		Font thisFont = null;// new Font("Times New Roman", Font.PLAIN, 14);
+		Font thisFont = null;
 		if (OS.startsWith("mac"))
 			thisFont = new Font("Monaco", Font.PLAIN, 14);
 		else
@@ -99,13 +91,9 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 		jTextArea2.setFont(thisFont);
 
-		// jTextArea2.setSelectionColor(Color.YELLOW);
 		jTextArea2.select(0, 40);
-		// highlight(jTextArea2, "smoke");
-		// highlight(jTextArea2, 0, 40);
 		jTextArea2.setCaretPosition(0);
 		setBounds(100, 100, 600, 500);
-		//setBounds(100, 100, 600, 1000);
 
 		class myTransferHandler extends TransferHandler {
 			protected myTransferHandler() {
@@ -142,9 +130,6 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				// jTextArea2.setSelectionStart(0);
-				// jTextArea2.setSelectionEnd(jTextArea2.getText().length()-1);
-
 				JComponent c = (JComponent) e.getSource();
 				TransferHandler th = c.getTransferHandler();
 				th.exportAsDrag(c, e, TransferHandler.COPY);
@@ -176,9 +161,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 				initComponents();
 				jTextArea2.setText(note.replaceAll("/n", "\n"));
-				// jTextArea2.setBackground(new Color(240,240,240));//Color.lightGray);
-				// Font currentFont = getFont();
-				Font thisFont = null;// new Font("Times New Roman", Font.PLAIN, 14);
+				Font thisFont = null;
 				if (OS.startsWith("mac"))
 					thisFont = new Font("Monaco", Font.PLAIN, 14);
 				else
@@ -186,10 +169,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 				jTextArea2.setFont(thisFont);
 
-				// jTextArea2.setSelectionColor(Color.YELLOW);
 				jTextArea2.select(0, 40);
-				// highlight(jTextArea2, "smoke");
-				// highlight(jTextArea2, 0, 40);
 				jTextArea2.setCaretPosition(0);
 				
 				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -230,9 +210,6 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 					@Override
 					public void mouseDragged(MouseEvent e) {
-						// jTextArea2.setSelectionStart(0);
-						// jTextArea2.setSelectionEnd(jTextArea2.getText().length()-1);
-
 						JComponent c = (JComponent) e.getSource();
 						TransferHandler th = c.getTransferHandler();
 						th.exportAsDrag(c, e, TransferHandler.COPY);
@@ -254,7 +231,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jMenuBar = new javax.swing.JMenuBar();
 		jFileMenu = new javax.swing.JMenu();
 		jEditMenu = new javax.swing.JMenu();
-		jStarMenu = new javax.swing.JMenu(); // added by hkpark
+		jStarMenu = new javax.swing.JMenu(); 
 		jSaveMenuItem = new javax.swing.JMenuItem();
 		jSeparator1 = new javax.swing.JSeparator();
 		jExitMenuItem = new javax.swing.JMenuItem();
@@ -354,73 +331,8 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	}
 	
 
-	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
-		
-		//Object[] buttonOptions = {"Search", "Next", "Cancel"};
-		//Object strstr ="Type in the string for searching: ";
-		/*ori
-		String find = JOptionPane.showInputDialog(this,
-				"Type in the string for searching: ");
-				*/
-		/*
-		  try {
-              UIManager.setLookAndFeel(
-                            "javax.swing.plaf.metal.MetalLookAndFeel");
-                          //  "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-                          //UIManager.getCrossPlatformLookAndFeelClassName());
-          } catch (Exception ex) {
-              ex.printStackTrace();
-          }
-		new SearchTextFrame().setVisible(true);
-		String find = (String) JOptionPane.showInputDialog(null, 
-				"Type in the string for searching: ", "Search",
-				JOptionPane.YES_NO_CANCEL_OPTION, null, buttonOptions, "Numbers");
-		
-		
-		Object[] options1 = { "Search", "Next", "Cancel" };
-		
-		
-JPanel panel = new JPanel();
-panel.add(new JLabel("Type in the string for searching: "));
-JTextField textField = new JTextField(10);
-panel.add(textField);
-
-int result = JOptionPane.showOptionDialog(jTextArea2, panel, "Search",
-        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-        null, options1, options1[1]);
-
-if (result == JOptionPane.NO_OPTION){
-	//System.out.println("hkpark] test test test");
-   // JOptionPane.showMessageDialog(null, jTextArea2.getText());
-}
-*/
-
-		
-		//added by hkpark
-		//JDialog searchDialog = new JDialog(this, "Click a button", true);
-		//
+	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {		
 		new SearchTextFrame(this, jTextArea2).setVisible(true);
-		/*
-		
-		if (find != null && !find.equals("")) {
-			int newCaretPosition = highlight(jTextArea2, find);
-			if (newCaretPosition != -1)
-			{
-				try
-				{
-				//added by hkpark
-				Rectangle viewRect = jTextArea2.modelToView(newCaretPosition);
-				jTextArea2.scrollRectToVisible(viewRect);
-				//
-				jTextArea2.setCaretPosition(newCaretPosition);
-				//added by hkpark
-				//jTextArea2.moveCaretPosition(pos);
-				} catch (Exception exp) {
-                    exp.printStackTrace();
-                }
-			}
-		}
-		*/
 	}
 
 	private void jSaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
@@ -453,7 +365,6 @@ if (result == JOptionPane.NO_OPTION){
 
 	}
 	
-	//added by hkpark
 	private void jStarMenuActionPerformed() {
 		
 		markStar=markStar*-1;
@@ -483,7 +394,6 @@ if (result == JOptionPane.NO_OPTION){
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-//				new TextViewerFrame(" ", "pdo xml string").setVisible(true);
 			}
 		});
 	}
@@ -499,21 +409,11 @@ if (result == JOptionPane.NO_OPTION){
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JSeparator jSeparator1;
 	private javax.swing.JTextArea jTextArea2;
-	
-	// added by hkpark
 	private javax.swing.JMenu jStarMenu;
-	
 	// End of variables declaration
 
 	/**
 	 * Creates highlights around all occurrences of pattern in textComp
-	 * 
-	 * 	// search option
-	// default: 0
-	// case sensitive: 1
-	// case sensitive + whole word: 2
-	// case insensitive + whole word: 3
-	 * // case sensitive + regular expression: 4
 	 */
 	public int highlight(JTextComponent textComp, String pattern, int searchOpt) {
 		// First remove all old highlights
@@ -524,10 +424,8 @@ if (result == JOptionPane.NO_OPTION){
 			Document doc = textComp.getDocument();
 			String text = doc.getText(0, doc.getLength());
 			int pos = 0;
-			System.out.println("searchOpt: "+searchOpt);
 			switch(searchOpt){
 				case 0: //default: 0		
-					System.out.println("default: 0");
 					while ((pos = text.toLowerCase()
 					.indexOf(pattern.toLowerCase(), pos)) >= 0) {
 						hilite.addHighlight(pos, pos + pattern.length(),
@@ -536,7 +434,6 @@ if (result == JOptionPane.NO_OPTION){
 					}
 					break;
 				case 1: // case sensitive: 1
-					System.out.println("case sensitive: 1");
 					while ((pos = text.indexOf(pattern, pos)) >= 0) {
 						hilite.addHighlight(pos, pos + pattern.length(),
 								myHighlightPainter);
@@ -545,7 +442,6 @@ if (result == JOptionPane.NO_OPTION){
 					break;
 				case 2: // case sensitive + whole word: 2
 				{
-					System.out.println("case sensitive + whole word: 2");
 					pattern="\\b"+pattern+"\\b";
 					Matcher matcher =Pattern.compile(pattern).matcher(text);
 					while (matcher.find()) {
@@ -566,7 +462,7 @@ if (result == JOptionPane.NO_OPTION){
 					}
 					break;
 				}
-				case 4: // case sensitive + regular expression: 4
+				case 4: // regular expression: 4
 				{
 					try{
 						System.out.println("case sensitive + regular expression: 5");
@@ -581,23 +477,6 @@ if (result == JOptionPane.NO_OPTION){
 					break;
 				}
 			}
-			// Search for pattern
-			//while ((pos = text.toLowerCase()
-				//	.indexOf(pattern.toLowerCase(), pos)) >= 0) {
-				// Create highlighter using private painter and apply around
-				// pattern
-				/*
-				if (firstPosition == -1)
-				{
-					firstPosition = pos;
-					hilite.addHighlight(pos, pos + pattern.length(),
-							curntHighlightPainter);
-				}
-				else*/
-			//	hilite.addHighlight(pos, pos + pattern.length(),
-			//		myHighlightPainter);
-			//	pos += pattern.length();
-			//}
 
 		} catch (BadLocationException e) {
 			e.printStackTrace();
@@ -606,11 +485,7 @@ if (result == JOptionPane.NO_OPTION){
 	}
 
 
-	//modified by hkpark
 	public void highlight(JTextComponent textComp, int start, int end) {
-		// First remove all old highlights
-		//removeHighlights(textComp);
-
 		try {
 			Highlighter hilite = textComp.getHighlighter();
 			hilite.addHighlight(start, end, curntHighlightPainter);
@@ -619,7 +494,6 @@ if (result == JOptionPane.NO_OPTION){
 		}
 	}
 	
-	//added by hkpark
 	public int highlight(JTextComponent textComp, String pattern, int searchOpt, int pos) {
 		int firstPosition = -1;
 		// First remove all old highlights
@@ -629,13 +503,12 @@ if (result == JOptionPane.NO_OPTION){
 			Highlighter hilite = textComp.getHighlighter();
 			Document doc = textComp.getDocument();
 			String text = doc.getText(0, doc.getLength());
-			// int pos = 0;
 
 			// Search for pattern
 			if(pos<text.length() && ((pos = text.toLowerCase()
 					.indexOf(pattern.toLowerCase(), pos)) >= 0))
 			{
-				// shoudl add removing previous highlight
+				// Remove previous highlight
 				hilite.addHighlight(pos, pos + pattern.length(),
 						curntHighlightPainter);
 				pos += pattern.length();
@@ -648,7 +521,6 @@ if (result == JOptionPane.NO_OPTION){
 		return pos;
 	}
 	
-	//added by hkpark
 	public int highlightPrev(JTextComponent textComp, int cnt) {
 		int[] startPos;
 		int keywordLength=0, nFound=0;
@@ -685,7 +557,6 @@ if (result == JOptionPane.NO_OPTION){
 		return cnt;				
 	}
 	
-	//added by hkpark
 	public int highlightNext(JTextComponent textComp, int cnt) {
 		int[] startPos;
 		int keywordLength=0, nFound=0;
@@ -723,31 +594,24 @@ if (result == JOptionPane.NO_OPTION){
 
 	}
 	
-	//added by hkpark
 		public int highlight(JTextComponent textComp, String pattern, int searchOpt, int pos, int cntFound) {
-			// First remove all old highlights
-			//removeHighlights(textComp);
-			
 			try {
 				Highlighter hilite = textComp.getHighlighter();
 				Highlighter.Highlight[] hilites = hilite.getHighlights();
 				if (cntFound>0 && (hilites[cntFound-1].getPainter() instanceof MyHighlightPainter)) {
 					int start = hilites[cntFound-1].getStartOffset();
 					int end = hilites[cntFound-1].getEndOffset();
-					////hilite.removeHighlight(hilites[cntFound-1]);
 					hilite.addHighlight(start, end, myHighlightPainter);
 						
 				}
-				//hilite.
+				
 				Document doc = textComp.getDocument();
 				String text = doc.getText(0, doc.getLength());
-				// int pos = 0;
-
+	
 				// Search for pattern
 				if(pos<text.length() && ((pos = text.toLowerCase()
 						.indexOf(pattern.toLowerCase(), pos)) >= 0))
 				{
-					////hilite.removeHighlight(hilites[cntFound]);
 					hilite.addHighlight(pos, pos + pattern.length(),
 							curntHighlightPainter);
 					pos += pattern.length();
@@ -760,29 +624,6 @@ if (result == JOptionPane.NO_OPTION){
 			}
 			return pos;
 		}
-	
-	/*
-	public void highlight(JTextComponent textComp, int start, int end, HighlightPainter curntHighlightColr) {
-		// First remove all old highlights
-		removeHighlights(textComp);
-
-		try {
-			Highlighter hilite = textComp.getHighlighter();
-			// Document doc = textComp.getDocument();
-			// String text = doc.getText(0, doc.getLength());
-			// int pos = 0;
-
-			// Search for pattern
-			// while ((pos = text.indexOf(pattern, pos)) >= 0) {
-			// Create highlighter using private painter and apply around pattern
-			hilite.addHighlight(start, end, myHighlightPainter);
-			// pos += pattern.length();
-			// }
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	/**
 	 * Removes only private highlights
@@ -801,7 +642,6 @@ if (result == JOptionPane.NO_OPTION){
 	// An instance of the private subclass of the default highlight painter
 	Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(
 			Color.lightGray);
-	//added by hkpark
 	Highlighter.HighlightPainter curntHighlightPainter = new MyHighlightPainter(
 			Color.decode("0x2febbc"));
 

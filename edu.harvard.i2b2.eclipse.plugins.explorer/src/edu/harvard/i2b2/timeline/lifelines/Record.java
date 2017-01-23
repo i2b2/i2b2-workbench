@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
@@ -7,6 +7,7 @@
  *  
  *  	Wensong Pan (MGH)
  *		Shawn Murphy, MD, PH.D (MGH)
+ *		Heekyong Park (hpark25) (MGH)
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
@@ -86,33 +87,9 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 	LabelPanel theLabelPanel;
 	ScrollPane pane;/* Added 09-13-98 by Partha */
 
-	// int resizeWidth; // width to be used when a resize is done... read from a
-	// parameter
-	// int resizeHeight; // same for height...
-
 	public Record() {
 
 	}
-
-	// public void start() {
-	// if(theThread == null)
-	// theThread = new Thread(this);
-	// theThread.start();
-	// System.out.println("got to start");
-	// }
-
-	/*
-	 * public void run() { System.out.println("got to run");
-	 * Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-	 * 
-	 * while(Thread.currentThread() == theThread) { if(changed && threadTest) {
-	 * theTabPanel.theTimeLinePanel.repaint(); changed = false; } try {
-	 * Thread.sleep(1); } catch (InterruptedException e) {
-	 * System.out.println("thread exception"); } } }
-	 * 
-	 * public void stop() { theThread = null; if (theCurrPanel.ctrlpanel !=
-	 * null) theCurrPanel.ctrlpanel.setVisible(false); }
-	 */
 
 	public void update(Graphics g) {
 		paint(g);
@@ -171,9 +148,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		vague_association = getParm("vague_association");
 		angle_label = getParm("angle_label");
 		infotip = getParm("infotip");
-
-		// resizeWidth = Integer.parseInt(getParameter("width"));
-		// resizeHeight = Integer.parseInt(getParameter("height"));
 
 		String dataString = getParameter("thedata");
 
@@ -243,7 +217,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		setLayout(null);
 
 		Dimension pd = getParent().getSize();
-		// pd.setSize(pd.getWidth(), pd.getHeight());
 		setSize(pd);
 
 		// no layout is set, so reshapes are not needed to get anything to
@@ -255,7 +228,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		// panel for picture (upper left)
 		thePicPanel = new PicPanel((int) (getSize().width * 0.075),
 				(int) (getSize().height * 0.1), this, theData.getPictureFile());
-		// add(thePicPanel);
 		thePicPanel.setBounds(0, 0, (int) (getSize().width * 0.075),
 				(int) (getSize().height * 0.1));
 
@@ -264,7 +236,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 				(int) (getSize().height * 0.1), theData.getName(), theData
 						.getGender(), theData.getAge(), theData.getMoreInfo()); // 3/28/98
 		theInfoPanel.setLayout(null);
-		// add(theInfoPanel);
 		theInfoPanel.setBounds((int) (getSize().width * 0.075), 0,
 				(int) (getSize().width * 0.30), (int) (getSize().height * 0.1));
 
@@ -272,7 +243,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		theAlertPanel = new AlertPanel((int) (getSize().width * 0.30),
 				(int) (getSize().height * 0.05));
 		theAlertPanel.setLayout(null);
-		// add(theAlertPanel);
 		theAlertPanel.setBounds((int) (getSize().width * 0.075),
 				(int) (getSize().height * .05), (int) (getSize().width * 0.30),
 				(int) (getSize().height * 0.05));
@@ -285,19 +255,16 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 				(int) (getSize().height * 0.1));
 		theLabelPanel = new LabelPanel(800, 400);
 		theLabelPanel.setLayout(null);
-		// add(theLabelPanel); // snm
 		theLabelPanel.setBounds((int) (getSize().width * 0.375), 0,
 				(int) (getSize().width * 0.6), (int) (getSize().height * 0.1));
 		theLabelPanel.setBounds(500, 0, 800, 400);
 		pane.add(theLabelPanel);
-		// add(pane); //snm
 		pane.setBounds((int) (getSize().width * 0.375), 0,
 				(int) (getSize().width * 0.6), (int) (getSize().height * 0.1));
 
 		// left bottom of toppanel
 		theCurrPanel = new CurrPanel((int) (getSize().width), 40, this);
 		theCurrPanel.setLayout(null);
-		// add(theCurrPanel); // snm comment out
 		theCurrPanel.setBounds(0, 0, (int) getSize().width, 40);
 
 		// eventually will have multiple tabs (now just lifeline) use card
@@ -317,7 +284,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		// non applet
 		// derived class
 		theTabPanel.setApplet(this);
-		// theTabPanel.init(); // needed?
 	}
 
 	// * inherited from newApplet interface
@@ -337,25 +303,16 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		}
 	}
 
-	//added by hkpark
 	public void redrawTabPanel() {
 		theTabPanel = new MainPanel((int) getSize().width,
 				(int) (getSize().height), this, LoadRecord.getToday());
 		theTabPanel.setLayout(null);
-		add(theTabPanel); // snm comment out
+		add(theTabPanel); 
 		theTabPanel.setBounds(0, 0, (int) getSize().width,
-				(int) (getSize().height));/* modified 12/02 - Partha */
-		// tabpanel actually goes to www for data within timelinepanel, actually
-		// this
-		// method sets the applet for the timelinepanel (so can use showstatus,
-		// showdocument,
-		// newapplet methods... actually applet methods, but are using inside a
-		// non applet
-		// derived class
+				(int) (getSize().height));
 		theTabPanel.setApplet(this);
 	}
 	
-	//added by hkpark
 	public Record getRecord() {
 		return this;
 	}
