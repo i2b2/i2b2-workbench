@@ -96,7 +96,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	boolean selectedAgg = false;
 	boolean choiceIsUp = false;
 	private Choice testChoice;
-	private Menu testMenu;
 	private LiteLabel infoTipLabel = null;
 	private InfoJFrame infoFrame = null;
 	private TextViewerFrame textFrame = null;
@@ -245,7 +244,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		
 		setLabelFont(11); // default font size is 12
 		testChoice = new Choice();
-		testMenu = new Menu("test");
 		this.today = today;
 		this.thisApplet = thisApplet;
 
@@ -253,8 +251,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		int strWidth;
 		this.width = width;
 		this.height = height;
-
-		// timeLineDisplay = PlatformUI.getWorkbench().getDisplay();
 
 		// Default values for the zooming options when starting up
 		ResourceTable.put(new String("zoom_ratio"), new Integer(1));/*
@@ -643,8 +639,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								getOfg();
 								//new TextViewerFrame(note, dndXmlData)
 								if(textFrame != null) {
-									textFrame.setVisible(false);
-									textFrame.dispose();
+									textFrame.disposeTextViewerFrame();
+									//textFrame.setVisible(false);
+									//textFrame.dispose();
 									textFrame = null;
 								}
 								textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
@@ -729,6 +726,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 					
 					infoFrame = new InfoJFrame(this, ob, selectedRecord);
+					//hkpark
+					System.out.println("hkpark: observation cd: "+ob.getObserverCd().getValue());
+	//				System.out.println("hkpark: observation name: "+PDOQueryClient.getCodeInfo(ob.getObserverCd().getValue()));
+					
 					// size change 
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					int infoFramePos_x, infoFramePos_y;
@@ -829,7 +830,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		;
 	}
 
 	public void mouseExited(MouseEvent e) {
@@ -1252,6 +1252,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 					System.out.println("concept_cd: "+concept_cd+" code: "
 							+makeReadableCodeString(concept_cd));
+					System.out.println("infotip: "+infotip); //hkpark
 				}
 								
 				infoTipLabel = new LiteLabel(infotip,
@@ -2249,9 +2250,15 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public String decryptBlob(String blob) {
+		/*modified by hkpark
+		 * 
+		 // should recover this part
 		key = UserInfoBean.getInstance().getKey();
 		if (key == null || key.length() == 0)
 			getKey();
+		*/
+		// should remove the following line - hkpark
+		key="82f27ca7b71ceabb";
 		
 		NoteCryptUtil util = new NoteCryptUtil(key);
 		if (util == null) {

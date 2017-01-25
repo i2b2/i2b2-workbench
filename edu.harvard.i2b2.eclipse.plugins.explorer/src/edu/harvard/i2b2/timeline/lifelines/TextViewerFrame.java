@@ -34,6 +34,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -61,7 +63,9 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	private int markStar; 
 	private GenRecord thisRecord=null; 
 	private TimeLinePanel tmLnDisplay;
+	private SearchTextFrame searchBox;
 	ImageIcon iconBlank, iconStarred;
+	
 	
 	
 	
@@ -237,7 +241,12 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jExitMenuItem = new javax.swing.JMenuItem();
 		jSearchMenuItem = new javax.swing.JMenuItem();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				disposeTextViewerFrame();
+			}
+		}); 
+		
 		setTitle("Notes Viewer");
 		jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -327,12 +336,18 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	}
 
 	private void jExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
-		setVisible(false);
+		disposeTextViewerFrame();				
 	}
 	
+	public void disposeTextViewerFrame() {
+		if(searchBox!=null)
+			searchBox.setVisible(false);
+		setVisible(false);
+	}
 
 	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {		
-		new SearchTextFrame(this, jTextArea2).setVisible(true);
+		searchBox = new SearchTextFrame(this, jTextArea2);
+		searchBox.setVisible(true);
 	}
 
 	private void jSaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
