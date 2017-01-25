@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2010 Massachusetts General Hospital 
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -7,6 +7,7 @@
  * Contributors: 
  *   
  *     Wensong Pan
+ *     Heekyong Park (hpark25)
  *     
  */
 
@@ -15,10 +16,6 @@
  * 
  * A utility class for generating timeline ".lld" files based on the PDO; some methods here were 
  * ported from DBLib class.
- * 
- */
-
-/* Modified by hkpark
  * 
  */
 
@@ -63,16 +60,12 @@ public class TimelineFactory {
 	public String newline = System.getProperty("line.separator");
 
 	private static final Log log = LogFactory.getLog(TimelineFactory.class);
-	
-	//added by hkpark
+
 	public String ptStr = "ID:_#";
-	private String ptInfo_colr="0x134261"; //0x99CCFF";
+	private String ptInfo_colr="0x134261";
 	private String evntBgrndCol="0xF7FAFC";
 	
-	
-	/**
-	 * 
-	 */
+
 	public TimelineFactory() {
 	}
 

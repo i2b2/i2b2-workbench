@@ -1,17 +1,13 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
  *  Contributors:
  *  
  *  	Wensong Pan (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *		
- */
-
-/*
- * modified by hkpark
- * 
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
@@ -32,9 +28,10 @@ public class GenRecord {
 	protected MyDate start_date;
 	protected MyDate end_date;
 	private String type;
-	// added by hkpark
-	// to mark review process and to display in different color
-	// "R" : Read (values could be changed in the future) 
+	// hkpark. to mark read/starred status and to display ticks in different color
+	// "N": unread
+	// "R": read (clicked)
+	// "S": starred 
 	public String mark_status = "N";
 	public static ConflictResolver xOverlap1 = null, xOverlap2 = null;
 	public boolean fit = false, beforefit = false, selected = true;
