@@ -14,6 +14,8 @@ package edu.harvard.i2b2.explorer.ui;
 import com.cloudgarden.resource.SWTResourceManager;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,6 +35,7 @@ import java.util.Comparator;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -661,9 +664,16 @@ public class MainComposite extends Composite {
 				patientMaxNumText.setBounds(w - 92-gap, 5, 45, 24);
 				rightArrowButton.setBounds(w - 42-gap, 5, 37, 24);
 				refreshButton.setBounds(w+6-gap, 5, 50, 24); 
-				refreshMiniVisualization(oAwtContainer);
+				System.out.println("hkpark)Refresh/ width, height:"+getBounds().width+", "+getBounds().height);
+				//System.out.println("hkpark)Refresh/ x, y:"+(int) getSize().x+", "+(int) getSize().y);
+		
+				//refreshMiniVisualization(oAwtContainer);
+				refreshMiniVisualization(oAwtContainer, w-14, getBounds().height-86);
 			}
 		});
+		
+		
+		
 
 		verticalForm.setWeights(new int[] { 25, 3 });
 
@@ -734,6 +744,8 @@ public class MainComposite extends Composite {
 			}
 
 		});
+		
+		
 
 		Composite oGroupComposite = new Composite(oModelComposite, SWT.NONE);
 		oGroupComposite.setLayout(gridLayout);
@@ -2196,7 +2208,7 @@ public class MainComposite extends Composite {
 		oGridLayout0.marginWidth = 1;
 		oGridLayout0.marginHeight = 5;
 		comp2.setLayout(oGridLayout0);
-		
+	
 		
 
 		if (false) {
@@ -3636,8 +3648,38 @@ public class MainComposite extends Composite {
 		}
 	}
 	
-	public void refreshMiniVisualization(java.awt.Container poAwtContainer) {
+	public void refreshMiniVisualization(java.awt.Container poAwtContainer) {		
 		PerformMiniVisualization(oAwtContainer, rsltStr,true);
+	}
+
+	
+	public void refreshMiniVisualization(java.awt.Container poAwtContainer, int w, int h) {		
+		try {
+			poAwtContainer.removeAll();
+			
+
+			log.info("Got to PerformMiniVisualization");
+			Record record1 = new Record();
+			poAwtContainer.add(record1);
+			record1.init(w, h);
+			theRecord = record1.getRecord();
+			if (returnedNumber >= 0) {
+				getDisplay().syncExec(new Runnable() {
+					public void run() {
+
+						MessageBox mBox = new MessageBox(getShell(),
+								SWT.ICON_INFORMATION | SWT.OK);
+						mBox.setText("Please Note ...");
+						mBox.setMessage("Only " + (returnedNumber)
+								+ " patients returned");
+						mBox.open();
+					}
+				});
+			}
+
+		} catch (Exception e) {
+			log.error("done"); //
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -3810,7 +3852,7 @@ public class MainComposite extends Composite {
 		System.setProperty("ApplicationConfigurationXML",
 				ssFakeApplicationConfigurationXML);
 		Display display = new Display();
-		Shell shell = new Shell(display);
+		final Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		shell.setText("ExplorerC Test");
 		shell.setSize(1000, 800);

@@ -276,6 +276,175 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		add(theTabPanel); // snm comment out
 		theTabPanel.setBounds(0, 0, (int) getSize().width,
 				(int) (getSize().height));/* modified 12/02 - Partha */
+		//System.out.println("hkpark)Tab Panel/ width, height:"+(int) getSize().width+", "+(int) (getSize().height));
+		// tabpanel actually goes to www for data within timelinepanel, actually
+		// this
+		// method sets the applet for the timelinepanel (so can use showstatus,
+		// showdocument,
+		// newapplet methods... actually applet methods, but are using inside a
+		// non applet
+		// derived class
+		theTabPanel.setApplet(this);
+	}
+	
+	public void init(int w, int h) {
+		System.out.println("got to init");
+		option[0] = getParm("default");
+		option[1] = getParm("quick_compact");
+		option[2] = getParm("slow_compact");
+		option[3] = getParm("time_ordered");
+		option[4] = getParm("agg_ordered");
+
+		comments = getParm("comments");
+
+		lbloption[0] = getParm("top_right");
+		lbloption[1] = getParm("top_right_left");
+		lbloption[2] = getParm("4corners");
+
+		excentric = getParm("excentric");
+
+		column[0] = getParm("one_column");
+		column[1] = getParm("two_columns");
+
+		timeoption[0] = getParm("delay_time");
+		timeoption[1] = getParm("real_time");
+
+		arrowoption[0] = getParm("no_arrow");
+		arrowoption[1] = getParm("arrow");
+
+		lengthoption[0] = getParm("fix_length");
+		lengthoption[1] = getParm("variable_length");
+
+		summaryoption[0] = getParm("summarylabel");
+		summaryoption[1] = getParm("summarytimeline");
+
+		searchoption_timeline[0] = getParm("timeline_gray");
+		searchoption_timeline[1] = getParm("timeline_remove");
+
+		searchoption_label[0] = getParm("label_gray");
+		searchoption_label[1] = getParm("label_remove");
+
+		symbol = getParm("symbol");
+		vague_association = getParm("vague_association");
+		angle_label = getParm("angle_label");
+		infotip = getParm("infotip");
+
+		String dataString = getParameter("thedata");
+
+		String colorString = getParameter("bgcolor");
+
+		if (colorString != null) {
+			Long theInt = Long.valueOf(colorString, 16);
+			bgColor = new Color(theInt.intValue());
+		} else
+			bgColor = Color.lightGray;
+		setBackground(bgColor);
+
+		if ((colorString = getParameter("fgcolor")) != null) {
+			Long theInt = Long.valueOf(colorString, 16);
+			fgColor = new Color(theInt.intValue());
+		} else
+			fgColor = Color.black;
+		setForeground(fgColor);
+
+		// where is "highlight?" color used?
+		if ((colorString = getParameter("hlcolor")) != null) {
+			Long theInt = Long.valueOf(colorString, 16);
+			hlColor = new Color(theInt.intValue());
+		} else
+			hlColor = Color.blue;
+
+		if ((colorString = getParameter("textcolor")) != null) {
+			Long theInt = Long.valueOf(colorString, 16);
+			textColor = new Color(theInt.intValue());
+		} else
+			textColor = Color.black;
+
+			String datafile = getParameter("datafile");
+			if (datafile == null)
+				// datafile =
+				// "http://www.cs.umd.edu/projects/hcil/Research throw /1997/dandemo/width.old";
+				System.out.println("got a null pointer for datafile");
+			else
+				try {
+					String appDirectory = System.getProperty("user.dir")
+							.toString()
+							+ "/temp/";
+					datafile = "file:///" + appDirectory + File.separator
+							+ datafile;
+					System.out.println(datafile);
+				} catch (Exception e) {
+				}
+			// datafile = getCodeBase() + datafile; // why did this stop working
+			// for a url? or did it?
+
+			theData = new LoadRecord(datafile, dataString);
+	
+		// does this one make a difference? All the others panels are in
+		// toppanel
+
+		setLayout(null);
+
+		Dimension pd = getParent().getSize();
+		setSize(pd);
+
+		// no layout is set, so reshapes are not needed to get anything to
+		// display
+		// if a layout is set... use preferredsize or some other solution (like
+		// a good layout manager?)
+		// presently there is no layout set (two lines above)
+
+		// panel for picture (upper left)
+		/*
+		thePicPanel = new PicPanel((int) (getSize().width * 0.075),
+				(int) (getSize().height * 0.1), this, theData.getPictureFile());
+		thePicPanel.setBounds(0, 0, (int) (getSize().width * 0.075),
+				(int) (getSize().height * 0.1));
+
+		// panel with personal info on patient middle top of applet
+		theInfoPanel = new InfoPanel((int) (getSize().width * 0.30),
+				(int) (getSize().height * 0.1), theData.getName(), theData
+						.getGender(), theData.getAge(), theData.getMoreInfo()); // 3/28/98
+		theInfoPanel.setLayout(null);
+		theInfoPanel.setBounds((int) (getSize().width * 0.075), 0,
+				(int) (getSize().width * 0.30), (int) (getSize().height * 0.1));
+
+		// just below infopanel... presently empty
+		theAlertPanel = new AlertPanel((int) (getSize().width * 0.30),
+				(int) (getSize().height * 0.05));
+		theAlertPanel.setLayout(null);
+		theAlertPanel.setBounds((int) (getSize().width * 0.075),
+				(int) (getSize().height * .05), (int) (getSize().width * 0.30),
+				(int) (getSize().height * 0.05));
+
+		// top right
+		pane = new ScrollPane();
+		pane.setSize((int) (getSize().width * 0.6),
+				(int) (getSize().height * 0.1));
+		theLabelPanel = new LabelPanel((int) (getSize().width * 0.6),
+				(int) (getSize().height * 0.1));
+		theLabelPanel = new LabelPanel(800, 400);
+		theLabelPanel.setLayout(null);
+		theLabelPanel.setBounds((int) (getSize().width * 0.375), 0,
+				(int) (getSize().width * 0.6), (int) (getSize().height * 0.1));
+		theLabelPanel.setBounds(500, 0, 800, 400);
+		pane.add(theLabelPanel);
+		pane.setBounds((int) (getSize().width * 0.375), 0,
+				(int) (getSize().width * 0.6), (int) (getSize().height * 0.1));
+
+		// left bottom of toppanel
+		theCurrPanel = new CurrPanel((int) (getSize().width), 40, this);
+		theCurrPanel.setLayout(null);
+		theCurrPanel.setBounds(0, 0, (int) getSize().width, 40);
+*/
+		// eventually will have multiple tabs (now just lifeline) use card
+		// layout perhaps? (and
+		// a little bit of "tab" graphics)
+		theTabPanel = new MainPanel(w, h, this, LoadRecord.getToday());
+		theTabPanel.setLayout(null);
+		add(theTabPanel); // snm comment out
+		theTabPanel.setBounds(0, 0, w, h);/* modified 12/02 - Partha */
+		//System.out.println("hkpark)Tab Panel/ width, height:"+(int) getSize().width+", "+(int) (getSize().height));
 		// tabpanel actually goes to www for data within timelinepanel, actually
 		// this
 		// method sets the applet for the timelinepanel (so can use showstatus,
