@@ -1250,9 +1250,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else {
 						infotip = conceptName+dcstr+msgs[1];
 					}
-					System.out.println("concept_cd: "+concept_cd+" code: "
+					System.out.println("hkpark) concept_cd: "+concept_cd+" code: "
 							+makeReadableCodeString(concept_cd));
-					System.out.println("infotip: "+infotip); //hkpark
+					System.out.println("hkpark) infotip: "+infotip); //hkpark
 				}
 								
 				infoTipLabel = new LiteLabel(infotip,
@@ -2250,15 +2250,11 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public String decryptBlob(String blob) {
-		/*modified by hkpark
-		 * 
-		 // should recover this part
+
 		key = UserInfoBean.getInstance().getKey();
 		if (key == null || key.length() == 0)
 			getKey();
-		*/
-		// should remove the following line - hkpark
-		key="82f27ca7b71ceabb";
+
 		
 		NoteCryptUtil util = new NoteCryptUtil(key);
 		if (util == null) {
