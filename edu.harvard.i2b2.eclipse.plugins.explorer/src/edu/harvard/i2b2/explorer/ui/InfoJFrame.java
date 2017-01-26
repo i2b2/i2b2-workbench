@@ -98,7 +98,7 @@ public class InfoJFrame extends javax.swing.JFrame {
 		
 		jTable1.setValueAt("Event ID", 3, 0);
 		jTable1.setValueAt(ob.getEventId().getValue(), 3, 1);
-		jTable1.setValueAt("Observer name (ID)", 4, 0);
+		jTable1.setValueAt("Observer Name (ID)", 4, 0);
 		String obsStr=PDOQueryClient.getCodeInfo(ob.getObserverCd().getValue())+" ("+ob.getObserverCd().getValue()+")";
 		jTable1.setValueAt(obsStr, 4, 1);
 		
