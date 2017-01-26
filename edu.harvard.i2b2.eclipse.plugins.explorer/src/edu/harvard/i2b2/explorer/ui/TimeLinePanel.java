@@ -726,9 +726,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 					
 					infoFrame = new InfoJFrame(this, ob, selectedRecord);
-					//hkpark
-					System.out.println("hkpark: observation cd: "+ob.getObserverCd().getValue());
-	//				System.out.println("hkpark: observation name: "+PDOQueryClient.getCodeInfo(ob.getObserverCd().getValue()));
 					
 					// size change 
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -1250,9 +1247,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else {
 						infotip = conceptName+dcstr+msgs[1];
 					}
-					System.out.println("hkpark) concept_cd: "+concept_cd+" code: "
-							+makeReadableCodeString(concept_cd));
-					System.out.println("hkpark) infotip: "+infotip); //hkpark
 				}
 								
 				infoTipLabel = new LiteLabel(infotip,
@@ -1979,7 +1973,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			String result = PDOQueryClient.sendQueryRequestREST(xmlStr);
 
 			System.out.println(result);
-			
 			PDOResponseMessageModel pdoresponsefactory = new PDOResponseMessageModel();
 			List<ObservationSet> factSets = pdoresponsefactory
 					.getFactSetsFromResponseXML(result);

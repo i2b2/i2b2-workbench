@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
 import edu.harvard.i2b2.timeline.lifelines.GenRecord;
+import edu.harvard.i2b2.timeline.lifelines.PDOQueryClient;
 
 public class InfoJFrame extends javax.swing.JFrame {
 	
@@ -72,6 +73,7 @@ public class InfoJFrame extends javax.swing.JFrame {
 		jTable1.setValueAt("Concept CD", 0, 0);
 		jTable1.setValueAt(ob.getConceptCd().getValue(), 0, 1);
 		
+		
 		Date start_date, end_date;
 		DateFormat  formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 		
@@ -96,9 +98,9 @@ public class InfoJFrame extends javax.swing.JFrame {
 		
 		jTable1.setValueAt("Event ID", 3, 0);
 		jTable1.setValueAt(ob.getEventId().getValue(), 3, 1);
-		
-		jTable1.setValueAt("Observer ID", 4, 0);
-		jTable1.setValueAt(ob.getObserverCd().getValue(), 4, 1);
+		jTable1.setValueAt("Observer name (ID)", 4, 0);
+		String obsStr=PDOQueryClient.getCodeInfo(ob.getObserverCd().getValue())+" ("+ob.getObserverCd().getValue()+")";
+		jTable1.setValueAt(obsStr, 4, 1);
 		
 		jTable1.setValueAt("Instance Number", 5, 0);
 		jTable1.setValueAt(ob.getInstanceNum().getValue(), 5, 1);
