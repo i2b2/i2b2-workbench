@@ -35,6 +35,7 @@ import java.util.Comparator;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
@@ -651,7 +652,7 @@ public class MainComposite extends Composite {
 				}
 			}
 		});
-
+		
 		addListener(SWT.Resize, new Listener() {
 			public void handleEvent(Event event) {
 				int gap = 65;
@@ -664,10 +665,10 @@ public class MainComposite extends Composite {
 				patientMaxNumText.setBounds(w - 92-gap, 5, 45, 24);
 				rightArrowButton.setBounds(w - 42-gap, 5, 37, 24);
 				refreshButton.setBounds(w+6-gap, 5, 50, 24); 
-				System.out.println("hkpark)Refresh/ width, height:"+getBounds().width+", "+getBounds().height);
+				//System.out.println("hkpark)Refresh/ width, height:"+getBounds().width+", "+getBounds().height);
 				//System.out.println("hkpark)Refresh/ x, y:"+(int) getSize().x+", "+(int) getSize().y);
 		
-				//refreshMiniVisualization(oAwtContainer);
+				
 				refreshMiniVisualization(oAwtContainer, w-14, getBounds().height-86);
 			}
 		});
@@ -3653,16 +3654,22 @@ public class MainComposite extends Composite {
 	}
 
 	
-	public void refreshMiniVisualization(java.awt.Container poAwtContainer, int w, int h) {		
+	public void refreshMiniVisualization(final java.awt.Container poAwtContainer, final int w, final int h) {		
+		
 		try {
-			poAwtContainer.removeAll();
-			
+			//SwingUtilities.invokeAndWait(new Runnable() {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					poAwtContainer.removeAll();
 
-			log.info("Got to PerformMiniVisualization");
-			Record record1 = new Record();
-			poAwtContainer.add(record1);
-			record1.init(w, h);
-			theRecord = record1.getRecord();
+					log.info("Got to PerformMiniVisualization");
+					Record record1 = new Record();
+					poAwtContainer.add(record1);
+					record1.init(w, h);
+					theRecord = record1.getRecord();
+				}
+			});
+			
 			if (returnedNumber >= 0) {
 				getDisplay().syncExec(new Runnable() {
 					public void run() {
@@ -3678,7 +3685,8 @@ public class MainComposite extends Composite {
 			}
 
 		} catch (Exception e) {
-			log.error("done"); //
+			//log.error("done"); //
+			e.printStackTrace();
 		}
 	}
 	

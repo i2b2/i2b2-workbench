@@ -739,7 +739,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else
 						infoFramePos_x = this.getLocationOnScreen().x+x-150;
 					
-					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin)
+					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin+40) // added 40 to avoid overlapping by the bottom windows' start bar
 						infoFramePos_y = this.getLocationOnScreen().y + y - 200-margin;
 					else
 						infoFramePos_y = this.getLocationOnScreen().y + y + margin;
