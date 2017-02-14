@@ -1,6 +1,13 @@
-/* 
- * Written by hkpark
+/*
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
+ * All rights reserved. This program and the accompanying materials 
+ * are made available under the terms of the i2b2 Software License v2.1 
+ * which accompanies this distribution. 
  * 
+ * Contributors: 
+ *   
+ *     Heekyong Park (hpark25) (MGH)
+ *     
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
@@ -39,13 +46,12 @@ public class SearchTextFrame extends JFrame {
 	int cntFound = -1;
 	int numFound =0;
 	String foundMsg=" ";
-	// search option
-	// default: 0
+	int opt = 0; // search option
+		// case insensitive (default): 0
 		// case sensitive: 1
 		// case sensitive + whole word: 2
 		// case insensitive + whole word: 3
-		// case sensitive + regular expression: 4
-	int opt = 0; 				
+		// regular expression: 4 				
 	
 	public  SearchTextFrame(TextViewerFrame ntFrame, JTextArea jTxtArea2) {			
 			noteFrame = ntFrame;
@@ -54,7 +60,6 @@ public class SearchTextFrame extends JFrame {
 		
 	        JLabel label = new JLabel("Type in the string for searching: ");
 	        final JLabel numFoundMsg = new JLabel("");
-	        //JLabel numFoundMsg = new JLabel(" Type in the string for searching: ");
 	        final JTextField keywordInput = new JTextField();
 	        final JCheckBox case_CheckBox = new JCheckBox("Case sensitive");
 	        final JCheckBox whole_CheckBox = new JCheckBox("Whole Word");
@@ -93,8 +98,6 @@ public class SearchTextFrame extends JFrame {
 		    	                .addComponent(prevButton)
 		    	                .addComponent(nextButton)
 		    	                .addComponent(cancelButton))
-		                
-		        		
 		            )
 	             )
 	        );
@@ -102,10 +105,8 @@ public class SearchTextFrame extends JFrame {
 	        layout.linkSize(SwingConstants.HORIZONTAL, findButton, prevButton, nextButton, cancelButton);
 
 	        layout.setVerticalGroup(layout.createSequentialGroup()
-	           // .addGroup(layout.createParallelGroup(BASELINE)
-	                .addComponent(label)
-	                
-	                .addComponent(keywordInput)//)	
+	                .addComponent(label)                
+	                .addComponent(keywordInput)	
 	                .addComponent(numFoundMsg)
 	                
 	            .addGroup(layout.createParallelGroup(LEADING)
@@ -113,16 +114,13 @@ public class SearchTextFrame extends JFrame {
 	                .addGroup(layout.createSequentialGroup()
 	                    .addGroup(layout.createParallelGroup(BASELINE)
 	                        .addComponent(case_CheckBox)
-	                      //  .addComponent(wrap_CheckBox))
-	                   // .addGroup(layout.createParallelGroup(BASELINE)
 	                        .addComponent(whole_CheckBox)
 	                        .addComponent(regExpr_CheckBox))))
 	            .addGroup(layout.createParallelGroup(LEADING)
 	                    	.addComponent(findButton)
 	                    	.addComponent(prevButton)
 	                    	.addComponent(nextButton)
-	                    	.addComponent(cancelButton))
-	            
+	                    	.addComponent(cancelButton))	            
 	            );
 	        
 	        setTitle("Search");
@@ -169,9 +167,6 @@ public class SearchTextFrame extends JFrame {
                     	case_CheckBox.setEnabled(true);
             	        whole_CheckBox.setEnabled(true);
                     }
-
-                 //   validate();
-                 //   repaint();
                 }
             });
 	        
@@ -218,7 +213,6 @@ public class SearchTextFrame extends JFrame {
 	        {
 		          public void actionPerformed(ActionEvent e)
 		          {
-		           // System.out.println("next");
 		            cntFound = noteFrame.highlightPrev(jTextArea2, cntFound);
 
 		            if(cntFound == 0)
@@ -228,7 +222,6 @@ public class SearchTextFrame extends JFrame {
 		            else 
 		            	foundMsg= (cntFound+1) +"th of "+numFound+" words";
 		            
-		            System.out.println(foundMsg);
 		            numFoundMsg.setText(foundMsg);
 		            numFoundMsg.setForeground(Color.decode("0x092746"));
 		          }
@@ -238,7 +231,6 @@ public class SearchTextFrame extends JFrame {
 	        {
 	          public void actionPerformed(ActionEvent e)
 	          {
-	           // System.out.println("next");
 	            cntFound = noteFrame.highlightNext(jTextArea2, cntFound);
 	            
 	            if(cntFound == 0)
@@ -248,7 +240,6 @@ public class SearchTextFrame extends JFrame {
 	            else 
 	            	foundMsg= (cntFound+1) +"th of "+numFound+" words";
 	            
-	            System.out.println(foundMsg);
 	            numFoundMsg.setText(foundMsg);
 	            numFoundMsg.setForeground(Color.decode("0x092746"));
 	          }
@@ -262,20 +253,17 @@ public class SearchTextFrame extends JFrame {
 	        	  setVisible(false);
 	          }
 	        });
-	        
-	        
-	        pack();
-	    
-	     
+
+	        pack();    
 	    }
 	
 
 	// search option
-	// default: 0
-		// case sensitive: 1
-		// case sensitive + whole word: 2
-		// case insensitive + whole word: 3
-	// case sensitive + regular expression: 4
+	// case insensitive (default): 0
+	// case sensitive: 1
+	// case sensitive + whole word: 2
+	// case insensitive + whole word: 3
+	// regular expression: 4
 	private int setSearchOption(boolean caseSen, boolean whole, boolean regEx)
 	{
 		int searchOpt = 0;
@@ -283,8 +271,6 @@ public class SearchTextFrame extends JFrame {
 		{
 			if(whole == true && regEx == false)
 				searchOpt = 2; // case sensitive + whole word: 2
-			//else if(whole == false && regEx == true)
-			//	searchOpt = 4; // case sensitive + regular expression: 4
 			else
 				searchOpt = 1; // case sensitive: 1
 			
@@ -293,32 +279,23 @@ public class SearchTextFrame extends JFrame {
 		{
 			if(whole == true && regEx == false)
 				searchOpt = 3; // case insensitive + whole word: 3
-			else if(whole == false && regEx == true) // case insensitive + regular expression: -> nonsense, disable other checkboxes
+			else if(whole == false && regEx == true) // regular expression: 4
 				searchOpt = 4;			
 			else
-				searchOpt = 0;
+				searchOpt = 0; // case insensitive (default)
 		}
 		return searchOpt;
 	}
 	
 	private void jFindActionPerformed(String keyword, int searchOpt)
     {
-      System.out.println("Find : "+find);//+keywordInput.getText());
       caretPosition=0;
       cntFound=-1;
-      int first_loc = findTerm(keyword, searchOpt);
-     // noteFrame.highlight(jTextArea2, first_loc, first_loc+find.length());          
+      findTerm(keyword, searchOpt);
     }
 	
 	public int findTerm(String keyword, int searchOpt)
-	{ 
-		
-		/*
-		 * JCheckBox case_CheckBox = new JCheckBox("Case sensitive");
-	        JCheckBox whole_CheckBox = new JCheckBox("Whole Word");
-	        JCheckBox regExpr_CheckBox = new JCheckBox("Regular expressions");
-	        
-		 */
+	{ 		
 		int newCaretPosition=0;
 		 if (keyword != null && !keyword.equals("")) {
 	    			 newCaretPosition = noteFrame.highlight(jTextArea2, keyword, searchOpt);
@@ -326,13 +303,9 @@ public class SearchTextFrame extends JFrame {
 	    			{
 	    				try
 	    				{
-	    				//added by hkpark
-	    				Rectangle viewRect = jTextArea2.modelToView(newCaretPosition);
-	    				jTextArea2.scrollRectToVisible(viewRect);
-	    				//
-	    				jTextArea2.setCaretPosition(newCaretPosition);
-	    				//added by hkpark
-	    				//jTextArea2.moveCaretPosition(pos);
+		    				Rectangle viewRect = jTextArea2.modelToView(newCaretPosition);
+		    				jTextArea2.scrollRectToVisible(viewRect);
+		    				jTextArea2.setCaretPosition(newCaretPosition);
 	    				} catch (Exception exp) {
 	                        exp.printStackTrace();
 	                    }

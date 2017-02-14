@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
@@ -7,15 +7,7 @@
  *  
  *  	Wensong Pan (MGH)
  *		Shawn Murphy, MD, PH.D (MGH)
- */
-
-/*
- * Modified by hkpark
- * Added Zooming function by mouse wheel
- * 
- * Replaced "Person_#" to "ID: #" (Starting string of a patient information)
- * added a new variable, ptStr, for future variation
- * 
+ *		Heekyong Park (hpark25) (MGH)
  */
 
 package edu.harvard.i2b2.explorer.ui;
@@ -78,7 +70,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	public boolean relabeling = true;
 	public boolean slide = false; // make it public to be accessed by facet.java
 	public boolean search = false;
-	//added by hkpark
 	public String ptStr = "ID: #";
 	private boolean stream = false, rubber = false;
 	private int inClick = 0;
@@ -98,10 +89,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	private int cur_clicked_x;
 	private int cur_clicked_y;
 	
-	// added by hkpark
-	private int wheelZoomCounter=0;
-	
-	// private UserInfoBean uib = null;
 	Image offScreenImage;
 	boolean threadTest = false;
 	private int rubber_startX, rubber_startY, rubber_endX, rubber_endY;
@@ -109,8 +96,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	boolean selectedAgg = false;
 	boolean choiceIsUp = false;
 	private Choice testChoice;
-	private Menu testMenu;
-	// private LiteLabel infoTipLabel = null;
 	private LiteLabel infoTipLabel = null;
 	private InfoJFrame infoFrame = null;
 	private TextViewerFrame textFrame = null;
@@ -124,7 +109,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	private GenRecord cur_selectedRecord = null;
 
 	private ViewPart textAnalyzerView;
-	// private Display timeLineDisplay;
 	// for excentric
 	/**
 	 * Idle object triggering the timeout when the user doesn't move.
@@ -239,8 +223,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	Color ly = new Color(230, 237, 210);
 	Color lly = new Color(201, 199, 205);
 	Color lp = new Color(255, 200, 255); // stands for lightpurple
-	Color lb = new Color(255, 245, 200); // stands for lightbrown was
-	// 255,236,200
+	Color lb = new Color(255, 245, 200); // stands for lightbrown was 255,236,200
 	Color db = new Color(255, 236, 175); // stands for darkbrown
 	Facet afacetRecord; // list of facets
 	// what the data hashtable gets loaded into, a list of facets (i.e.
@@ -261,7 +244,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		
 		setLabelFont(11); // default font size is 12
 		testChoice = new Choice();
-		testMenu = new Menu("test");
 		this.today = today;
 		this.thisApplet = thisApplet;
 
@@ -269,8 +251,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		int strWidth;
 		this.width = width;
 		this.height = height;
-
-		// timeLineDisplay = PlatformUI.getWorkbench().getDisplay();
 
 		// Default values for the zooming options when starting up
 		ResourceTable.put(new String("zoom_ratio"), new Integer(1));/*
@@ -307,8 +287,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		n_key = recordTable.size();
 		keyLabels = new String[n_key];
 		Facet afacetRecord;
-		// MyDate lastEndDate = new MyDate(1,1,2010);
-
+		
 		idleO = new Idle() {
 			public void idle(int x, int y) {
 				TimeLinePanel.this.idle(x, y, true);
@@ -365,17 +344,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			hide_labels();
 			this.selectedRecord = null;
 		}
-
-		/*
-		 * int x=e.getX(); int y=e.getY();
-		 * 
-		 * genRecord selectedRecord = inRegion(x,y,true,true); if(selectedRecord
-		 * != null) { infoTipLabel = new
-		 * LiteLabel(selectedRecord.getInputLine(), new Point(x+10, y+10), 1,
-		 * fontMetrics1.getFont(), Color.black, Color.yellow);
-		 * infoTipLabel.setAlignment(LiteLabel.LEFT);
-		 * repaint_rect(infoTipLabel.getBounds()); }
-		 */
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -558,7 +526,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 				}
 
-				//GenRecord selectedRecord = inRegion(x, y, true, false);
 				final GenRecord selectedRecord = inRegion(x, y, true, false);
 				if (selectedRecord != null) {
 
@@ -568,22 +535,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 
 					String concept_cd = xtras[2];
 
-					// String concept_cd =
-					// msgs[7].substring(msgs[7].lastIndexOf("$$")+2,
-					// msgs[7].lastIndexOf("\""));
 
-					// changing to valueTypeCd == 'B' and blob not equal null
-					// below instead of concept code checks
-					// if (!System.getProperty("applicationName").equals("BIRN")
-					// && (!(("LCS-I2B2:c1009c".indexOf(concept_cd)>=0) ||
-					// ("LCS-I2B2:c1010c".indexOf(concept_cd)>=0)
-					// || ("LCS-I2B2:c1011c".indexOf(concept_cd)>=0) ||
-					// ("LCS-I2B2:pul".indexOf(concept_cd)>=0)))) {
-					// return;
-					// }
-
-					String patientNumber = xtras[1]; // msgs[7].substring(msgs[7].indexOf("$$")+2,
-					// msgs[7].lastIndexOf("$$"));
+					String patientNumber = xtras[1]; 
 					String start_date = msgs[1];
 					String encounterNumber = xtras[3];
 					String providerId = xtras[4];
@@ -596,12 +549,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						if (xtras[6] != null && xtras[6].length() > 0)
 							start_date = xtras[6];
 					}
-
-					// if (uib == null) {
-					// LoginDHelper ldh = new LoginDHelper();
-					// uib = ldh.getUserInfo(System.getProperty("user"),
-					// System.getProperty("pass"));
-					// }
 
 					String[] blobdata = getNotes(patientNumber, concept_cd,
 							start_date, encounterNumber, providerId,
@@ -625,19 +572,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						return;
 					}
 
-					// Application app;
-					// app = new Application();
-					// app.setClassName("edu.harvard.i2b2.timeline.external.NotesViewer");
 					if ((blobdata[1].equals("B"))
 							&& ((blobdata[2].trim()).equals("X")))
 						note = decryptBlob(note);
-					// app.setEncrypted(true);
-					// else
-					// app.setEncrypted(false);
-					// app.setName("Display Note");
-
-					// if (app.getEncrypted())
-					// note = decryptBlob(note);
 
 					if (note != null
 							&& note
@@ -646,20 +583,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								"Not a valid decryption key.");
 						return;
 					}
-
-					/*
-					 * try { System.gc();
-					 * 
-					 * Class appClass = Class.forName(app.getClassName());
-					 * Object lObject = appClass.newInstance();
-					 * 
-					 * Executor exe = (Executor) lObject;
-					 * 
-					 * exe.init(app, note );
-					 * 
-					 * exe.execute(); } catch (Exception ee) {
-					 * System.out.println(ee.getMessage()); }
-					 */
 
 					String xmlPdoData = blobdata[3];
 					StringWriter strWriter = null;
@@ -694,7 +617,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								.println("Error marshalling Explorer drag text");
 					}
 
-					// System.out.println("DND content: "+strWriter.toString());
 					final String dndXmlData = strWriter.toString();
 
 					// get text analyzer View (NEW)
@@ -717,8 +639,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								getOfg();
 								//new TextViewerFrame(note, dndXmlData)
 								if(textFrame != null) {
-									textFrame.setVisible(false);
-									textFrame.dispose();
+									textFrame.disposeTextViewerFrame();
+									//textFrame.setVisible(false);
+									//textFrame.dispose();
 									textFrame = null;
 								}
 								textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
@@ -747,10 +670,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					 * catch block e.printStackTrace(); } } }); }
 					 */
 					
-					// added by hkpark
-					//if(selectedRecord.mark_status.equalsIgnoreCase("N"))
-					//	selectedRecord.mark_status="R";
-					//else 
+					
 					if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
 						selectedRecord.mark_status="R";
 					repaint();
@@ -762,35 +682,17 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			if (e.getClickCount() == 1) {
 				GenRecord selectedRecord = inRegion(x, y, true, false);
 				if (selectedRecord != null) {
-					/////////////////////////////////////
 					if(cur_selectedRecord != null) {
 						cur_selectedRecord.wp_select = false;
 					}
 					selectedRecord.wp_select = true;
 					cur_selectedRecord = selectedRecord;
-					////////////////////////////////////
 					String msg = selectedRecord.getInputLine();
 					String[] msgs = msg.split(",");
 					String[] xtras = msgs[7].split("\\$\\$");
 
-					String concept_cd = xtras[2];
-
-					// String concept_cd =
-					// msgs[7].substring(msgs[7].lastIndexOf("$$")+2,
-					// msgs[7].lastIndexOf("\""));
-
-					// changing to valueTypeCd == 'B' and blob not equal null
-					// below instead of concept code checks
-					// if (!System.getProperty("applicationName").equals("BIRN")
-					// && (!(("LCS-I2B2:c1009c".indexOf(concept_cd)>=0) ||
-					// ("LCS-I2B2:c1010c".indexOf(concept_cd)>=0)
-					// || ("LCS-I2B2:c1011c".indexOf(concept_cd)>=0) ||
-					// ("LCS-I2B2:pul".indexOf(concept_cd)>=0)))) {
-					// return;
-					// }
-
-					String patientNumber = xtras[1]; // msgs[7].substring(msgs[7].indexOf("$$")+2,
-					// msgs[7].lastIndexOf("$$"));
+					String concept_cd = xtras[2];				
+					String patientNumber = xtras[1]; 
 					String start_date = msgs[1];
 					String encounterNumber = xtras[3];
 					String providerId = xtras[4];
@@ -804,16 +706,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 							start_date = xtras[6];
 					}
 
-					// if (uib == null) {
-					// LoginDHelper ldh = new LoginDHelper();
-					// uib = ldh.getUserInfo(System.getProperty("user"),
-					// System.getProperty("pass"));
-					// }
-
-					//String[] blobdata = getNotes(patientNumber, concept_cd,
-							//start_date, encounterNumber, providerId,
-							//modifier_cd);
-					
 					ObservationType ob = getObservation(patientNumber, concept_cd,
 							start_date, encounterNumber, providerId,
 							modifier_cd);
@@ -826,70 +718,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					// [1] is valueTypeCd
 					// [2] is valueFlagCd
 					// [3] is PDO
-					//note = (String) ob.getObservationBlob()
-							//.getContent().get(0);//blobdata[0];
-					
-					//////////////////////////////////////
-					/*String msg = selectedRecord.getInputLine();
-					String[] msgs = msg.split(",");
-					if (msgs[4].equalsIgnoreCase("p4")) {
-						msgs[4] = "Very Low";
-					} else if (msgs[4].equalsIgnoreCase("p8")) {
-						msgs[4] = "Low";
-					} else if (msgs[4].equalsIgnoreCase("p10")) {
-						msgs[4] = "Normal";
-					} else if (msgs[4].equalsIgnoreCase("p12")) {
-						msgs[4] = "High";
-					} else if (msgs[4].equalsIgnoreCase("p18")) {
-						msgs[4] = "Very High";
-					} else if (msgs[4].equalsIgnoreCase("p1")) {
-						return;
-					}
-
-					String val = " ";
-					// String concept = msgs[7].substring(msgs[7].indexOf("::")+2,
-					// msgs[7].lastIndexOf("::"));
-					String infotip = null;
-					String[] xtras = msgs[7].split("\\$\\$");
-					String name = xtras[0];
-					String conceptName = "";
-					String concept_cd = xtras[2];
-					if (name.startsWith("\"E")) {
-						conceptName = name.substring(name.indexOf("::") + 2, name
-								.lastIndexOf("::"));
-						infotip = conceptName + ", " + msgs[1];
-					} else if (name.startsWith("\"C")) {
-						// conceptName = PDOQueryClient.getCodeInfo(concept_cd);
-						conceptName = name.substring(name.indexOf("::") + 2, name
-								.lastIndexOf("::"));
-						if (conceptName == null || conceptName.equals("")) {
-							conceptName = PDOQueryClient.getCodeInfo(concept_cd);
-						}
-						if (msgs[7].indexOf("Value") >= 0) {
-							val = xtras[0].substring(
-									xtras[0].lastIndexOf(": ") + 2, xtras[0]
-											.length() - 2);
-							infotip = conceptName + " ("
-									+ makeReadableCodeString(concept_cd) + "), "
-									+ val + "(" + msgs[4] + ")" + ", " + msgs[1];// +": "+val+" ("+msgs[4]+")";
-						} else {
-							infotip = conceptName + " ("
-									+ makeReadableCodeString(concept_cd) + "), "
-									+ msgs[1];
-						}
-						System.out.println("concept_cd: " + concept_cd + " code: "
-								+ makeReadableCodeString(concept_cd));
-					}*/
-					
-	                ////////////////////
-					/*LiteLine lineLabel = new LiteLine(new Point(20, 0),
-								new Point(20, 299),//new Double(getSize().getHeight()).intValue()),
-								7,
-								Color.red);
-						
-					Rectangle r1 = lineLabel.getBounds();	
-					repaint_rect(r1);*/
-					////////////////////////////
 								
 					if(infoFrame != null) {
 						infoFrame.setVisible(false);
@@ -898,13 +726,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					}
 					
 					infoFrame = new InfoJFrame(this, ob, selectedRecord);
-					//infoFrame.setUndecorated(true);
-					//infoFrame.setInfo(conceptName + "\n"
-							//+ makeReadableCodeString(concept_cd) + "\n" + msgs[1]
-									//+ "\n" + xtras[5].replaceAll("@2@", "\n"));
-					//infoFrame.setLocation(400, 300);
 					
-					// modified by hkpark
 					// size change 
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					int infoFramePos_x, infoFramePos_y;
@@ -917,16 +739,11 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else
 						infoFramePos_x = this.getLocationOnScreen().x+x-150;
 					
-					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin)
+					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin+40) // added 40 to avoid overlapping by the bottom windows' start bar
 						infoFramePos_y = this.getLocationOnScreen().y + y - 200-margin;
 					else
 						infoFramePos_y = this.getLocationOnScreen().y + y + margin;
-					
-					/*
-					else
-						infoFrame.setBounds(this.getLocationOnScreen().x+x-150, this.getLocationOnScreen().y + y
-								+ 15, 381, 200);
-					*/
+
 					infoFrame.setBounds(infoFramePos_x, infoFramePos_y, 381, 200);
 					
 					if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
@@ -934,38 +751,11 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					repaint();
 					infoFrame.repaint();
 							
-					//infoFrame.setUndecorated(true);
-					infoFrame.setVisible(true);
-									
-					///////////////////////////////////
-					
-					// DragLabel drgL = new DragLabel("this is a test");
-					/*
-					 * String msg = selectedRecord.getInputLine(); String []
-					 * msgs = msg.split(","); if(msgs[4].equalsIgnoreCase("p2"))
-					 * { msgs[4] = "Very Low"; } else
-					 * if(msgs[4].equalsIgnoreCase("p8")) { msgs[4] = "Low"; }
-					 * else if(msgs[4].equalsIgnoreCase("p10")) { msgs[4] =
-					 * "Normal"; } else if(msgs[4].equalsIgnoreCase("p12")) {
-					 * msgs[4] = "High"; } else
-					 * if(msgs[4].equalsIgnoreCase("p20")){ msgs[4] =
-					 * "Very High"; } String val =
-					 * msgs[7].substring(msgs[7].indexOf("=")+1,
-					 * msgs[7].length()-1); String infotip =
-					 * msgs[1]+" to "+msgs[2]+":"+val+"("+msgs[4]+")";
-					 * infoTipLabel = new LiteLabel(infotip, new Point(x+10,
-					 * y+10), 1, fontMetrics1.getFont(), Color.black,
-					 * Color.yellow); infoTipLabel.setAlignment(LiteLabel.LEFT);
-					 * repaint_rect(infoTipLabel.getBounds());
-					 */
+					infoFrame.setVisible(true);					
 				} else {
 					if (x > 102) { // single click on the backgroup to zoom in
 						relabeling = true;
-						// if( !e.isMetaDown() && !e.isShiftDown() &&
-						// !e.isControlDown()) { // zoom in
 						lastInX = x;
-						System.out.println("hkpark] zoomCounter: "+zoomCounter+", zoom_steps: "+zoom_steps
-								+", outClick: "+outClick+", inClick:"+inClick);
 						zoomIn(i, x, y);
 						if (!nothingSelected(x, y) && (e.getClickCount() == 2)
 								&& !e.isShiftDown() && !e.isControlDown()) { // double
@@ -975,7 +765,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 							// URL
 							decStatus(i, x, y);
 						}
-						// lastInX = x;
 						lastInY = y;
 					}
 				}
@@ -984,17 +773,14 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		}
 	}
 	
-	// added by hkpark
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int i = 0;
 		int x = e.getX();
 		int y = e.getY();
 		int notches = e.getWheelRotation();
 		
-	    
-		System.out.println("hkpark: notches: "+notches);
 		if (x > 102) { // mouse wheel scroll on the backgroup to zoom in & out
-			if(inClick==3) // hkpark. to avoid bug. maybe need to fix again
+			if(inClick==3) // hkpark. To prevent bug. maybe need to fix again
 							// The inClick value does not change to 0 when zooming by scroll.
 							// Therefore, when scrolling much at once, inClick increases to more than 100 and zooming error occurs
 			{
@@ -1003,58 +789,18 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			else{
 			if (notches < 0) { // Mouse wheel moved UP
 				relabeling = true;				
-				System.out.println("hkpark: zoomIn - Scroll amount: " + e.getScrollAmount() + " unit increments per notch");
 				zoomIn(i, x, y);
 				lastInX = x;
 				lastInY = y;	
 			}
 		    else {	// Mouse wheel moved DOWN 
-		    	System.out.println("hkpark: zoomOut - Scroll amount: " + e.getScrollAmount() + " unit increments per notch");
-				zoomOut(i, x, y);
+		    	zoomOut(i, x, y);
 				lastOutX = x;		
 				lastOutY = y;
 		    }		
-			/*
-			if (rubber) {
-				rubber = false;
-				stream = true;
-				repaint();
-			}
-			*/
-			}
-			System.out.println("hkpark] zoomCounter: "+zoomCounter+", zoom_steps: "+zoom_steps
-					+", outClick: "+outClick+", inClick:"+inClick);
-								
+			}	
 		}
-		
 	}
-
-		
-
-	/*
-	 * public class DragLabel extends JLabel { public DragLabel(String s) {
-	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
-	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
-	 * 
-	 * // component, action, listener
-	 * this.dragSource.createDefaultDragGestureRecognizer( this,
-	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
-	 * dragSource; private DragGestureListener dgListener; private
-	 * DragSourceListener dsListener; }
-	 * 
-	 * public class DGListener implements DragGestureListener { public void
-	 * dragGestureRecognized(DragGestureEvent e){
-	 * 
-	 * try { Transferable transferable = ... //initial cursor, transferable,
-	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
-	 * dsListener); // or if dragSource is an instance variable: //
-	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
-	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
-	 * System.err.println( idoe ); } }
-	 * 
-	 * }
-	 */
-	
 
 	public void mouseDragged(MouseEvent e) {
 		System.out.println("mouse Dragged");
@@ -1077,14 +823,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		//if (this.infoTipLabel != null) {
-			//infoTipLabel.setVisible(false);
-			//infoTipLabel = null;
-		//}
+		;
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		;
 	}
 
 	public void mouseExited(MouseEvent e) {
@@ -1124,7 +866,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public void paint(Graphics g) {
-		//System.out.println("repainting");
 		Facet aFacet = null;
 		noRects = true;
 		int scrollBarY = 0;
@@ -1147,7 +888,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				// will have to be caught here (or in some component). dan
 				// 1/9/97
 				ofg.setColor(Color.gray);
-				// ofg.fillRect(1,currentY,10,10);
 
 				// if(record.theTabPanel.tlpScroll.getValue() == 100 ) {
 				// System.out.println("scroll position: " +
@@ -1205,9 +945,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 										+ textstream.currentY
 										- getFontTextHeight() - 2, textstream
 										.getLabelWidth(), getFontTextHeight());
-								// g.drawString(textstream.getCause(),
-								// textstream.getLabelX(),
-								// textstream.getLabelY()+textstream.currentY-2);
 							}
 							// strange, pending, why the band disappears
 							g.drawRect(rubber_startX, rubber_startY,
@@ -1220,8 +957,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 
 								textstream = (StoryRecord) streamlist
 										.elementAt(j);
-								// textstream.draw(currentY, this, false, true,
-								// true, false, false);
 								g.setColor(Color.black);
 								g
 										.setFont(Record.theTabPanel.theTimeLinePanel.fontMetrics1
@@ -1254,7 +989,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								g.drawRect(rubber_startX, rubber_startY,
 										rubber_endX - rubber_startX,
 										rubber_endY - rubber_startY);
-								// g.setColor(Color.gray);
 							}
 
 							stream = false;
@@ -1342,8 +1076,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			}
 			inClick = 0;/* modified 11/22 */
 		}
-		// inClick = 0;
-
+		
 		if (outClick > 0) {
 			while (outClick != zoom_steps) {
 				int i = 0;
@@ -1357,30 +1090,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			outClick = 0;
 		}
 	}
-
-	/*
-	 * public class DragLabel extends JLabel { public DragLabel(String s) {
-	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
-	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
-	 * 
-	 * // component, action, listener
-	 * this.dragSource.createDefaultDragGestureRecognizer( this,
-	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
-	 * dragSource; private DragGestureListener dgListener; private
-	 * DragSourceListener dsListener; }
-	 * 
-	 * public class DGListener implements DragGestureListener { public void
-	 * dragGestureRecognized(DragGestureEvent e){
-	 * 
-	 * try { Transferable transferable = ... //initial cursor, transferable,
-	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
-	 * dsListener); // or if dragSource is an instance variable: //
-	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
-	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
-	 * System.err.println( idoe ); } }
-	 * 
-	 * }
-	 */
 	
 	public static void setApplet(NewApplet inApplet) {
 		theApplet = inApplet;
@@ -1392,25 +1101,12 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	 * and call the layout algorithm.
 	 */
 	public void show_labels(int x, int y, boolean layoutY) {
-		//////////
 		for (int a = 0; a < n_key; a++) {
 			Facet tempFacet = (Facet) (recordTable.get(new Integer(a)));
 			if (tempFacet.checkTitleContainsFull(x, y)) {
-				//if (System.getProperty("identityService").equals("")) {
-					//return;
-				//}
-
 				String title = tempFacet.fullName();
-				//modified by hkpark
 				if (title.indexOf(ptStr) < 0) {
 					hide_labels();
-					/*if(infoTipLabel == null) {
-						infoTipLabel = new InfoDialog();
-					}
-					infoTipLabel.setInfoTip(title);
-					infoTipLabel.setBounds(this.getLocationOnScreen().x+x-150, this.getLocationOnScreen().y + y
-							+ 15, 360, 140);
-					infoTipLabel.setVisible(true);*/
 					infoTipLabel = new LiteLabel(title,
 							new Point(x+10, y+30),
 							1,
@@ -1444,7 +1140,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			}
 		}
 
-		//////////
 		
 		GenRecord selectedRecord_cur = inRegion(x, y, true, false);
 		if (selectedRecord_cur == null) {
@@ -1457,15 +1152,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			return;
 		}
 
-		//if (selectedRecord == null) {
-			selectedRecord = selectedRecord_cur;
-			//hide_labels();
-		//} else {
-			hide_labels();
-		//}
+		selectedRecord = selectedRecord_cur;
+		hide_labels();
 
 		Point p = new Point(x, y);
-		// Vector streamlist = new Vector();
 		Vector substreamlist;
 		Facet aFacet = null;
 
@@ -1485,7 +1175,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				aFacet = (Facet) (recordTable.get(new Integer(i)));
 				substreamlist = aFacet.rubber_band(x, y, cursor_radius);
 				for (int j = 0; j < substreamlist.size(); j++) {
-					// streamlist.addElement(substreamlist.elementAt(j));
 					StoryRecord thisRecord = (StoryRecord) (substreamlist
 							.elementAt(j));
 					int centerX = thisRecord.startX
@@ -1558,21 +1247,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					else {
 						infotip = conceptName+dcstr+msgs[1];
 					}
-					System.out.println("concept_cd: "+concept_cd+" code: "
-							+makeReadableCodeString(concept_cd));
 				}
-				//else if(name.startsWith("\"P")) {					
-				//	conceptName = getProviderDetails(concept_cd);
-				//	infotip = conceptName+" ("+concept_cd+"), "+msgs[1];
-				//}
-				
-				/*if(msgs[7].indexOf("Value")>=0) {
-					val = xtras[0].substring(xtras[0].lastIndexOf(": ")+2, xtras[0].length()-2);
-					infotip = conceptName+" ("+makeReadableCodeString(concept_cd)+"), "+val+"("+msgs[4]+")"+", "+msgs[1];//+": "+val+" ("+msgs[4]+")";
-				}
-				else {
-					infotip = conceptName+" ("+makeReadableCodeString(concept_cd)+"), "+msgs[1];
-				}*/
 								
 				infoTipLabel = new LiteLabel(infotip,
 						new Point(x+10, y+30),
@@ -1598,87 +1273,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					infoTipLabel.setAlignment(LiteLabel.RIGHT);
 				}
 				else {
-					infoTipLabel.setAlignment(LiteLabel.RIGHT);//CENTER);
+					infoTipLabel.setAlignment(LiteLabel.RIGHT);
 				}
 				
 				repaint_rect(infoTipLabel.getBounds());  
-				// String concept = msgs[7].substring(msgs[7].indexOf("::")+2,
-				// msgs[7].lastIndexOf("::"));
-				/*String infotip = null;
-				String[] xtras = msgs[7].split("\\$\\$");
-				String name = xtras[0];
-				String conceptName = "";
-				String concept_cd = xtras[2];
-				if (name.startsWith("\"E")) {
-					conceptName = name.substring(name.indexOf("::") + 2, name
-							.lastIndexOf("::"));
-					infotip = conceptName + ", " + msgs[1];
-				} else if (name.startsWith("\"C")) {
-					// conceptName = PDOQueryClient.getCodeInfo(concept_cd);
-					conceptName = name.substring(name.indexOf("::") + 2, name
-							.lastIndexOf("::"));
-					if (conceptName == null || conceptName.equals("")) {
-						conceptName = PDOQueryClient.getCodeInfo(concept_cd);
-					}
-					if (msgs[7].indexOf("Value") >= 0) {
-						val = xtras[0].substring(
-								xtras[0].lastIndexOf(": ") + 2, xtras[0]
-										.length() - 2);
-						infotip = conceptName + " ("
-								+ makeReadableCodeString(concept_cd) + "), "
-								+ val + "(" + msgs[4] + ")" + ", " + msgs[1];// +": "+val+" ("+msgs[4]+")";
-					} else {
-						infotip = conceptName + " ("
-								+ makeReadableCodeString(concept_cd) + "), "
-								+ msgs[1];
-					}
-					System.out.println("concept_cd: " + concept_cd + " code: "
-							+ makeReadableCodeString(concept_cd));
-				}
-				// else if(name.startsWith("\"P")) {
-				// conceptName = getProviderDetails(concept_cd);
-				// infotip = conceptName+" ("+concept_cd+"), "+msgs[1];
-				// }
-
-				/*
-				 * if(msgs[7].indexOf("Value")>=0) { val =
-				 * xtras[0].substring(xtras[0].lastIndexOf(": ")+2,
-				 * xtras[0].length()-2); infotip =
-				 * conceptName+" ("+makeReadableCodeString
-				 * (concept_cd)+"), "+val+
-				 * "("+msgs[4]+")"+", "+msgs[1];//+": "+val+" ("+msgs[4]+")"; }
-				 * else { infotip =
-				 * conceptName+" ("+makeReadableCodeString(concept_cd
-				 * )+"), "+msgs[1]; }
-				 */
-
-				/*
-				 * infoTipLabel = new LiteLabel(infotip, new Point(x + 10, y +
-				 * 30), 1, fontMetrics1.getFont(), Color.black, Color.yellow);
-				 */
-				/*if(infoTipLabel == null) {
-					infoTipLabel = new InfoDialog();
-				}
-				infoTipLabel.setInfoTip(conceptName + "\n"
-						+ makeReadableCodeString(concept_cd) + "\n" + msgs[1]
-						+ "\n" + xtras[5].replaceAll("@2@", "\n"));
-				infoTipLabel.setBounds(this.getLocationOnScreen().x+x-150, this.getLocationOnScreen().y + y
-						+ 15, 360, 140);
-				infoTipLabel.setVisible(true);*/
-
-				// Rectangle r = infoTipLabel.getBounds();
-				/*
-				 * if (y > getSize().getHeight() - 40) { infoTipLabel = new
-				 * LiteLabel(infotip, new Point(x + 10, y - 5), 1,
-				 * fontMetrics1.getFont(), Color.black, Color.yellow); }
-				 * 
-				 * if ((x + r.width) < (getSize().width - 10)) {
-				 * infoTipLabel.setAlignment(LiteLabel.LEFT); } else if (x >
-				 * r.width) { infoTipLabel.setAlignment(LiteLabel.RIGHT); } else
-				 * { infoTipLabel.setAlignment(LiteLabel.RIGHT);// CENTER); }
-				 */
-
-				// repaint_rect(infoTipLabel.getBounds());
 			}
 		}
 	}
@@ -1696,14 +1294,11 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	 */
 	public void hide_labels() {
 		if (Record.excentric && cursor != null) {
-			// System.out.println("hide labels");
 			Rectangle r = labels.getBounds().union(cursor.getBounds());
 			labels.removeAllElements();
 			cursor = null;
 			repaint_rect(r);
-		} else if (Record.infotip && infoTipLabel != null) {			
-			//infoTipLabel.setVisible(false);
-			//infoTipLabel = null;
+		} else if (Record.infotip && infoTipLabel != null) {		
 			Rectangle r = infoTipLabel.getBounds();
 			infoTipLabel = null;
 			repaint_rect(r);
@@ -1898,9 +1493,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			GenRecord selectedRecord = tempFacet
 					.inRegion(x, y, data, label, 5);
 			if (selectedRecord != null) {
-				// System.out.println("current x, y: "+x+","+y);
-				// Rectangle r = ((storyRecord) selectedRecord).getBarArea();
-				// System.out.println("matched x, y: "+r.x+","+r.y);
 				return selectedRecord;
 			}
 		}
@@ -1947,9 +1539,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public MyDate coordToDate(int start) {
-
-		// long diff = validDateMin.MinDiff(validDateMax);
-
 		double scaleFactor = (double) ((double) rwinWidth / (double) (aScale
 				.getDateMin()).MinDiff(aScale.getDateMax()));
 
@@ -2021,30 +1610,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		return (aScale.scaleMax(checkThis.getEnddate()));
 	}
 
-	/*
-	 * public class DragLabel extends JLabel { public DragLabel(String s) {
-	 * this.setText(s); this.dragSource = DragSource.getDefaultDragSource();
-	 * this.dgListener = new DGListener(); this.dsListener = new DSListener();
-	 * 
-	 * // component, action, listener
-	 * this.dragSource.createDefaultDragGestureRecognizer( this,
-	 * DnDConstants.ACTION_COPY, this.dgListener ); } private DragSource
-	 * dragSource; private DragGestureListener dgListener; private
-	 * DragSourceListener dsListener; }
-	 * 
-	 * public class DGListener implements DragGestureListener { public void
-	 * dragGestureRecognized(DragGestureEvent e){
-	 * 
-	 * try { Transferable transferable = ... //initial cursor, transferable,
-	 * dsource listener e.startDrag(DragSource.DefaultCopyNoDrop, transferable,
-	 * dsListener); // or if dragSource is an instance variable: //
-	 * dragSource.startDrag(e, DragSource.DefaultCopyNoDrop, transferable,
-	 * //dsListener); }catch( InvalidDnDOperationException idoe ) {
-	 * System.err.println( idoe ); } }
-	 * 
-	 * }
-	 */
-	
 	public void grep(String searchString) {
 		n_key = recordTable.size();
 		Facet tempFacet;
@@ -2078,7 +1643,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		/* START MODIFICATION - Partha 11/22 */
 		zoom_ratio = ((Integer) ResourceTable.get("zoom_ratio")).intValue();
 		zoom_steps = ((Integer) ResourceTable.get("zoom_steps")).intValue();
-		//System.out.println("hkpark] zoom_steps: "+zoom_steps);
 
 		MyDate temp = coordToDate(x);
 
@@ -2098,67 +1662,63 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		System.out.println("ValidDateMin : " + xmin);
 		int xmax = dateToCoord(validDateMax);
 		System.out.println("dateMax ;" + xmax);
-		// if condition added by hkpark
-		// to avoid mouse wheel zooming error
+		// if condition is added to avoid mouse wheel zooming error
 		if(xmin>0 && xmax>0)
-	{		
-		newMin = coordToDate(xmin + (int) (zoom_ratio * 0.08 * (x - xmin)));
-		newMax = coordToDate(xmax - (int) (zoom_ratio * 0.08 * (xmax - x)));
-		lastPosnMax[zoomCounter + 1] = new MyDate(newMax.getMonth(), newMax
-				.getDay(), newMax.getYear(), newMax.getHour(), newMax.getMin());
-		lastPosnMin[zoomCounter + 1] = new MyDate(newMin.getMonth(), newMin
-				.getDay(), newMin.getYear(), newMin.getHour(), newMin.getMin());
-
-		/* END MODIFICATION - Partha 11/22 */
-
-		if (!(newMin.after(newMax))) {
-			for (int slideValue = 1; slideValue < 11; slideValue++) {
-				((MainPanel) getParent()).theYearSlider.adjust(slideValue,
-						newMin, newMax, rwinOffset);// 10 for event type, change
-				// this!
-
-				if (aScale.getMode().equals("month"))
-					((MainPanel) getParent()).theMonthSlider.adjust(slideValue,
-							newMin, newMax, rwinOffset);
-				if (aScale.getMode().equals("day"))
-					((MainPanel) getParent()).theWeekSlider.adjust(slideValue,
-							newMin, newMax, rwinOffset);
-
-				validDateMin = new MyDate(newMin.getMonth(), newMin.getDay(),
-						newMin.getYear(), newMin.getHour(), newMin.getMin());
-				validDateMax = new MyDate(newMax.getMonth(), newMax.getDay(),
-						newMax.getYear(), newMax.getHour(), newMin.getMin());
-				aScale.setScale(validDateMin, validDateMax, today);
-
-				MyDate shouldBeMin = new MyDate(coordToDate(lwinWidth)
-						.getMonth(), coordToDate(lwinWidth).getDay(),
-						coordToDate(lwinWidth).getYear(),
-						coordToDate(lwinWidth).getHour(),
-						coordToDate(lwinWidth).getMin());
-				Record.theTabPanel.upBar.listen(validDateMin, validDateMax);
-				// System.out.println("Before Paint");
+		{		
+			newMin = coordToDate(xmin + (int) (zoom_ratio * 0.08 * (x - xmin)));
+			newMax = coordToDate(xmax - (int) (zoom_ratio * 0.08 * (xmax - x)));
+			lastPosnMax[zoomCounter + 1] = new MyDate(newMax.getMonth(), newMax
+					.getDay(), newMax.getYear(), newMax.getHour(), newMax.getMin());
+			lastPosnMin[zoomCounter + 1] = new MyDate(newMin.getMonth(), newMin
+					.getDay(), newMin.getYear(), newMin.getHour(), newMin.getMin());
+	
+			/* END MODIFICATION - Partha 11/22 */
+	
+			if (!(newMin.after(newMax))) {
+				for (int slideValue = 1; slideValue < 11; slideValue++) {
+					((MainPanel) getParent()).theYearSlider.adjust(slideValue,
+							newMin, newMax, rwinOffset);// 10 for event type, change
+					// this!
+	
+					if (aScale.getMode().equals("month"))
+						((MainPanel) getParent()).theMonthSlider.adjust(slideValue,
+								newMin, newMax, rwinOffset);
+					if (aScale.getMode().equals("day"))
+						((MainPanel) getParent()).theWeekSlider.adjust(slideValue,
+								newMin, newMax, rwinOffset);
+	
+					validDateMin = new MyDate(newMin.getMonth(), newMin.getDay(),
+							newMin.getYear(), newMin.getHour(), newMin.getMin());
+					validDateMax = new MyDate(newMax.getMonth(), newMax.getDay(),
+							newMax.getYear(), newMax.getHour(), newMin.getMin());
+					aScale.setScale(validDateMin, validDateMax, today);
+	
+					MyDate shouldBeMin = new MyDate(coordToDate(lwinWidth)
+							.getMonth(), coordToDate(lwinWidth).getDay(),
+							coordToDate(lwinWidth).getYear(),
+							coordToDate(lwinWidth).getHour(),
+							coordToDate(lwinWidth).getMin());
+					Record.theTabPanel.upBar.listen(validDateMin, validDateMax);
+				}
+	
+				if (!threadTest) {
+					repaint();
+					// threadtest
+				} else {
+					Record.changed = true;
+				}
+	
+				/*
+				 * try { Thread.sleep(250); } catch(InterruptedException ex){};
+				 */
 			}
-
-			if (!threadTest) {
-				// System.out.println("Waiting5");
-				repaint();
-				// threadtest
-			} else {
-				// System.out.println("Waiting6");
-				Record.changed = true;
-			}
-
-			/*
-			 * try { Thread.sleep(250); } catch(InterruptedException ex){};
-			 */
+			inClick++;
+			zoomCounter++;/*
+						 * added Partha -11/23 to keep track of the positions that
+						 * the newMin and the newMax take in zoomIn so that they can
+						 * be reversed in zoomOut
+						 */
 		}
-		inClick++;
-		zoomCounter++;/*
-					 * added Partha -11/23 to keep track of the positions that
-					 * the newMin and the newMax take in zoomIn so that they can
-					 * be reversed in zoomOut
-					 */
-	}
 
 	}
 
@@ -2194,21 +1754,12 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				}
 			}
 		}
-		// int xmin = dateToCoord(newMin);
-		// int xmax = dateToCoord(newMax);
-		// rDiff = dateToCoord(dateMax) - dateToCoord(validDateMax);
-		// lDiff = dateToCoord(validDateMin) - dateToCoord(dateMin);
-		// newMin = coordToDate(xmin - (int)(0.5*lDiff/2));
-		// newMax = coordToDate(xmax + (int)(0.5*rDiff/2));
-		// inClick--;
 		else {
 			zoomCounter--;
 			if (zoomCounter < 0)
 				zoomCounter = 0;
-			// {
 			newMin = lastPosnMin[zoomCounter].copy();
 			newMax = lastPosnMax[zoomCounter].copy();
-			// }
 		}
 		/* END MODIFICATION -Partha 11/22 */
 
@@ -2393,66 +1944,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			String start_date, String encounterNumber, String providerId,
 			String modifier_cd) {
 
-		/*
-		 * Connection oConnection = null; String sSQL = null; ResultSet oRs =
-		 * null; String notes = null; String valtype = null;
-		 * 
-		 * //call pdo service here!!!!! oConnection = DBLib.openJDBCConnection(
-		 * System.getProperty("datamartURL"),
-		 * System.getProperty("datamartDriver"),
-		 * System.getProperty("datamartUser"),
-		 * System.getProperty("datamartPassword"));
-		 * 
-		 * 
-		 * if (System.getProperty("applicationName").equals("BIRN")) {
-		 * 
-		 * sSQL = "select OBSERVATION_BLOB, valtype_cd from " +
-		 * System.getProperty("datamartDatabase") + ".observation_fact" +
-		 * " where event_ide = '"+patientNumber+"' and" +
-		 * " concept_cd = '"+concept_cd+"'" +
-		 * " and date_trunc('second', start_date) = '" + start_date + "'";
-		 * 
-		 * System.out.println("before query: " + new Date());
-		 * System.out.println("Query: " + sSQL);
-		 * 
-		 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); return null; }
-		 * 
-		 * System.out.println("after query: " + new Date());
-		 * 
-		 * try { while(oRs.next()) { //!oRs.isAfterLast()) { notes =
-		 * oRs.getString(1); valtype = oRs.getString(2);
-		 * 
-		 * if(notes != null) { break; } }
-		 * 
-		 * if(notes == null) { return null; } } catch(Exception e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * } else { sSQL = "select OBSERVATION_BLOB, valtype_cd from " +
-		 * System.getProperty("datamartDatabase") + ".observation_fact" +
-		 * " where patient_num = "+patientNumber+" and" +
-		 * " concept_cd = '"+concept_cd+"'" +
-		 * " and start_date = to_date('"+start_date
-		 * +" AM', 'mm-dd-yyyy hh:mi am')";
-		 * 
-		 * System.out.println("before query: " + new Date());
-		 * System.out.println("Query: " + sSQL);
-		 * 
-		 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); return null; }
-		 * 
-		 * System.out.println("after query: " + new Date());
-		 * 
-		 * Clob data = null; try { oRs.next(); while(!oRs.isAfterLast()) { data
-		 * = oRs.getClob(1); valtype = oRs.getString(2); if(data != null) {
-		 * break; } oRs.next(); }
-		 * 
-		 * if(data == null) { return null; } notes = data.getSubString(1,
-		 * (int)(data.length())); System.out.println("notes: " + notes); }
-		 * catch(Exception e) { e.printStackTrace(); } }
-		 * DBLib.closeConnection(oConnection);
-		 */
-
 		try {
 			PDORequestMessageFactory pdoFactory = new PDORequestMessageFactory();
 
@@ -2461,11 +1952,8 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					start_date);
 			String result = PDOQueryClient.sendQueryRequestREST(xmlStr);
 
-			// FileWriter fwr = new FileWriter("c:\\testdir\\response.txt");
-			// fwr.write(result);
 			System.out.println(result);
 			return PDOQueryClient.getNotes(result);
-			// return new String[] {notes, valtype};
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -2476,66 +1964,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			String start_date, String encounterNumber, String providerId,
 			String modifier_cd) {
 
-		/*
-		 * Connection oConnection = null; String sSQL = null; ResultSet oRs =
-		 * null; String notes = null; String valtype = null;
-		 * 
-		 * //call pdo service here!!!!! oConnection = DBLib.openJDBCConnection(
-		 * System.getProperty("datamartURL"),
-		 * System.getProperty("datamartDriver"),
-		 * System.getProperty("datamartUser"),
-		 * System.getProperty("datamartPassword"));
-		 * 
-		 * 
-		 * if (System.getProperty("applicationName").equals("BIRN")) {
-		 * 
-		 * sSQL = "select OBSERVATION_BLOB, valtype_cd from " +
-		 * System.getProperty("datamartDatabase") + ".observation_fact" +
-		 * " where event_ide = '"+patientNumber+"' and" +
-		 * " concept_cd = '"+concept_cd+"'" +
-		 * " and date_trunc('second', start_date) = '" + start_date + "'";
-		 * 
-		 * System.out.println("before query: " + new Date());
-		 * System.out.println("Query: " + sSQL);
-		 * 
-		 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); return null; }
-		 * 
-		 * System.out.println("after query: " + new Date());
-		 * 
-		 * try { while(oRs.next()) { //!oRs.isAfterLast()) { notes =
-		 * oRs.getString(1); valtype = oRs.getString(2);
-		 * 
-		 * if(notes != null) { break; } }
-		 * 
-		 * if(notes == null) { return null; } } catch(Exception e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * } else { sSQL = "select OBSERVATION_BLOB, valtype_cd from " +
-		 * System.getProperty("datamartDatabase") + ".observation_fact" +
-		 * " where patient_num = "+patientNumber+" and" +
-		 * " concept_cd = '"+concept_cd+"'" +
-		 * " and start_date = to_date('"+start_date
-		 * +" AM', 'mm-dd-yyyy hh:mi am')";
-		 * 
-		 * System.out.println("before query: " + new Date());
-		 * System.out.println("Query: " + sSQL);
-		 * 
-		 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-		 * System.out.println(e.getMessage()); return null; }
-		 * 
-		 * System.out.println("after query: " + new Date());
-		 * 
-		 * Clob data = null; try { oRs.next(); while(!oRs.isAfterLast()) { data
-		 * = oRs.getClob(1); valtype = oRs.getString(2); if(data != null) {
-		 * break; } oRs.next(); }
-		 * 
-		 * if(data == null) { return null; } notes = data.getSubString(1,
-		 * (int)(data.length())); System.out.println("notes: " + notes); }
-		 * catch(Exception e) { e.printStackTrace(); } }
-		 * DBLib.closeConnection(oConnection);
-		 */
-
 		try {
 			PDORequestMessageFactory pdoFactory = new PDORequestMessageFactory();
 
@@ -2544,25 +1972,14 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					start_date);
 			String result = PDOQueryClient.sendQueryRequestREST(xmlStr);
 
-			// FileWriter fwr = new FileWriter("c:\\testdir\\response.txt");
-			// fwr.write(result);
 			System.out.println(result);
-			
 			PDOResponseMessageModel pdoresponsefactory = new PDOResponseMessageModel();
 			List<ObservationSet> factSets = pdoresponsefactory
 					.getFactSetsFromResponseXML(result);
 			ObservationSet observationFactSet = factSets.get(0);
 			ObservationType obsFactType = observationFactSet.getObservation()
 					.get(0);
-			//String eNotes = (String) obsFactType.getObservationBlob()
-					//.getContent().get(0);
-			// System.out.println("notes: "+eNotes);
 
-			//return new String[] { eNotes, obsFactType.getValuetypeCd(),
-					//obsFactType.getValueflagCd().getValue(), result };
-			//return result;//PDOQueryClient.getNotes(result);
-			// return new String[] {notes, valtype};
-			
 			return obsFactType;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2677,7 +2094,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			}
 		}
 
-		//GenRecord selectedRecord = inRegion(cur_clicked_x, cur_clicked_y, true, false);
 		final GenRecord selectedRecord = inRegion(cur_clicked_x, cur_clicked_y, true, false);
 		if (selectedRecord != null) {
 
@@ -2686,23 +2102,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			String[] xtras = msgs[7].split("\\$\\$");
 
 			String concept_cd = xtras[2];
-
-			// String concept_cd =
-			// msgs[7].substring(msgs[7].lastIndexOf("$$")+2,
-			// msgs[7].lastIndexOf("\""));
-
-			// changing to valueTypeCd == 'B' and blob not equal null
-			// below instead of concept code checks
-			// if (!System.getProperty("applicationName").equals("BIRN")
-			// && (!(("LCS-I2B2:c1009c".indexOf(concept_cd)>=0) ||
-			// ("LCS-I2B2:c1010c".indexOf(concept_cd)>=0)
-			// || ("LCS-I2B2:c1011c".indexOf(concept_cd)>=0) ||
-			// ("LCS-I2B2:pul".indexOf(concept_cd)>=0)))) {
-			// return;
-			// }
-
-			String patientNumber = xtras[1]; // msgs[7].substring(msgs[7].indexOf("$$")+2,
-			// msgs[7].lastIndexOf("$$"));
+			String patientNumber = xtras[1]; 
 			String start_date = msgs[1];
 			String encounterNumber = xtras[3];
 			String providerId = xtras[4];
@@ -2715,12 +2115,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				if (xtras[6] != null && xtras[6].length() > 0)
 					start_date = xtras[6];
 			}
-
-			// if (uib == null) {
-			// LoginDHelper ldh = new LoginDHelper();
-			// uib = ldh.getUserInfo(System.getProperty("user"),
-			// System.getProperty("pass"));
-			// }
 
 			String[] blobdata = getNotes(patientNumber, concept_cd,
 					start_date, encounterNumber, providerId,
@@ -2741,19 +2135,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				return;
 			}
 
-			// Application app;
-			// app = new Application();
-			// app.setClassName("edu.harvard.i2b2.timeline.external.NotesViewer");
 			if ((blobdata[1].equals("B"))
 					&& ((blobdata[2].trim()).equals("X")))
 				note = decryptBlob(note);
-			// app.setEncrypted(true);
-			// else
-			// app.setEncrypted(false);
-			// app.setName("Display Note");
-
-			// if (app.getEncrypted())
-			// note = decryptBlob(note);
 
 			if (note != null
 					&& note
@@ -2763,19 +2147,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				return;
 			}
 
-			/*
-			 * try { System.gc();
-			 * 
-			 * Class appClass = Class.forName(app.getClassName());
-			 * Object lObject = appClass.newInstance();
-			 * 
-			 * Executor exe = (Executor) lObject;
-			 * 
-			 * exe.init(app, note );
-			 * 
-			 * exe.execute(); } catch (Exception ee) {
-			 * System.out.println(ee.getMessage()); }
-			 */
 
 			String xmlPdoData = blobdata[3];
 			StringWriter strWriter = null;
@@ -2862,20 +2233,21 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			 * catch block e.printStackTrace(); } } }); }
 			 */
 			
-			// added by hkpark
+
 			if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
 				selectedRecord.mark_status="R";
 			repaint();
-			//
 			
 			return;
 		}
 	}
 
 	public String decryptBlob(String blob) {
+
 		key = UserInfoBean.getInstance().getKey();
 		if (key == null || key.length() == 0)
 			getKey();
+
 		
 		NoteCryptUtil util = new NoteCryptUtil(key);
 		if (util == null) {
@@ -2883,7 +2255,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			return "Not a valid key";
 		}
 		String deNote = util.decryptNotes(blob);
-		// System.out.println("notes: " + deNote);
 
 		if (!deNote.equalsIgnoreCase("[I2B2-Error] Invalid key")) {
 			MainComposite.noteKey = new String(key);
@@ -2905,9 +2276,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			if (tmp.exists()) {
 				return drives[i]/* +File.separator */+ filename;
 			}
-			// else {
-			// return null;
-			// }
 		}
 
 		File testFile = new File("i2b2notekey.txt");
@@ -2918,80 +2286,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 
 		return null;
 	}
-
-	/*
-	 * private String getConceptDetails(String concept_cd) { Connection
-	 * oConnection = null; String sSQL = null; ResultSet oRs = null; String data
-	 * = null;
-	 * 
-	 * oConnection = DBLib.openJDBCConnection(
-	 * System.getProperty("datamartURL"), System.getProperty("datamartDriver"),
-	 * System.getProperty("datamartUser"),
-	 * System.getProperty("datamartPassword"));
-	 * 
-	 * //((OracleConnection)oConnection).setDefaultExecuteBatch(20);
-	 * 
-	 * if (System.getProperty("applicationName").equals("BIRN")) {
-	 * 
-	 * } else { sSQL = "select NAME_CHAR from " +
-	 * System.getProperty("datamartDatabase") + ".CONCEPT_DIMENSION" +
-	 * " where concept_cd = '"+concept_cd+"'"; //+
-	 * " and start_date = to_date('"+
-	 * start_date+" 12:00 AM', 'mm-dd-yyyy hh:mi am')";
-	 * 
-	 * //System.out.println("before query: " + new Date());
-	 * //System.out.println("Query: " + sSQL);
-	 * 
-	 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-	 * System.out.println(e.getMessage()); return null; }
-	 * 
-	 * //System.out.println("after query: " + new Date());
-	 * 
-	 * try { oRs.next(); while(!oRs.isAfterLast()) { data = oRs.getString(1);
-	 * if(data != null) { break; } oRs.next(); } } catch(Exception e) {
-	 * //e.printStackTrace(); } }
-	 * 
-	 * DBLib.closeConnection(oConnection);
-	 * 
-	 * if(data == null) { return concept_cd; } else { return data; } }
-	 */
-
-	/*
-	 * private String getProviderDetails(String provider_id) { Connection
-	 * oConnection = null; String sSQL = null; ResultSet oRs = null; String data
-	 * = null;
-	 * 
-	 * oConnection = DBLib.openJDBCConnection(
-	 * System.getProperty("datamartURL"), System.getProperty("datamartDriver"),
-	 * System.getProperty("datamartUser"),
-	 * System.getProperty("datamartPassword"));
-	 * 
-	 * //((OracleConnection)oConnection).setDefaultExecuteBatch(20);
-	 * 
-	 * if (System.getProperty("applicationName").equals("BIRN")) {
-	 * 
-	 * } else { sSQL = "select NAME_CHAR from " +
-	 * System.getProperty("datamartDatabase") + ".PROVIDER_DIMENSION" +
-	 * " where PROVIDER_ID = '"+provider_id+"'"; //+
-	 * " and start_date = to_date('"
-	 * +start_date+" 12:00 AM', 'mm-dd-yyyy hh:mi am')";
-	 * 
-	 * //System.out.println("before query: " + new Date());
-	 * //System.out.println("Query: " + sSQL);
-	 * 
-	 * try { oRs = DBLib.doQuery(oConnection, sSQL); } catch (Exception e) {
-	 * System.out.println(e.getMessage()); return null; }
-	 * 
-	 * //System.out.println("after query: " + new Date());
-	 * 
-	 * try { oRs.next(); while(!oRs.isAfterLast()) { data = oRs.getString(1);
-	 * if(data != null) { break; } oRs.next(); } } catch(Exception e) {
-	 * //e.printStackTrace(); } }
-	 * 
-	 * DBLib.closeConnection(oConnection);
-	 * 
-	 * if(data == null) { return provider_id; } else { return data; } }
-	 */
 
 	private String makeReadableCodeString(String sCode) {
 
@@ -3055,36 +2349,24 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			} else if (icd9.length() == 5 || icd9.length() == 6) {
 				return icd9.substring(0, 4) + "." + icd9.substring(4);
 			}
-			// else if(icd9.length() == 6) {
-			// return icd9.substring(0, 3)+"."+icd9.substring(4);
-			// }
 		} else if (sFirstChar.equals("P")) {
 			if (icd9.length() <= 3) {
 				return icd9.substring(1);
 			} else if (icd9.length() == 4 || icd9.length() == 5) {
 				return icd9.substring(1, 3) + "." + icd9.substring(3);
 			}
-			// else if(icd9.length() == 5) {
-			// return icd9.substring(1, 2)+"."+icd9.substring(3);
-			// }
 		} else if (sFirstChar.equals("V")) {
 			if (icd9.length() <= 3) {
 				return icd9;
 			} else if (icd9.length() == 4 || icd9.length() == 5) {
 				return icd9.substring(0, 3) + "." + icd9.substring(3);
 			}
-			// else if(icd9.length() == 5) {
-			// return icd9.substring(0, 2)+"."+icd9.substring(3);
-			// }
 		} else {
 			if (icd9.length() <= 3) {
 				return icd9;
 			} else if (icd9.length() == 4 || icd9.length() == 5) {
 				return icd9.substring(0, 3) + "." + icd9.substring(3);
 			}
-			// else if(icd9.length() == 5) {
-			// return icd9.substring(0, 2)+"."+icd9.substring(3);
-			// }
 		}
 
 		return icd9;
