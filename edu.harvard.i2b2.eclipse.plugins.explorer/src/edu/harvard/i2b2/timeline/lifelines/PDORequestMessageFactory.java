@@ -35,7 +35,12 @@ import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.RequestMessageType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.SecurityType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.FactPrimaryKeyType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.GetObservationFactByPrimaryKeyRequestType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.GetObserverByPrimaryKeyRequestType; //hkpark
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.ObjectFactory;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.ObserverPrimaryKeyType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionListType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionNameType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionSelectType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoQryHeaderType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoRequestTypeType;
@@ -52,7 +57,17 @@ public class PDORequestMessageFactory {
 				.setRequestType(PdoRequestTypeType.GET_OBSERVATIONFACT_BY_PRIMARY_KEY);
 		return pdoHeader;
 	}
-
+	/*
+	//hkpark
+	private PdoQryHeaderType buildHeaderType_Observer() {
+		PdoQryHeaderType pdoHeader = new PdoQryHeaderType();
+		pdoHeader.setEstimatedTime(180000);
+		pdoHeader
+				.setRequestType(PdoRequestTypeType.GET_OBSERVER_BY_PRIMARY_KEY);
+		return pdoHeader;
+	}
+	*/
+	
 	public GetObservationFactByPrimaryKeyRequestType buildFactRequestTypeByPrimaryKey(
 			String patientNum, String encounterNum, String concept_cd,
 			String providerId, String modifier_cd, String start_date) {
@@ -79,17 +94,76 @@ public class PDORequestMessageFactory {
 			e.printStackTrace();
 		}
 		// primaryKey.setStartDate(xmlCalendar);
-
+		
+		//hkpark
+		//OutputOptionListType outputOptionListType = new OutputOptionListType();
+		///////
+		
 		OutputOptionType outputOptionType = new OutputOptionType();
 		outputOptionType.setBlob(true);
 		outputOptionType.setOnlykeys(false);
+		//hkpark
+		//outputOptionType.setSelect(OutputOptionSelectType.USING_INPUT_LIST);
+		
+		//hkpark
+		//outputOptionListType.setPatientSet(outputOptionType);
+		//outputOptionListType.setNames(OutputOptionNameType.ASATTRIBUTES);
+		///////
+
 
 		reqType.setFactOutputOption(outputOptionType);
 		reqType.setFactPrimaryKey(primaryKey);
 
 		return reqType;
-	}
+	}	
+	
+/*
+	// hkpark
+	public GetObserverByPrimaryKeyRequestType buildObserverFactRequestTypeByPrimaryKey(
+			String patientNum, String encounterNum, String concept_cd,
+			String providerId, String modifier_cd, String start_date) {
+		GetObserverByPrimaryKeyRequestType reqType = new GetObserverByPrimaryKeyRequestType();
 
+		ObserverPrimaryKeyType primaryKey = new ObserverPrimaryKeyType();
+		primaryKey.setObserverPath(patientNum); //////
+		primaryKey.setObserverId(providerId);
+		// primaryKey.setModifierCd(modifier_cd);
+
+		DatatypeFactory dataTypeFactory = null;
+		XMLGregorianCalendar xmlCalendar = null;
+		try {
+			dataTypeFactory = DatatypeFactory.newInstance();
+			String[] strs = start_date.split(" ")[0].split("-");
+			int year = new Integer(strs[2]).intValue();
+			int month = new Integer(strs[0]).intValue();
+			int day = new Integer(strs[1]).intValue();
+			xmlCalendar = dataTypeFactory.newXMLGregorianCalendar(year, month,
+					day, 0, 0, 0, 0, -5 * 60);
+		} catch (DatatypeConfigurationException e) {
+			e.printStackTrace();
+		}
+		// primaryKey.setStartDate(xmlCalendar);
+		
+		//hkpark
+		//OutputOptionListType outputOptionListType = new OutputOptionListType();
+		///////
+		
+		OutputOptionType outputOptionType = new OutputOptionType();
+		outputOptionType.setBlob(true);
+		outputOptionType.setOnlykeys(false);
+		
+		//hkpark
+		//outputOptionListType.setPatientSet(outputOptionType);
+		//outputOptionListType.setNames(OutputOptionNameType.ASATTRIBUTES);
+		///////
+
+
+		reqType.setObserverOutputOption(outputOptionType);
+		reqType.setObserverPrimaryKey(primaryKey);
+
+		return reqType;
+	}
+*/
 	public String requestXmlMessage(String patientNum, String encounterNum,
 			String concept_cd, String providerId, String modifier_cd,
 			String start_date) throws Exception {

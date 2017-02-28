@@ -3657,7 +3657,6 @@ public class MainComposite extends Composite {
 	public void refreshMiniVisualization(final java.awt.Container poAwtContainer, final int w, final int h) {		
 		
 		try {
-			//SwingUtilities.invokeAndWait(new Runnable() {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					poAwtContainer.removeAll();
