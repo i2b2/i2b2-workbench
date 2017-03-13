@@ -18,13 +18,17 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 
 import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
 import edu.harvard.i2b2.timeline.excentric.LiteLabel;
+import edu.harvard.i2b2.timeline.lifelines.Aggregate;
 import edu.harvard.i2b2.timeline.lifelines.GenRecord;
 import edu.harvard.i2b2.timeline.lifelines.MyColor;
 import edu.harvard.i2b2.timeline.lifelines.PDOQueryClient;
@@ -43,33 +47,82 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 	private String note = null;
 	private TextViewerFrame textFrame = null;
 	public boolean pin = false;
-	private int prevRow;
+	public GenRecord[] selRecs;
+	private int numRetrieved;
+	private int curIndx;
+	private int lMostIndx, rMostIndx;
+	private Aggregate cAggr;
 //	private JLayeredPane layeredPane;
 	 
 
+	public int getLeftMostIndx() {
+		return lMostIndx;
+	}
+	
+	public int getRightMostIndx() {
+		return rMostIndx;
+	}
+	
+	public int getCurIndx() {
+		return curIndx;
+	}
+	
     /**
      * Creates new form InfoJFrame
      * 
-     */
-	public InfoJFrameOverlapRecs(TimeLinePanel panel, GenRecord[] selectedRecords, int numRetrieved, int curIndx) { //, int x, int y) {
+     */	
+	public InfoJFrameOverlapRecs(TimeLinePanel panel, Aggregate curntAggr) { 
     	panel_ = panel;    	
-//    	thisRecord=selectedRecords[curIndx];
-    //	boundOriX = x;
-    //	boundOriY = y;
-    	Color temp = null;
+    	cAggr = curntAggr;
+    	selRecs=cAggr.getOverlapRecords();
     	
-        initComponents(numRetrieved, selectedRecords);
+    	initAggrVal();
+    	
+        initComponents(selRecs);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
            
-        for(int i=0; i<selectedRecords.length; i++)
+        parseOverlapList();
+        
+        DefaultTableCellRenderer colAlignRenderer = new DefaultTableCellRenderer();
+        colAlignRenderer.setHorizontalAlignment( JLabel.RIGHT );
+        jTable1.getColumnModel().getColumn(4).setCellRenderer( colAlignRenderer );
+
+        
+        int total = jTable1.getColumnModel().getTotalColumnWidth();
+        int w0 = 20, w1 = 10, w2, w3 = 70, w4 = 85;
+        w2 = total - (w0+w1+w3+w4); 
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(w0);
+		 jTable1.getColumnModel().getColumn(1).setPreferredWidth(w1);
+		jTable1.getColumnModel().getColumn(2).setPreferredWidth(w2);
+		jTable1.getColumnModel().getColumn(3).setPreferredWidth(w3);
+		jTable1.getColumnModel().getColumn(4).setPreferredWidth(w4);
+		
+		
+		
+		//jTable1.getColumnModel().getColumn(0).setCellRenderer(new RenderTableColor());
+    }
+	
+	private void parseOverlapList() {
+		Color temp = null;
+		int crntTotalNumRow = dtm.getRowCount();
+		
+		if(crntTotalNumRow < numRetrieved)
+    		for(int i = crntTotalNumRow; i<10; i++)
+    			dtm.addRow(new String [] {"", "", "", "", ""});
+    	
+    	if(crntTotalNumRow > numRetrieved)
+    		for(int i = numRetrieved; i<10; i++)
+    			dtm.removeRow(i);
+    	
+		for(int i=0; i< cAggr.getNumRetrieved(); i++)
         {
-	        if (selectedRecords[i] != null) {
+	        if (selRecs[i] != null) {
 	        	
 	        	String start_date;
 	        	
-				String msg = selectedRecords[i].getInputLine();
+				String msg = selRecs[i].getInputLine();
 				String[] msgs = msg.split(",");			
 				
 				
@@ -84,16 +137,20 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 				// Tag ">>" to current record
 				if(i == curIndx)
 				{
+					//System.out.println("hkpark) >> i: "+i+", curIndx: "+ curIndx);
 					jTable1.setValueAt(">>", i, 0);
-					prevRow = curIndx;							
 				}
+				
 				else
-					jTable1.setValueAt(null, i, 0);
+				{
+					//System.out.println("hkpark) i: "+i+", curIndx: "+ curIndx + "selRecs.length: "+cAggr.getNumRetrieved());
+					jTable1.setValueAt("", i, 0);
+				}
 				
 				// show status column (original tick color / read(gray) / starred (yellow)
 				MyColor tempColor = new MyColor(msgs[3]);
 				temp = tempColor.getColor();
-				status[i]=selectedRecords[i].mark_status;
+				status[i]=selRecs[i].mark_status;
 				
 				
 				// show brief details 
@@ -107,9 +164,10 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 					if (conceptName == null || conceptName.equals("")) {
 						conceptName = PDOQueryClient.getCodeInfo(concept_cd);
 					}
-					String cstr = panel_.makeReadableCodeString(concept_cd);
-					if(!cstr.equalsIgnoreCase("")) {
-						infoStr = conceptName+" ("+cstr+")";
+					String cstr ="";
+					if(concept_cd !=  null)
+					{
+						infoStr = conceptName+" ("+concept_cd+")";
 					}
 					else
 						infoStr = conceptName+" ( - )";					
@@ -177,41 +235,82 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 				
 	        }
 		}
-        
-        DefaultTableCellRenderer colAlignRenderer = new DefaultTableCellRenderer();
-        colAlignRenderer.setHorizontalAlignment( JLabel.RIGHT );
-        jTable1.getColumnModel().getColumn(4).setCellRenderer( colAlignRenderer );
-
+		
 		TableColumn statCol = jTable1.getColumnModel().getColumn(1);
-
 		statCol.setCellRenderer(new ColorColumnRenderer(temp));
+
+	}
+	
+	public void changeCurrentPos(int crntPos) {
+		for(int i=0; i < cAggr.getNumRetrieved(); i++) {
+			if(i == crntPos)
+				jTable1.setValueAt(">>", crntPos, 0);
+			else
+				jTable1.setValueAt("", i, 0);			
+		}
+	}
+    
+	private void initAggrVal() {
+		curIndx = cAggr.getCurIndx();
+    	numRetrieved=cAggr.getNumRetrieved();
+    	lMostIndx = cAggr.getLeftMostIndx();
+    	rMostIndx = cAggr.getRightMostIndx();    	
+	}
+	
+	private int calcTblHeight() {
+		return tHeight =  jTable1.getRowHeight() * numRetrieved
+        		+ jTable1.getIntercellSpacing().height * (numRetrieved +1)
+        		+  jTable1.getTableHeader().getPreferredSize().height;
         
-        int total = jTable1.getColumnModel().getTotalColumnWidth();
-        int w0 = 20, w1 = 10, w2, w3 = 70, w4 = 85;
-        w2 = total - (w0+w1+w3+w4); 
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(w0);
-		 jTable1.getColumnModel().getColumn(1).setPreferredWidth(w1);
-		jTable1.getColumnModel().getColumn(2).setPreferredWidth(w2);
-		jTable1.getColumnModel().getColumn(3).setPreferredWidth(w3);
-		jTable1.getColumnModel().getColumn(4).setPreferredWidth(w4);
+	}
+	
+	private void redrawOverlapPopup() {
+		setBounds(panel_.overlapFramePos_x, panel_.overlapFramePos_y, 381, calcTblHeight()+32); // pop up window resize
+		calcTblHeight();
+		jPanel1.setBounds(7, 25, 366, tHeight); // table area resize
 		
+		if(cAggr.getLeftMostIndx() == 0) // if current list is the left end of the data stream 
+    		jLeftButton.setEnabled(false);
+		else
+			jLeftButton.setEnabled(true);
+		if(cAggr.getAllRecords().size() -1 == cAggr.getRightMostIndx()) // if current list is the right end of the data stream
+    		jRightButton.setEnabled(false); // disable right arrow button
+		else 
+			jRightButton.setEnabled(true);
 		
-		
-		//jTable1.getColumnModel().getColumn(0).setCellRenderer(new RenderTableColor());
-    }
+	}
     
-    
-    private void initComponents(int numRow, final GenRecord[] selectedRecords) {
+    private void initComponents(final GenRecord[] selectedRecords) {
     	getContentPane().setBackground(Color.decode("0xfaf4ce"));
     	getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.gray));
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new JTable(){
-        	
+        	public String getToolTipText(MouseEvent e) {
+                String toolTip = null;
+                Point p = e.getPoint();
+                int row = rowAtPoint(p);
+                int col = columnAtPoint(p);
+
+                try {
+                	toolTip = getValueAt(row, col).toString();
+                	
+                	UIManager.put("ToolTip.background", new ColorUIResource(255, 250, 140)); 
+                	Border border = BorderFactory.createLineBorder(new Color(76,79,83)); 
+                	UIManager.put("ToolTip.border", border);
+                	
+                } catch (RuntimeException e1) {
+                    //null pointer exception if mouse is over an empty line
+                }             
+
+                return toolTip;
+            }
         	
         };
         jPinButton = new JButton();
-        jCloseButton = new JButton();        
+        jCloseButton = new JButton();      
+        jLeftButton = new JButton();
+        jRightButton =  new JButton();
 
         setLayout(null);
 
@@ -223,42 +322,28 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         
-        
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        dtm = new DefaultTableModel(
         		new String [] {
                         "", "", "Concept name (CD)", "Date", "Value"         				
                      },
-         		numRow
-        ) {
+        		numRetrieved
+        ){
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
+                    false, false, false, false, false
+                };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-            /*
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component c = super.prepareRenderer(renderer, row, column);
-                if (c instanceof JComponent) {
-                    JComponent jc = (JComponent) c;
-                    jc.setToolTipText((String) getValueAt(row, column));
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
                 }
-                return c;
-            }*/
-        });
-       
+            };
+        jTable1.setModel(dtm);       
         ((JLabel) jTable1.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
   
         jScrollPane1.setViewportView(jTable1);        
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         add(jPanel1);
-        //jPanel1.setBounds(7, 30, 366, 162);
-        tHeight =  jTable1.getRowHeight() * numRow
-        		+ jTable1.getIntercellSpacing().height * (numRow +1)
-        		+  jTable1.getTableHeader().getPreferredSize().height;// jTable1.HEIGHT; //jTable1.getHeight();
         
+        calcTblHeight();        
         jPanel1.setBounds(7, 25, 366, tHeight);
         
         Font thisFont = new Font("Helvetica", Font.BOLD, 10);    
@@ -289,7 +374,6 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
             }
         });
         add(jPinButton);
-        //jPinButton.setBounds(381 - 105, 2, 60, 20);
         jPinButton.setBounds(381 - 145, 2, 100, 20);
 
     //    this.layeredPane = layeredPane;
@@ -300,31 +384,7 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
         
         
         
-        jTable1.addMouseListener(new MouseAdapter() {
-        	public void mouseEntered(MouseEvent e) {
-        		 /*
-        		javax.swing.JTable table =(javax.swing.JTable) e.getSource();
-                Point p = e.getPoint();
-                final int selectedRow = table.rowAtPoint(p);   
-                final int selectedColmn = table.columnAtPoint(p);    
-                
-               // ;
-        		//String str;
-               
-        		System.out.println("hkpark] mouse enter : "+(String) table.getValueAt(selectedRow, selectedColmn));
-        		LiteLabel infoTipLabel = new LiteLabel((String) table.getValueAt(selectedRow, selectedColmn),
-						new Point(getLocationOnScreen().x+10, getLocationOnScreen().y+30),
-						1,
-						null,
-						Color.gray,
-						Color.white);
-        		Rectangle r = infoTipLabel.getBounds();
-    			infoTipLabel = null;
-    			//repaint(r.x, r.y, r.width, r.height);
-    			repaint(r.x, r.y, r.width, r.height);*/
-						
-        	}
-        	
+        jTable1.addMouseListener(new MouseAdapter() {               	
             public void mousePressed(MouseEvent e) {
             	javax.swing.JTable table =(javax.swing.JTable) e.getSource();
                 Point p = e.getPoint();
@@ -379,14 +439,44 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
             }
         });
 
+        //Font thisFont = new Font("Helvetica", Font.BOLD, 10);    
         
+        jLeftButton.setFont(thisFont);
+        jLeftButton.setText("<<");
+        jLeftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLeftButtonActionPerformed(evt);                
+            }
+        });
+        add(jLeftButton);
+        jLeftButton.setBounds(10, 2, 45, 20);
+
+        jRightButton.setFont(thisFont);
+        jRightButton.setText(">>");
+        jRightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRightButtonActionPerformed(evt);   // search next up to 10 overlapped ticks              
+            }
+        });
+        add(jRightButton);
+        jRightButton.setBounds(60, 2, 45, 20);
+        
+        if(cAggr.getLeftMostIndx() == 0) // if current list is the left end of the data stream 
+    		jLeftButton.setEnabled(false);
+		else
+			jLeftButton.setEnabled(true);
+		if(cAggr.getAllRecords().size() -1 == cAggr.getRightMostIndx()) // if current list is the right end of the data stream
+    		jRightButton.setEnabled(false); // disable right arrow button
+		else 
+			jRightButton.setEnabled(true);
         
     } 
     
     public void closeInfoJFrame()
     {
     	if(infoFrame != null) {
-			infoFrame.setVisible(false);
+    		//removeOverlapTag();
+			//infoFrame.setVisible(false);
 			infoFrame.dispose();
 			infoFrame = null;
 		}
@@ -414,14 +504,82 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
     		
     }
     
-    private void jCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCloseButtonActionPerformed
+    private void jCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	pin = false;
+    	panel_.prev_a = -1;
+    	removeOverlapTag();
         setVisible(false);
         dispose();
     }
     
-  
+    private void jLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	selRecs = cAggr.findNxtNeighbrsList(lMostIndx, -1);
+    	if( selRecs != null)
+		{
+        	initAggrVal();
+        	redrawOverlapPopup();
+         	parseOverlapList();     	
+		}    	
+    }
     
+    private void jRightButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	selRecs = cAggr.findNxtNeighbrsList(rMostIndx, 1);
+    	if( selRecs != null)
+		{
+    		initAggrVal();
+    		redrawOverlapPopup();
+        	parseOverlapList(); 
+		}    	
+    }
+    
+    public void removeOverlapTag()
+    {
+    	int k=0;
+    	for(int i=0; i<numRetrieved; i++)
+		{
+    		selRecs[i].mark_overlap = false;
+    		if(selRecs[i].mark_status.equalsIgnoreCase("O")) {
+    			selRecs[i].mark_status="N";  // change overlap to normal status, leave starred and read tags
+    			k++;
+    		}
+		}
+    	System.out.println("hkpark) REMOVE: inside. chnged " +k+" times");
+		panel_.repaint();
+    }
+    /*
+    public void removeOverlapTag(int crntLeftMostIndx, int crntRightMostIndx)
+    {
+    	int k=0;
+    	
+    	
+    	for(int i=crntLeftMostIndx; i<=crntRightMostIndx; i++)
+		{
+    		cAggr.element(i).mark_overlap = false;
+    		if(cAggr.element(i).mark_status.equalsIgnoreCase("O")) {
+    			cAggr.element(i).mark_status="N";  // change overlap to normal status, leave starred and read tags
+    			k++;
+    		}
+		}
+    	System.out.println("hkpark) REMOVE: inside. chnged " +k+" times");
+		panel_.repaint();
+    }
+  */
+	 public void markOverlapTag()
+	 {
+	    	for(int i=0; i<numRetrieved; i++)
+			{
+	    		selRecs[i].mark_overlap = true;
+	    		if(selRecs[i].mark_status.equalsIgnoreCase("N"))
+	    			selRecs[i].mark_status="O"; // Selected overlapped record to show in a pop up view
+			}
+			panel_.repaint();
+	 } 
+	 
+	 public boolean cmpSelOverlaps()
+	 {
+		 
+		 return false;
+	 }
 	
     /**
      * @param args the command line arguments
@@ -432,7 +590,7 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	new InfoJFrameOverlapRecs(null, null, -1, -1).setVisible(true);
+            	new InfoJFrameOverlapRecs(null, null).setVisible(true);
             }
         });
     }
@@ -443,9 +601,12 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jCloseButton;
     private javax.swing.JButton jPinButton;
+    private javax.swing.JButton jLeftButton;
+    private javax.swing.JButton jRightButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jPanel1;
     private JTable jTable1;
+    private DefaultTableModel dtm ;
     // End of variables declaration//GEN-END:variables
     
     public static class FrameDragListener extends MouseAdapter {
@@ -487,96 +648,50 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
             (JTable table, Object value, boolean isSelected,
              boolean hasFocus, int row, int column)
        {
-    	   
-    	   
-    	 
-    	    
-    	   
-	       Component cell = super.getTableCellRendererComponent
+    	   Component cell = super.getTableCellRendererComponent
 	             (table, value, isSelected, hasFocus, row, column);
-	       
-	      // Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     	   
-   	    if (cell instanceof JLabel && value != null) {
-	    //   if (value != null) {
-   	        int availableWidth = table.getColumnModel().getColumn(column).getWidth();
-   	        availableWidth -= table.getIntercellSpacing().getWidth();
-   	        Insets borderInsets = getBorder().getBorderInsets(cell);
-   	        availableWidth -= (borderInsets.left + borderInsets.right);
-   	        FontMetrics fm = getFontMetrics( getFont() );
-   	        String cellText = value.toString();
+	   	    if (cell instanceof JLabel && value != null) {
+	   	        int availableWidth = table.getColumnModel().getColumn(column).getWidth();
+	   	        availableWidth -= table.getIntercellSpacing().getWidth();
+	   	        Insets borderInsets = getBorder().getBorderInsets(cell);
+	   	        availableWidth -= (borderInsets.left + borderInsets.right);
+	   	        FontMetrics fm = getFontMetrics( getFont() );
+	   	        String cellText = value.toString();
+	   	 
+	   	        if (fm.stringWidth(cellText) > availableWidth) ((javax.swing.JLabel) cell).setToolTipText(value.toString());
+	   	        else ((javax.swing.JLabel) cell).setToolTipText(null);
+	   	    }
    	 
-   	        if (fm.stringWidth(cellText) > availableWidth) ((javax.swing.JLabel) cell).setToolTipText(value.toString());
-   	        else ((javax.swing.JLabel) cell).setToolTipText(null);
-   	    // cell.setToolTipText(value.toString());
-   	    }
-   	 
-   	    //return c;
-	      
-	      //  cell.setBackground( bkgndColor );
-	       // cell.setForeground( fgndColor );
 	       for(int i=0; i<status.length; i++)
 	        {
 	    	   if(row ==i)
 	    	   {
-		    	   if(status[i].equals("N")) // original tick color
-					{
-		    		   cell.setBackground(inputColr);					
-					}
-					else if(status[i].equals("R")) // read(gray)
+		    	   if(status[i].equals("R")) // read(gray)
 					{
 						cell.setBackground(Color.GRAY);
 					}
 					else if(status[i].equals("S")) // starred (yellow)
 						cell.setBackground(Color.decode("0xf9a51e"));
+					else // original tick color
+						cell.setBackground(inputColr);
 	    	   }
 	    	   
 	        }
-	       /*
-	       if (row == rowIndx) {
- 				cell.setForeground(inputColr);
- 			}
- 			*/
-	         
 	        if (isSelected) {
-	        	jTable1.setValueAt("", prevRow, 0);
+	        	jTable1.setValueAt("", curIndx, 0);
 	        	jTable1.setValueAt(">>", row, 0);
-	        	prevRow = row;
+	        	curIndx = row;
 	        	
 	       }
-	         
+	      //  setToolTipText(getValueAt(row, column).toString());
+	        
           return cell;
        }
        
 		
 		
     }
-    
-    
-    
-    /*
-    class CustomRenderer extends DefaultTableCellRenderer 
-    {
-		public Component getTableCellRendererComponent(	JTable table, Object value,
-								boolean isSelected, boolean hasFocus,
-								int row, int column)
-		{
-		    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-	
-		    if(!hasFocus)
-		    {
-		      c.setBackground(new java.awt.Color(255, 72, 72));
-		    }
-		    else
-		    {
-		      c.setBackground(new java.awt.Color(20, 255, 20));
-		    }
-	
-		    return c;
-		}
-    }
-    
-    */
     
 }
 

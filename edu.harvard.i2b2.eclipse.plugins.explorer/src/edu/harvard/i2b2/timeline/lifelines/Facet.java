@@ -42,27 +42,35 @@ public class Facet extends Panel {
 	private int maxNumNeighbrs = 9; // maximum number of neighbors to retrieve for pop up 
 	// can retrieve up to maxNumNeighbrs neighbor records, 
 	// thus showing 10 records in the pop up, including mouse hovered record
-	private int cntNeighbrs;
-	private int curIndx;
+	//	private int cntNeighbrs;
+	//private int curIndx;
+	//private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
+		// needed to implement finding next/previous neighboring overlapping ticks 
+	private Aggregate curntAggr;
+	private int facetLnIndx, aggrIndx;
+	
+	public int getFacetLnIndx()
+	{
+		return facetLnIndx;
+	}
+	
+
+	public int getAggrIndx()
+	{
+		return aggrIndx;
+	}
+	
+	
+	
 	
 	public String title() {
 		return title;
 	}
 	
-	public int getMaxNumOverlapRecs()
-	{
-		return maxNumNeighbrs+1;
+	public Aggregate getCurntAggr() {
+		return curntAggr;
 	}
 	
-	public int getNumRetrieved() {
-		return cntNeighbrs+1;
-	}
-	
-	public int getCurIndx() {
-		//System.out.println("curIndx: "+curIndx);
-		return curIndx;
-	}
-
 	private Checkbox open;
 	public Color backgroundColor; // added 1/12/98 dan: also added to
 	// constructor and in draw method
@@ -559,22 +567,39 @@ public class Facet extends Panel {
 		else
 			return null;
 	}
+
 	
+	// find next neighboring overlap list
+	// endIndx is start point (leftMostIndx or rightMostIndx) of the previous overlap list
+	// if finding next neighboring overlap list, dir == 1
+	// if finding previous neighboring overlap list, dir == -1
+/*
+	public GenRecord[] findNxtOverlap(Aggregate tempAgg, int endIndx,int dir) 
+	{	
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
+		if(dir == 1)
+			overlapRecords = curntAggr.findOverlap(endIndx, false, true);
+			//overlapRecords = findOverlap(tempAgg, endIndx, false, true);
+		else if(dir == -1)
+			overlapRecords = curntAggr.findOverlap(endIndx, true, false);
+		return overlapRecords;
+
+	}
+	*/
 	
 	
 
-	//hkpark
-	
+	//hkpark	
 	public GenRecord[] inOverlapRegion(int x, int y, boolean data, boolean label,
 			int distance) {
 		double minDis = Integer.MAX_VALUE;
 		int gap=1; // maximum gap between two data bars to determine in the overlapped range 
 		int cntLtNeighbrs=0; // total number of neighbor records retrieved
-		cntNeighbrs = 0;
+		//cntNeighbrs = 0;
 		
 		boolean findNxtLt = true, findNxtRt = true;
 		StoryRecord selectedRecord = null, rtNeighbrStory = null, ltNeighbrStory = null;
-		StoryRecord[] overlapRecords = new StoryRecord[maxNumNeighbrs+1];
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
 		StoryRecord[] ltStoryRecords = new StoryRecord[maxNumNeighbrs];
 		StoryRecord[] rtStoryRecords = new StoryRecord[maxNumNeighbrs];
 		
@@ -585,116 +610,22 @@ public class Facet extends Panel {
 
 		for (int i = 0; i < facetLines.size(); i++) {
 			FacetLine tempFacetLine = (FacetLine) (facetLines.elementAt(i));
+			facetLnIndx = i;
 			String title = tempFacetLine.getTitle();
 			for (int j = 0; j < tempFacetLine.getAggregates().size(); j++) {
 				Aggregate tempAgg = (Aggregate) (tempFacetLine.getAggregates().elementAt(j));
+				aggrIndx = j;
 				for (int k = 0; k < tempAgg.getAllRecords().size(); k++) {
+					
 					StoryRecord tempStory = (StoryRecord) (tempAgg.getAllRecords().elementAt(k));
 					Rectangle dataRect = tempStory.getBarArea();
 					Rectangle labelRect = tempStory.getLabelArea();
 					if ((data && dataRect.contains(x, y))
 							|| (label && labelRect.contains(x, y)))
 					{
-						int l = 0;
-						//gap = dataRect.width+2; // set gap as data bar(tick) width + 2 (to retrieve closely related data together)
-						for (int m = 1; cntNeighbrs < maxNumNeighbrs; m++)
-						{
-							if(findNxtLt == true)
-							{
-								if(k-m >= 0 && cntNeighbrs < maxNumNeighbrs) 
-								{
-									// next left side neighbor record
-									ltNeighbrStory = (StoryRecord) (tempAgg.getAllRecords().elementAt(k-m));
-									if(ltNeighbrStory != null)
-									{
-										if(Math.abs(dataRect.x - ltNeighbrStory.startX) <= dataRect.width + gap)
-										{
-											//ltStoryRecords[l] = ltNeighbrStory;
-											ltStoryRecords[cntLtNeighbrs] = ltNeighbrStory;
-											//System.out.println("hkpark)overlapRecords[" +(l-1)+"] = " + ltNeighbrStory.getInputLine());
-											cntNeighbrs++;	
-											cntLtNeighbrs++;
-										}
-										else 
-										{
-											findNxtLt = false;
-											if(findNxtRt == false) 
-												break;
-										}
-									}
-								}
-								else
-								{
-									findNxtLt = false;
-									if(findNxtRt == false) 
-										break;
-								}
-							}
-							
-
-							if(findNxtRt == true)
-							{
-								if(k+m <= tempAgg.getAllRecords().size()-1 && cntNeighbrs < maxNumNeighbrs)
-								{
-									// next right side neighbor record
-									rtNeighbrStory = (StoryRecord) (tempAgg.getAllRecords().elementAt(k+m));
-									if(rtNeighbrStory != null)
-									{
-										if(Math.abs(rtNeighbrStory.startX - dataRect.x) <= dataRect.width + gap)// if
-										{
-											//rtStoryRecords[l] = rtNeighbrStory;
-											rtStoryRecords[cntNeighbrs-cntLtNeighbrs] = rtNeighbrStory;
-											//System.out.println("hkpark)overlapRecords["+(l-1)+"] = " + rtNeighbrStory.getInputLine());
-											cntNeighbrs++;
-										}
-										else
-										{
-											findNxtRt = false;
-											if(findNxtLt == false) 
-												break;
-											else
-												continue;
-										}
-									}
-								}
-								else // if no more record on the right side
-								{
-									findNxtRt = false;
-									if(findNxtLt == false) 
-										break;
-									
-								}
-							}
-							l++;
-						}
-						if(cntLtNeighbrs > 0)
-						{
-							for (int o = 0; o < cntLtNeighbrs; o++)
-							{
-								if(ltStoryRecords[cntLtNeighbrs-1-o] == null)
-									System.out.println("hkpark) no left neighbors??"); 
-								else
-									{
-										overlapRecords[o] = ltStoryRecords[cntLtNeighbrs-1-o];
-									//	System.out.println("hkpark)L] overlapRecords[" +o+"] = " + overlapRecords[o].getInputLine());
-									}
-								
-							}
-						}
-						overlapRecords[cntLtNeighbrs] = tempStory;
-						curIndx = cntLtNeighbrs;
-						//System.out.println("hkpark)C] overlapRecords["+cntLtNeighbrs+"] = " + overlapRecords[cntLtNeighbrs].getInputLine());
-						if(cntNeighbrs-cntLtNeighbrs > 0)
-						{
-							int ii=0;
-							for (int p = cntLtNeighbrs+1; p <= cntNeighbrs; p++)
-							{
-								overlapRecords[p] = rtStoryRecords[ii++];
-								//System.out.println("hkpark)R] overlapRecords[" +p+"] = " + overlapRecords[p].getInputLine());
-							}
-						}
-						
-						return overlapRecords;
+						curntAggr = tempAgg;
+						overlapRecords = curntAggr.findOverlap(k, true, true);
+						return overlapRecords;			
 					}
 					else {
 						int selectedX, selectedY;

@@ -351,7 +351,12 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {		
 		searchBox = new SearchTextFrame(this, jTextArea2);
-		searchBox.setBounds(this.getBounds().x + this.getBounds().width + 10, this.getBounds().y, 440, 170);
+		int searchX = this.getBounds().x + this.getBounds().width + 10;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		if(searchX + 440 <= (int)screenSize.getWidth())
+			searchBox.setBounds(searchX, this.getBounds().y, 440, 170);
+		else
+			searchBox.setBounds((int)screenSize.getWidth() - 440 -10, this.getBounds().y + 5, 440, 170);
 		searchBox.setVisible(true);
 	}
 

@@ -31,8 +31,11 @@ public class GenRecord {
 	// hkpark. to mark read/starred status and to display ticks in different color
 	// "N": unread
 	// "R": read (clicked)
-	// "S": starred 
+	// "S": starred
+	// "O": unread in selected overlapped records
 	public String mark_status = "N";
+	public boolean mark_overlap = false; // mark if the data is selected overlap list
+											// this data is necessary for marking with a line above the selected overlap list, including read, starred ticks 
 	public static ConflictResolver xOverlap1 = null, xOverlap2 = null;
 	public boolean fit = false, beforefit = false, selected = true;
 	public int labelX, labelY;

@@ -121,7 +121,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	private String key = null;
 	private GenRecord selectedRecord = null;
 	private GenRecord cur_selectedRecord = null;
-
+	int prev_a = -1;
+	Facet prevTempFacet = null;
+	
 	private ViewPart textAnalyzerView;
 	// for excentric
 	/**
@@ -247,6 +249,10 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	Hashtable afacetList; // comes from a facetrecord, not list of facets but
 	// rather: list of whats in facet
 	GenRecord aGenRecord; // basically contains only info on the type of record
+	
+	//hkpark test -  erase this and localize? (untag comment of local vars?)
+	public int overlapFramePos_x, overlapFramePos_y;
+	
 
 	public Record thisApplet;
 	Image image1;
@@ -1171,39 +1177,91 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		*/
 		
 		
-		GenRecord selectedRecord_cur = null;
-		Facet tempFacet;		
-		int curIndx;
+		Facet tempFacet;	
 		GenRecord[] selectedRecordArray = new GenRecord[numSelRecs];
+		//int crntLeftMostIndx, crntRightMostIndx;
+		InfoJFrameOverlapRecs crntInfoJFrameOverlapRecs = null;
 		
 		for (int a = 0; a < n_key; a++) {
 			tempFacet = (Facet) (recordTable.get(new Integer(a)));
 			selectedRecordArray = tempFacet.inOverlapRegion(x, y, true, false, 5);
 			if( selectedRecordArray != null)
 			{
-				curIndx = tempFacet.getCurIndx();
-				
+				Aggregate tempAggr = tempFacet.getCurntAggr();
+								
 				InfoJFrameOverlapRecs newInfoJFrameOverlapRecs;
-				newInfoJFrameOverlapRecs = new InfoJFrameOverlapRecs(this, selectedRecordArray, tempFacet.getNumRetrieved(), curIndx); //, overlapFramePos_x, overlapFramePos_y);
+				newInfoJFrameOverlapRecs = new InfoJFrameOverlapRecs(this, tempAggr); 
+				System.out.println("hkpark) newInfoJFrameOverlapRecs: "+newInfoJFrameOverlapRecs);
 				if(InfoFrameOverlapRecs!=null)
 				{
-					if(newInfoJFrameOverlapRecs.equals(InfoFrameOverlapRecs))
-						continue;
+					System.out.println("hkpark) inside if(InfoFrameOverlapRecs!=null)");
+					System.out.println("hkpark) InfoFrameOverlapRecs: "+InfoFrameOverlapRecs);
+					//if(newInfoJFrameOverlapRecs.selRecs.equals(InfoFrameOverlapRecs.selRecs)) 
+					// Check if the previously extracted overlap list is the same as a new one					
+					if(prev_a >= 0   &&   prev_a == a   
+							&&   prevTempFacet != null
+							&&   tempFacet.getFacetLnIndx() == prevTempFacet.getFacetLnIndx()
+							&&   tempFacet.getAggrIndx() == prevTempFacet.getAggrIndx()
+							&&   newInfoJFrameOverlapRecs.getLeftMostIndx() == InfoFrameOverlapRecs.getLeftMostIndx()
+							&&   newInfoJFrameOverlapRecs.getRightMostIndx() == InfoFrameOverlapRecs.getRightMostIndx() )
+					
+						// If the previous and current list are the same..						
+					{
+					//	System.out.println("hkpark) skip replacing the overlap list pop up"); 
+					//	System.out.println("hkpark) InfoFrameOverlapRecs: "+InfoFrameOverlapRecs);
+						InfoFrameOverlapRecs.changeCurrentPos(tempAggr.getCurIndx());
+						continue;	// skip replacing the overlap list pop up
+					}
+					
 					else	
 					{
+						
+						//System.out.println("hkpark) prev_a == a: "+prev_a+", " +a);
+						/*
+						if(prev_a == a && prevTempFacet!= null)
+						{
+							
+						System.out.println("hkpark) tempFacet.getFacetLnIndx(): "+tempFacet.getFacetLnIndx() +", " +prevTempFacet.getFacetLnIndx());
+						System.out.println("hkpark) tempFacet.getAggrIndx(): "+tempFacet.getAggrIndx()+", " +prevTempFacet.getAggrIndx());
+						System.out.println("hkpark) newInfoJFrameOverlapRecs.getLeftMostIndx(): "+newInfoJFrameOverlapRecs.getLeftMostIndx()+", " +InfoFrameOverlapRecs.getLeftMostIndx());
+						System.out.println("hkpark) newInfoJFrameOverlapRecs.getRightMostIndx(): "+newInfoJFrameOverlapRecs.getRightMostIndx()+", " +InfoFrameOverlapRecs.getRightMostIndx());
+						
+						}*/			
+										
 						if(InfoFrameOverlapRecs.pin==false)
+						{
+						//	System.out.println("hkpark) REMOVE: InfoFrameOverlapRecs.removeOverlapTag()");
+						//	System.out.println("hkpark) InfoFrameOverlapRecs: "+InfoFrameOverlapRecs);
+							//InfoFrameOverlapRecs.removeOverlapTag();
 							InfoFrameOverlapRecs.setVisible(false);
+							//InfoFrameOverlapRecs.removeOverlapTag();
+							if (crntInfoJFrameOverlapRecs!= null)
+								crntInfoJFrameOverlapRecs.removeOverlapTag();
+							//InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
+							
+						}
 						else 
+						{
 							continue;
+						}
 					}
+					if(InfoFrameOverlapRecs != null)
+						InfoFrameOverlapRecs.removeOverlapTag();  // hkpark) temp. cmment. this part cleans prev overlap when moving to other data type
 					InfoFrameOverlapRecs.closeInfoJFrame();
+					//InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
 				}
+				//else 
+					//InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
 				InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
-				
+				System.out.println("hkpark)InfoFrameOverlapRecs=newInfoJFrameOverlapRecs"); 
+				System.out.println("hkpark) newInfoJFrameOverlapRecs: "+newInfoJFrameOverlapRecs);
+				System.out.println("hkpark) InfoFrameOverlapRecs: "+InfoFrameOverlapRecs);
 				// relocate the info box when its boundary exceeds window area					
 				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 				int overlapFrameHeight = InfoFrameOverlapRecs.tHeight+32;
-				int overlapFramePos_x, overlapFramePos_y;
+				
+				// hkpark erase the comment tag? localize the vars?
+				//public int overlapFramePos_x, overlapFramePos_y;
 				int margin = 10;
 				int maxHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 				if((int)screenSize.getWidth()-margin < this.getLocationOnScreen().x+x-150+381)
@@ -1225,8 +1283,15 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 				
 				InfoFrameOverlapRecs.setBounds(overlapFramePos_x, overlapFramePos_y, 381, overlapFrameHeight); //InfoFrameOverlapRecs.tHeight+32); //overlapFrameHeight);				
 				InfoFrameOverlapRecs.repaint();
+				prevTempFacet = tempFacet;		
+				prev_a = a;			
+				//System.out.println("hkpark 2) prev_a == a: "+prev_a+", " +a);				 
 				InfoFrameOverlapRecs.setVisible(true);
-				selectedRecord_cur = selectedRecordArray[curIndx];				
+				//crntLeftMostIndx = InfoFrameOverlapRecs.getLeftMostIndx();
+				//crntRightMostIndx = InfoFrameOverlapRecs.getRightMostIndx();
+				InfoFrameOverlapRecs.markOverlapTag();
+				crntInfoJFrameOverlapRecs = InfoFrameOverlapRecs;
+						
 			}
 		}
 		
