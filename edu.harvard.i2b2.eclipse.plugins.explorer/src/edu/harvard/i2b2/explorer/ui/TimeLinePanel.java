@@ -1147,7 +1147,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								tempStory.mark_status="N";  // change overlap to normal status, leave starred and read tags
 			    		}
 						repaint();
-					}    
+					}
 				}
 				InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
 				
