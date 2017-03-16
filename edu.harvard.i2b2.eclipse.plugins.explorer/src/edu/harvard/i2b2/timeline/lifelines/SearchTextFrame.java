@@ -144,13 +144,12 @@ public class SearchTextFrame extends JFrame {
 		                opt=setSearchOption(case_CheckBox.isSelected(), whole_CheckBox.isSelected(), regExpr_CheckBox.isSelected());
 		        		jFindActionPerformed(find, opt);		        		
 		        		numFound = jTextArea2.getHighlighter().getHighlights().length;
-		        		System.out.println(numFound+" words are found.");
 		        		if(numFound==0 && find.equals(""))
 		        			foundMsg=" ";
 		        		else
 		        			foundMsg=numFound+" words are found.";
 		        		numFoundMsg.setText(foundMsg);
-		        		numFoundMsg.setForeground(Color.decode("0x092746 "));
+		        		numFoundMsg.setForeground(Color.decode("0x092746"));
 		    			
 		        		
 	                }

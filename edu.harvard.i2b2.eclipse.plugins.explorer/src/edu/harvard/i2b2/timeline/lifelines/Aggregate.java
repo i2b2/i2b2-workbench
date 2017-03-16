@@ -1,16 +1,18 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
  *  Contributors:
  *  
  *  	Wensong Pan (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
 
+import java.awt.Rectangle;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -123,19 +125,11 @@ public class Aggregate extends GenRecord {
 
 	@Override
 	public void redraw() {
-		// storyRecord aGenRecord = null;
 		GenRecord aGenRecord = null;
 
 		for (int k = 0; k < genList.size(); k++) {
 			aGenRecord = (StoryRecord) (genList.get(new Integer(k)));
 			aGenRecord.redraw();
-			/*
-			 * Rectangle r = aGenRecord.getBarArea();
-			 * System.out.println("original rect: "+r.x+","+r.y); r.x = -1; r.y
-			 * = -1; r.width = -1; r.height = -1;
-			 * System.out.println("set rect to: "
-			 * +aGenRecord.getBarArea().x+","+aGenRecord.getBarArea().y);
-			 */
 		}
 	}
 
@@ -670,7 +664,6 @@ public class Aggregate extends GenRecord {
 				}
 			}
 		}
-		// System.out.println("aggregate: finish relabeling");
 		return fitlabel;
 	}
 
@@ -776,4 +769,222 @@ public class Aggregate extends GenRecord {
 	public StoryRecord getSummary() {
 		return summary;
 	}
+	
+	
+	/*
+	 * Detect overlapping ticks
+	 */
+	private int maxNumNeighbrs = 9; // maximum number of neighbors to retrieve for pop up 
+	// can retrieve up to maxNumNeighbrs neighbor records, 
+	// thus showing 10 records in the pop up, including mouse hovered record
+	private int cntNeighbrs;
+	private int curIndx; // index of mouse hovered data or first next data in overlapRecords array
+	private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
+		// needed to implement finding next/previous neighboring overlapping ticks 
+	StoryRecord[] overlapRecords = new StoryRecord[maxNumNeighbrs+1];
+	
+	
+	
+	public int getMaxNumOverlapRecs()
+	{
+		return maxNumNeighbrs+1;
+	}
+	
+	public int getNumRetrieved() {
+		return cntNeighbrs+1;
+	}		
+	
+	public int getCurIndx() {
+		return curIndx;
+	}
+	
+	public int getLeftMostIndx() {
+		return leftMostIndx;
+	}
+	
+	public int getRightMostIndx() {
+		return rightMostIndx;
+	}
+	
+	public GenRecord[] getOverlapRecords() {
+		return overlapRecords;
+	}
+	
+	
+	public GenRecord[] findOverlap(int indx, boolean findNxtLt, boolean findNxtRt)
+	{
+		double minDis = Integer.MAX_VALUE;
+		int gap=1; // maximum gap between two data bars to determine in the overlapped range 
+		int cntLtNeighbrs=0; // total number of neighbor records retrieved
+		cntNeighbrs = 0;
+		
+		StoryRecord tempStory = (StoryRecord) (getAllRecords().elementAt(indx));
+		Rectangle dataRect = tempStory.getBarArea();
+		
+		StoryRecord rtNeighbrStory = null, ltNeighbrStory = null;
+		StoryRecord[] ltStoryRecords = new StoryRecord[maxNumNeighbrs];
+		StoryRecord[] rtStoryRecords = new StoryRecord[maxNumNeighbrs];
+				
+		int l = 0;
+		for (int m = 1; cntNeighbrs < maxNumNeighbrs; m++)
+		{
+			if(findNxtLt == true)
+			{
+				if(indx-m >= 0 && cntNeighbrs < maxNumNeighbrs) 
+				{
+					// next left side neighbor record
+					ltNeighbrStory = (StoryRecord) (getAllRecords().elementAt(indx-m));
+					if(ltNeighbrStory != null)
+					{
+						if(cntLtNeighbrs == 0 && (Math.abs(dataRect.x - ltNeighbrStory.startX) <= dataRect.width + gap))
+						{
+							ltStoryRecords[cntLtNeighbrs] = ltNeighbrStory;
+							cntNeighbrs++;	
+							cntLtNeighbrs++;
+						}
+						else if(cntLtNeighbrs-1>=0 && (Math.abs(ltStoryRecords[cntLtNeighbrs-1].startX - ltNeighbrStory.startX) <= dataRect.width + gap))
+						{
+							ltStoryRecords[cntLtNeighbrs] = ltNeighbrStory;
+							cntNeighbrs++;	
+							cntLtNeighbrs++;
+						}
+						else 
+						{
+							findNxtLt = false;
+							if(findNxtRt == false) 
+								break;
+						}
+					}
+				}
+				else
+				{
+					findNxtLt = false;
+					if(findNxtRt == false) 
+						break;
+				}
+			}
+			
+
+			if(findNxtRt == true)
+			{
+				if(indx+m <= getAllRecords().size()-1 && cntNeighbrs < maxNumNeighbrs)
+				{
+					// next right side neighbor record
+					rtNeighbrStory = (StoryRecord) (getAllRecords().elementAt(indx+m));
+					if(rtNeighbrStory != null)
+					{
+						if(cntNeighbrs-cntLtNeighbrs == 0 && (Math.abs(rtNeighbrStory.startX - dataRect.x) <= dataRect.width + gap)) // if
+						{
+							rtStoryRecords[cntNeighbrs-cntLtNeighbrs] = rtNeighbrStory;
+							cntNeighbrs++;
+						}
+						else if(cntNeighbrs-cntLtNeighbrs-1>=0 && (Math.abs(rtNeighbrStory.startX - rtStoryRecords[cntNeighbrs-cntLtNeighbrs-1].startX) <= dataRect.width + gap))
+						{
+							rtStoryRecords[cntNeighbrs-cntLtNeighbrs] = rtNeighbrStory;
+							cntNeighbrs++;
+						}
+						else
+						{
+							findNxtRt = false;
+							if(findNxtLt == false) 
+								break;
+							else
+								continue;
+						}
+					}
+				}
+				else // if no more record on the right side
+				{
+					findNxtRt = false;
+					if(findNxtLt == false) 
+						break;
+					
+				}
+			}
+			l++;
+		}
+		if(cntLtNeighbrs > 0)
+		{
+			for (int o = 0; o < cntLtNeighbrs; o++)
+			{
+				if(ltStoryRecords[cntLtNeighbrs-1-o] != null)
+					overlapRecords[o] = ltStoryRecords[cntLtNeighbrs-1-o];				
+			}
+		}
+		overlapRecords[cntLtNeighbrs] = tempStory;
+		curIndx = cntLtNeighbrs;
+		if(cntNeighbrs-cntLtNeighbrs > 0)
+		{
+			int ii=0;
+			for (int p = cntLtNeighbrs+1; p <= cntNeighbrs; p++)
+				overlapRecords[p] = rtStoryRecords[ii++];
+		}
+		
+		leftMostIndx = indx - cntLtNeighbrs;
+		rightMostIndx = indx + (cntNeighbrs-cntLtNeighbrs);
+		
+		return overlapRecords;
+	}
+	
+	// find next neighboring overlap list within current occlusion
+	// endIndx is end point (leftMostIndx or rightMostIndx) of the current overlap list
+	// if finding next neighboring overlap list, dir == 1
+	// if finding previous neighboring overlap list, dir == -1
+	//public GenRecord[] findNxtOverlap(Aggregate tempAgg, int endIndx,int dir) 
+	public GenRecord[] findNxtOverlap(int endIndx,int dir)
+	{	
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
+		if(dir == 1)
+		{
+			if(endIndx+1 >= 0)
+			{
+				findOverlap(endIndx, false, true);
+				if(getNumRetrieved() > 1)					
+					overlapRecords = findOverlap(endIndx+1, false, true);
+				else 
+					overlapRecords = null;
+			}
+			
+		}
+		else if(dir == -1)
+		{
+			if(endIndx-1 >=0){
+				findOverlap(endIndx, true, false);
+				if(getNumRetrieved() > 1)
+					overlapRecords = findOverlap(endIndx-1, true, false);
+				else 
+					overlapRecords = null;
+			}
+		}
+		return overlapRecords;
+	}
+	
+	// find next neighbor list within / in next occlusion or next single tick
+	// Show up to 10 overlapping list at a time 
+	// endIndx is end point (leftMostIndx or rightMostIndx) of the current overlap list
+	// if finding next neighboring overlap list, dir == 1
+	// if finding previous neighboring overlap list, dir == -1
+	//public GenRecord[] findNxtOverlap(Aggregate tempAgg, int endIndx,int dir) 
+	public GenRecord[] findNxtNeighbrsList(int endIndx,int dir)
+	{	
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
+		if(dir == 1)
+		{
+			if(endIndx+1 >= 0)			
+				overlapRecords = findOverlap(endIndx+1, false, true);
+			else 
+				overlapRecords = null;
+			
+		}
+		else if(dir == -1)
+		{
+			if(endIndx-1 >=0)
+				overlapRecords = findOverlap(endIndx-1, true, false);
+			else 
+				overlapRecords = null;
+		}
+		return overlapRecords;
+	}
+	
 }
+

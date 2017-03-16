@@ -425,20 +425,37 @@ public class StoryRecord extends GenRecord {
 				if (!silhouette) {
 					if (rectWidth == 1 || (getInputLine().indexOf("Value") < 0)) {
 						
-					if (this.mark_status.equalsIgnoreCase("N")) 
+						if (this.mark_status.equalsIgnoreCase("N")) 
 							g.setColor(currentColor);
 						else if(this.mark_status.equalsIgnoreCase("R"))		// read(clicked) note(R)
 							g.setColor(Color.GRAY);
 						else if(this.mark_status.equalsIgnoreCase("S"))		// starred note(S)
 							g.setColor(Color.decode("0xf9a51e")); 
+						else if(this.mark_status.equalsIgnoreCase("O"))		// selected overlap record
+						{
+								
+								/*
+								currentBarArea.setBounds(startX, startY,
+										(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
+												: (diff2 - diff1), rectWidth);
+												*/
+								g.setColor(Color.decode("0x2febbc"));
+						}
 						else
 							g.setColor(currentColor);
-										
-						g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
-								- diff1 + 3) : (diff2 - diff1), rectWidth);
-						currentBarArea.setBounds(startX, startY,
-								(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
-										: (diff2 - diff1), rectWidth);
+											
+							g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
+									- diff1 + 3) : (diff2 - diff1), rectWidth);
+							currentBarArea.setBounds(startX, startY,
+									(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
+											: (diff2 - diff1), rectWidth);
+						if(this.mark_overlap == true)
+						{
+							g.setColor(Color.black);
+							g.fillRect(startX, startY-4, (diff2 - diff1) < 3 ? (diff2
+									- diff1 + 3) : (diff2 - diff1), 2);
+						}
+					
 
 					} else {
 						g.setColor(currentColor);

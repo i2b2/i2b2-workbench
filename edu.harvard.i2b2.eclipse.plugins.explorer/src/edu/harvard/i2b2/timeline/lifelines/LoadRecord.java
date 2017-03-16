@@ -168,7 +168,7 @@ public class LoadRecord {
 						// comma
 
 						String name = readBlanks(line_tokens);
-						// hkpark. convert '_' to a blank space for display
+						// convert '_' to a blank space for display
 				        // (currently, blank in LLD file is parsed as a delimiter)
 						name = name.replace('_', ' ');  
 								
