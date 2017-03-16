@@ -32,6 +32,7 @@ import edu.harvard.i2b2.timeline.external.*;
 import edu.harvard.i2b2.timeline.lifelines.Aggregate;
 import edu.harvard.i2b2.timeline.lifelines.Facet;
 import edu.harvard.i2b2.timeline.lifelines.GenRecord;
+import edu.harvard.i2b2.timeline.lifelines.StoryRecord;
 import edu.harvard.i2b2.timeline.lifelines.HourstoryRecord;
 import edu.harvard.i2b2.timeline.lifelines.MyColor;
 import edu.harvard.i2b2.timeline.lifelines.MyDate;
@@ -59,6 +60,19 @@ import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 @SuppressWarnings("serial")
 public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		MouseListener, MouseMotionListener, MouseWheelListener, AWTEventListener {
+	
+	public InfoJFrameOverlapRecs InfoFrameOverlapRecs;
+	private int prevLeftMostOverlapIndx = -1, prevRightMostOverlapIndx = -1;
+	
+	public InfoJFrameOverlapRecs getInfoJFrameOverlapRecs()
+    {
+    	return InfoFrameOverlapRecs;
+    }
+	
+	public Point getOverlapFrameLocation()
+	{
+		return InfoFrameOverlapRecs.getLocationOnScreen();
+	}
 
 	public void eventDispatched(AWTEvent event) {
 		System.out.println("mouse idle");
@@ -88,6 +102,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	
 	private int cur_clicked_x;
 	private int cur_clicked_y;
+	private int numSelRecs = 10;
 	
 	Image offScreenImage;
 	boolean threadTest = false;
@@ -107,7 +122,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	private String key = null;
 	private GenRecord selectedRecord = null;
 	private GenRecord cur_selectedRecord = null;
-
+	int prev_a = -1;
+	Facet prevTempFacet = null;
+	
 	private ViewPart textAnalyzerView;
 	// for excentric
 	/**
@@ -233,6 +250,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	Hashtable afacetList; // comes from a facetrecord, not list of facets but
 	// rather: list of whats in facet
 	GenRecord aGenRecord; // basically contains only info on the type of record
+	
+	public int overlapFramePos_x, overlapFramePos_y;
+	
 
 	public Record thisApplet;
 	Image image1;
@@ -240,8 +260,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	MyDate today;
 
 	public TimeLinePanel(int width, int height, Record thisApplet, MyDate today) {
-		//Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.MOUSE_EVENT_MASK);
-		
 		setLabelFont(11); // default font size is 12
 		testChoice = new Choice();
 		this.today = today;
@@ -341,7 +359,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		int y = e.getY();
 		GenRecord selectedRecord = inRegion(x, y, true, true);
 		if (selectedRecord == null) {
-			hide_labels();
 			this.selectedRecord = null;
 		}
 	}
@@ -640,8 +657,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 								//new TextViewerFrame(note, dndXmlData)
 								if(textFrame != null) {
 									textFrame.disposeTextViewerFrame();
-									//textFrame.setVisible(false);
-									//textFrame.dispose();
 									textFrame = null;
 								}
 								textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
@@ -724,34 +739,32 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 						infoFrame.dispose();
 						infoFrame = null;
 					}
-					
-					infoFrame = new InfoJFrame(this, ob, selectedRecord);
+					infoFrame = new InfoJFrame(this, ob, selectedRecord);					
 					
 					// size change 
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					int infoFramePos_x, infoFramePos_y;
 					int margin = 10;
+					int maxHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 					// relocate the info box when its boundary exceeds window area					
 					if((int)screenSize.getWidth()-margin < this.getLocationOnScreen().x+x-150+381)
-						infoFramePos_x = this.getLocationOnScreen().x+x-150 - (381-150)-margin;//((this.getLocationOnScreen().x+x-150+381)-(int)screenSize.getWidth() - 5);
+						infoFramePos_x = this.getLocationOnScreen().x+x-150 - (381-150)-margin;
 					else if((this.getLocationOnScreen().x+x-150) < margin)
 						infoFramePos_x = margin;
 					else
 						infoFramePos_x = this.getLocationOnScreen().x+x-150;
 					
-					if(screenSize.getHeight()-this.getLocationOnScreen().y-y < 200+margin+40) // added 40 to avoid overlapping by the bottom windows' start bar
+					if(maxHeight-this.getLocationOnScreen().y-y < 200+margin) 
 						infoFramePos_y = this.getLocationOnScreen().y + y - 200-margin;
 					else
 						infoFramePos_y = this.getLocationOnScreen().y + y + margin;
-
-					infoFrame.setBounds(infoFramePos_x, infoFramePos_y, 381, 200);
 					
+					infoFrame.setBounds(infoFramePos_x, infoFramePos_y, 381, 200);
 					if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
 						selectedRecord.mark_status="R";
 					repaint();
 					infoFrame.repaint();
-							
-					infoFrame.setVisible(true);					
+					infoFrame.setVisible(true);		
 				} else {
 					if (x > 102) { // single click on the backgroup to zoom in
 						relabeling = true;
@@ -803,8 +816,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("mouse Dragged");
-
 		if (rubber) {
 			rubber_endX = e.getX();
 			rubber_endY = e.getY();
@@ -813,8 +824,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse Released");
-
 		if (rubber) {
 			rubber = false;
 			stream = true;
@@ -981,11 +990,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 														+ textstream.currentY
 														- descent);
 
-								// g.fillRect(textstream.streamX,
-								// textstream.streamY+textstream.currentY-getFontTextHeight(),
-								// textstream.getLabelWidth(),
-								// getFontTextHeight());
-								// strange, pending
 								g.drawRect(rubber_startX, rubber_startY,
 										rubber_endX - rubber_startX,
 										rubber_endY - rubber_startY);
@@ -1015,9 +1019,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 
 			// snm - looks like the height of the pane is here
 			dataheight = currentY + 50;
-			//
-			// System.out.println("dataheight = " + dataheight);
-			//
 			relabeling = false;
 			slide = false;
 			search = false;
@@ -1100,183 +1101,82 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	 * circle, add them into the labels list as <code>LiteDisplacedLabel</code>
 	 * and call the layout algorithm.
 	 */
-	public void show_labels(int x, int y, boolean layoutY) {
-		for (int a = 0; a < n_key; a++) {
-			Facet tempFacet = (Facet) (recordTable.get(new Integer(a)));
-			if (tempFacet.checkTitleContainsFull(x, y)) {
-				String title = tempFacet.fullName();
-				if (title.indexOf(ptStr) < 0) {
-					hide_labels();
-					infoTipLabel = new LiteLabel(title,
-							new Point(x+10, y+30),
-							1,
-							fontMetrics1.getFont(),
-							Color.black,
-							Color.yellow);
-					
-					Rectangle r = infoTipLabel.getBounds();
-					if(y > getSize().getHeight()-40) {
-						infoTipLabel = new LiteLabel(title,
-								new Point(x+10, y-5),
-								1,
-								fontMetrics1.getFont(),
-								Color.black,
-								Color.yellow);
-					}
-					
-					if((x+r.width) < (getSize().width-10)) {
-						infoTipLabel.setAlignment(LiteLabel.LEFT);
-					} 
-					else if(x > r.width) {
-						infoTipLabel.setAlignment(LiteLabel.RIGHT);
-					}
-					else {
-						infoTipLabel.setAlignment(LiteLabel.RIGHT);//CENTER);
-					}
-					
-					repaint_rect(infoTipLabel.getBounds()); 
-					return;
-				}
-			}
-		}
-
+	
+	public void show_list(int x, int y, boolean layoutY) {
 		
-		GenRecord selectedRecord_cur = inRegion(x, y, true, false);
-		if (selectedRecord_cur == null) {
-			selectedRecord = null;
-			hide_labels();
-			return;
-		}
-
-		if (selectedRecord != null && selectedRecord == selectedRecord_cur) {
-			return;
-		}
-
-		selectedRecord = selectedRecord_cur;
-		hide_labels();
-
-		Point p = new Point(x, y);
-		Vector substreamlist;
-		Facet aFacet = null;
-
-		cursor = new LiteRect(new Rectangle(x - cursor_radius, y
-				- cursor_radius, 2 * cursor_radius, 2 * cursor_radius), 1,
-				Color.red, null);
-		if (Record.excentric) {
-			// Julia, 10/12/98, move the following three lines here so that the
-			// excentric layout can be changed via control panel
-			int column = 1;
-			if (Record.column[1])
-				column = 2;
-			System.out.println(getSize().height);
-			layout = new StableLayout(getSize().width, getSize().height, column);
-
-			for (int i = 0; i < n_key; i++) {
-				aFacet = (Facet) (recordTable.get(new Integer(i)));
-				substreamlist = aFacet.rubber_band(x, y, cursor_radius);
-				for (int j = 0; j < substreamlist.size(); j++) {
-					StoryRecord thisRecord = (StoryRecord) (substreamlist
-							.elementAt(j));
-					int centerX = thisRecord.startX
-							+ (thisRecord.getBarArea().intersection(cursor
-									.getBounds())).width / 2;
-					int centerY = thisRecord.startY
-							+ thisRecord.getBarArea().height / 2;
-					if (!thisRecord.getCause().equals(" ")) {
-						if (Record.column[1]) {
-							labels.addElement(new LiteDisplacedLabel(thisRecord
-									.getCause(), new Point(centerX, centerY),
-									new Point(centerX, centerY), 1, font1,
-									thisRecord.getRectColor(), Color.yellow));
-						} else {
-							labels.addElement(new LiteDisplacedLabel(thisRecord
-									.getCause(), new Point(centerX, centerY),
-									1, font1, thisRecord.getRectColor(),
-									Color.yellow));
-						}
-					}
-				}
-			}
-			if (layoutY)
-				layout_labels(p);
-			repaint_rect(labels.getBounds().union(cursor.getBounds()));
-		} else if (Record.infotip) {
-
-			if (selectedRecord != null) {
-				String msg = selectedRecord.getInputLine();
-				String[] msgs = msg.split(",");
-				if (msgs[4].equalsIgnoreCase("p4")) {
-					msgs[4] = "Very Low";
-				} else if (msgs[4].equalsIgnoreCase("p8")) {
-					msgs[4] = "Low";
-				} else if (msgs[4].equalsIgnoreCase("p10")) {
-					msgs[4] = "Normal";
-				} else if (msgs[4].equalsIgnoreCase("p12")) {
-					msgs[4] = "High";
-				} else if (msgs[4].equalsIgnoreCase("p18")) {
-					msgs[4] = "Very High";
-				} else if (msgs[4].equalsIgnoreCase("p1")) {
-					return;
-				}
-
-				String val = " ";
-				String infotip = null;
-				String [] xtras = msgs[7].split("\\$\\$");
-				String name = xtras[0];
-				String conceptName = "";
-				String concept_cd = xtras[2];
-				if(name.startsWith("\"E")) {
-					conceptName = name.substring(name.indexOf("::")+2, name.lastIndexOf("::"));
-					infotip = conceptName+", "+msgs[1];
-				}
-				else if(name.startsWith("\"C")) {
-					conceptName = name.substring(name.indexOf("::") + 2, name
-							.lastIndexOf("::"));
-					if (conceptName == null || conceptName.equals("")) {
-						conceptName = PDOQueryClient.getCodeInfo(concept_cd);
-					}
-					String cstr = makeReadableCodeString(concept_cd);
-					String dcstr = cstr+", ";
-					if(!cstr.equalsIgnoreCase("")) {
-						dcstr = " ("+cstr+"), ";
-					}
-					if(msgs[7].indexOf("Value")>=0) {
-						val = xtras[0].substring(xtras[0].lastIndexOf(": ")+2, xtras[0].length()-2);
-						infotip = conceptName+dcstr+val+"("+msgs[4]+")"+", "+msgs[1];//+": "+val+" ("+msgs[4]+")";
-					}
-					else {
-						infotip = conceptName+dcstr+msgs[1];
-					}
-				}
+		Facet tempFacet;	
+		GenRecord[] selectedRecordArray = new GenRecord[numSelRecs];
+				
+		for (int a = 0; a < n_key; a++) {
+			tempFacet = (Facet) (recordTable.get(new Integer(a)));
+			selectedRecordArray = tempFacet.inOverlapRegion(x, y, true, false, 5);
+			if( selectedRecordArray != null)
+			{
+				Aggregate tempAggr = tempFacet.getCurntAggr();
 								
-				infoTipLabel = new LiteLabel(infotip,
-						new Point(x+10, y+30),
-						1,
-						fontMetrics1.getFont(),
-						Color.black,
-						Color.yellow);
-				
-				Rectangle r = infoTipLabel.getBounds();
-				if(y > getSize().getHeight()-40) {
-					infoTipLabel = new LiteLabel(infotip,
-							new Point(x+10, y-5),
-							1,
-							fontMetrics1.getFont(),
-							Color.black,
-							Color.yellow);
+				InfoJFrameOverlapRecs newInfoJFrameOverlapRecs;
+				newInfoJFrameOverlapRecs = new InfoJFrameOverlapRecs(this, tempAggr); 
+				if(InfoFrameOverlapRecs!=null)
+				{
+					// Check if the previously extracted overlap list is the same as a new one					
+					if(prev_a >= 0   &&   prev_a == a   
+							&&   prevTempFacet != null
+							&&   tempFacet.getFacetLnIndx() == prevTempFacet.getFacetLnIndx()
+							&&   tempFacet.getAggrIndx() == prevTempFacet.getAggrIndx()
+							&&   newInfoJFrameOverlapRecs.getLeftMostIndx() == InfoFrameOverlapRecs.getLeftMostIndx()
+							&&   newInfoJFrameOverlapRecs.getRightMostIndx() == InfoFrameOverlapRecs.getRightMostIndx() )
+					{	// If the previous and current list are the same..						
+						InfoFrameOverlapRecs.changeCurrentPos(tempAggr.getCurIndx());
+						continue;	// skip replacing the overlap list pop up
+					}
+					
+					else	
+					{
+						if(InfoFrameOverlapRecs.pin==false)
+							InfoFrameOverlapRecs.closeOverlapPopup();
+						else 
+							continue;
+					}
+					StoryRecord tempStory;
+					if(tempAggr != null && prevLeftMostOverlapIndx > -1 && prevRightMostOverlapIndx > -1
+							&& tempAggr.getAllRecords().size()-1 >= prevRightMostOverlapIndx) { // remove previous overlap ticks' mark
+						for(int i = prevLeftMostOverlapIndx; i <= prevRightMostOverlapIndx; i++) {
+							tempStory = (StoryRecord) (tempAggr.getAllRecords().elementAt(i));
+							tempStory.mark_overlap = false;
+							if(tempStory.mark_status.equalsIgnoreCase("O")) 
+								tempStory.mark_status="N";  // change overlap to normal status, leave starred and read tags
+			    		}
+						repaint();
+					}
 				}
+				InfoFrameOverlapRecs=newInfoJFrameOverlapRecs;
 				
-				if((x+r.width) < (getSize().width-10)) {
-					infoTipLabel.setAlignment(LiteLabel.LEFT);
-				} 
-				else if(x > r.width) {
-					infoTipLabel.setAlignment(LiteLabel.RIGHT);
-				}
-				else {
-					infoTipLabel.setAlignment(LiteLabel.RIGHT);
-				}
+				// relocate the info box when its boundary exceeds window area					
+				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				int overlapFrameHeight = InfoFrameOverlapRecs.tHeight+32;
 				
-				repaint_rect(infoTipLabel.getBounds());  
+				int margin = 10;
+				int maxHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+				if((int)screenSize.getWidth()-margin < this.getLocationOnScreen().x+x-150+381)
+					overlapFramePos_x = this.getLocationOnScreen().x+x-150 - (381-150)-margin;
+				else if((this.getLocationOnScreen().x+x-150) < margin)
+					overlapFramePos_x = margin;
+				else
+					overlapFramePos_x = this.getLocationOnScreen().x+x-150;
+				
+				if(maxHeight-this.getLocationOnScreen().y-y < overlapFrameHeight+margin) 
+					overlapFramePos_y = this.getLocationOnScreen().y + y - overlapFrameHeight - margin; 
+				else
+					overlapFramePos_y = this.getLocationOnScreen().y + y + margin;
+				
+				InfoFrameOverlapRecs.setBounds(overlapFramePos_x, overlapFramePos_y, 381, overlapFrameHeight); 				
+				InfoFrameOverlapRecs.repaint();
+				prevTempFacet = tempFacet;		
+				prev_a = a;			
+				InfoFrameOverlapRecs.setVisible(true);
+				prevLeftMostOverlapIndx = InfoFrameOverlapRecs.getLeftMostIndx();
+				prevRightMostOverlapIndx = InfoFrameOverlapRecs.getRightMostIndx();
+						
 			}
 		}
 	}
@@ -1286,38 +1186,6 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	 */
 	public void repaint_rect(Rectangle r) {
 		repaint(r.x, r.y, r.width, r.height);
-	}
-
-	/**
-	 * Remove all the labels as well as the cursor for excentric. Remove the
-	 * infotip label.
-	 */
-	public void hide_labels() {
-		if (Record.excentric && cursor != null) {
-			Rectangle r = labels.getBounds().union(cursor.getBounds());
-			labels.removeAllElements();
-			cursor = null;
-			repaint_rect(r);
-		} else if (Record.infotip && infoTipLabel != null) {		
-			Rectangle r = infoTipLabel.getBounds();
-			infoTipLabel = null;
-			repaint_rect(r);
-		}
-	}
-
-	/**
-	 * Conditionnaly show the excentric labels at the next mouse move. If the
-	 * mouse moved too much, just hide the labels.
-	 */
-	public void track_focus(int x, int y, boolean layout) {
-		boolean shown = (cursor != null);
-		hide_labels();
-		if (Record.excentric) {
-			if (shown
-					&& dist2(x - last_x, y - last_y) < (cursor_radius * cursor_radius))
-				idle(x, y, layout);
-		} else if (Record.infotip)
-			idle(x, y, layout);
 	}
 
 	/**
@@ -1336,11 +1204,11 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	 */
 	void idle(int x, int y, boolean layout) {
 		if (Record.excentric && cursor == null) {
-			show_labels(x, y, layout);
+			show_list(x, y, layout);
 			last_x = x;
 			last_y = y;
 		} else if (Record.infotip)
-			show_labels(x, y, layout);
+			show_list(x, y, layout);
 	}
 
 	static boolean inside(int x, int y, int radius, int x2, int y2) {
@@ -1498,7 +1366,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		}
 		return null;
 	}
-
+	
 	public boolean noSelection() {
 
 		if (selectedIndex == -1)
@@ -1940,7 +1808,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		return key;
 	}
 
-	private String[] getNotes(String patientNumber, String concept_cd,
+	public String[] getNotes(String patientNumber, String concept_cd,
 			String start_date, String encounterNumber, String providerId,
 			String modifier_cd) {
 
@@ -1960,7 +1828,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		}
 	}
 	
-	private ObservationType getObservation(String patientNumber, String concept_cd,
+	public ObservationType getObservation(String patientNumber, String concept_cd,
 			String start_date, String encounterNumber, String providerId,
 			String modifier_cd) {
 
@@ -1972,7 +1840,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 					start_date);
 			String result = PDOQueryClient.sendQueryRequestREST(xmlStr);
 
-			System.out.println(result);
+			//System.out.println(result); --> takes too much time when we track overlap data
 			PDOResponseMessageModel pdoresponsefactory = new PDOResponseMessageModel();
 			List<ObservationSet> factSets = pdoresponsefactory
 					.getFactSetsFromResponseXML(result);
@@ -2241,13 +2109,101 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 			return;
 		}
 	}
+	
+	public void showNoteViewer(String patientNumber, String concept_cd, String start_date, 
+			String encounterNumber, String providerId,	String modifier_cd, 
+			final GenRecord selectedRecord)
+	{
+		String[] blobdata = getNotes(patientNumber, concept_cd,
+				start_date, encounterNumber, providerId, 
+				modifier_cd);
+		if (blobdata == null) {
+			// note = "No notes found";
+			return;
+		}							
+		
+		// blobdata string array contents:
+		// [0] is note
+		// [1] is valueTypeCd
+		// [2] is valueFlagCd
+		// [3] is PDO
+		note = blobdata[0];
+
+		if (!System.getProperty("applicationName").equals("BIRN")
+				&& (!blobdata[1].equals("B"))) {
+			return;
+		}
+
+		if ((blobdata[1].equals("B"))
+				&& ((blobdata[2].trim()).equals("X")))
+			note = decryptBlob(note);
+
+		if (note != null
+				&& note
+						.equalsIgnoreCase("[I2B2-Error] Invalid key")) {
+			JOptionPane.showMessageDialog(this,
+					"Not a valid decryption key.");
+			return;
+		}
+
+		String xmlPdoData = blobdata[3];
+		StringWriter strWriter = null;
+
+		try {
+			PDOResponseMessageModel pdoresponsefactory = new PDOResponseMessageModel();
+			PatientDataType patientDataType = pdoresponsefactory
+					.getPatientDataTypeFromResponseXML(xmlPdoData);
+			// following line was appending decrypted note to
+			// encrypted one.... enc should be replaced with
+			// decrypted one.
+			// patientDataType.getObservationSet().get(0).getObservation().get(0).getObservationBlob().getContent().add(note.replaceAll("/n",
+			// "\n"));
+			patientDataType.getObservationSet().get(0)
+					.getObservation().get(0).getObservationBlob()
+					.getContent().set(0,
+							note.replaceAll("/n", "\n"));
+
+			strWriter = new StringWriter();
+			DndType dnd = new DndType();
+
+			edu.harvard.i2b2.common.datavo.pdo.ObjectFactory pdoOf = new edu.harvard.i2b2.common.datavo.pdo.ObjectFactory();
+			dnd.getAny().add(
+					pdoOf.createPatientData(patientDataType));
+
+			edu.harvard.i2b2.crcxmljaxb.datavo.dnd.ObjectFactory of = new edu.harvard.i2b2.crcxmljaxb.datavo.dnd.ObjectFactory();
+			ExplorerJAXBUtil.getJAXBUtil().marshaller(
+					of.createPluginDragDrop(dnd), strWriter);
+
+		} catch (Exception ex) {
+			System.out
+					.println("Error marshalling Explorer drag text");
+		}
+
+		final String dndXmlData = strWriter.toString();
+
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				if(textFrame != null) {
+					textFrame.setVisible(false);
+					textFrame.dispose();
+					textFrame = null;
+				}
+				textFrame = new TextViewerFrame(note, dndXmlData, TimeLinePanel.this, selectedRecord);
+				textFrame.setVisible(true);
+			}
+		});
+    	if(!selectedRecord.mark_status.equalsIgnoreCase("S"))
+			selectedRecord.mark_status="R";
+		repaint();
+	}
+	
+	
 
 	public String decryptBlob(String blob) {
-
 		key = UserInfoBean.getInstance().getKey();
 		if (key == null || key.length() == 0)
 			getKey();
-
+		 
 		
 		NoteCryptUtil util = new NoteCryptUtil(key);
 		if (util == null) {
@@ -2287,7 +2243,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		return null;
 	}
 
-	private String makeReadableCodeString(String sCode) {
+	public String makeReadableCodeString(String sCode) {
 
 		String sFirstChar;
 		String sSecondChar;
