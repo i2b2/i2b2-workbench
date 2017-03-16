@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
@@ -125,19 +125,11 @@ public class Aggregate extends GenRecord {
 
 	@Override
 	public void redraw() {
-		// storyRecord aGenRecord = null;
 		GenRecord aGenRecord = null;
 
 		for (int k = 0; k < genList.size(); k++) {
 			aGenRecord = (StoryRecord) (genList.get(new Integer(k)));
 			aGenRecord.redraw();
-			/*
-			 * Rectangle r = aGenRecord.getBarArea();
-			 * System.out.println("original rect: "+r.x+","+r.y); r.x = -1; r.y
-			 * = -1; r.width = -1; r.height = -1;
-			 * System.out.println("set rect to: "
-			 * +aGenRecord.getBarArea().x+","+aGenRecord.getBarArea().y);
-			 */
 		}
 	}
 
@@ -672,7 +664,6 @@ public class Aggregate extends GenRecord {
 				}
 			}
 		}
-		// System.out.println("aggregate: finish relabeling");
 		return fitlabel;
 	}
 
@@ -787,12 +778,13 @@ public class Aggregate extends GenRecord {
 	// can retrieve up to maxNumNeighbrs neighbor records, 
 	// thus showing 10 records in the pop up, including mouse hovered record
 	private int cntNeighbrs;
-	private int curIndx;
+	private int curIndx; // index of mouse hovered data or first next data in overlapRecords array
 	private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
 		// needed to implement finding next/previous neighboring overlapping ticks 
 	StoryRecord[] overlapRecords = new StoryRecord[maxNumNeighbrs+1];
 	
-		
+	
+	
 	public int getMaxNumOverlapRecs()
 	{
 		return maxNumNeighbrs+1;
@@ -803,7 +795,6 @@ public class Aggregate extends GenRecord {
 	}		
 	
 	public int getCurIndx() {
-		//System.out.println("curIndx: "+curIndx);
 		return curIndx;
 	}
 	
@@ -835,7 +826,6 @@ public class Aggregate extends GenRecord {
 		StoryRecord[] rtStoryRecords = new StoryRecord[maxNumNeighbrs];
 				
 		int l = 0;
-		//gap = dataRect.width+2; // set gap as data bar(tick) width + 2 (to retrieve closely related data together)
 		for (int m = 1; cntNeighbrs < maxNumNeighbrs; m++)
 		{
 			if(findNxtLt == true)
@@ -849,15 +839,12 @@ public class Aggregate extends GenRecord {
 						if(cntLtNeighbrs == 0 && (Math.abs(dataRect.x - ltNeighbrStory.startX) <= dataRect.width + gap))
 						{
 							ltStoryRecords[cntLtNeighbrs] = ltNeighbrStory;
-							//System.out.println("hkpark)overlapRecords[" +(l-1)+"] = " + ltNeighbrStory.getInputLine());
 							cntNeighbrs++;	
 							cntLtNeighbrs++;
 						}
 						else if(cntLtNeighbrs-1>=0 && (Math.abs(ltStoryRecords[cntLtNeighbrs-1].startX - ltNeighbrStory.startX) <= dataRect.width + gap))
 						{
-							//ltStoryRecords[l] = ltNeighbrStory;
 							ltStoryRecords[cntLtNeighbrs] = ltNeighbrStory;
-							//System.out.println("hkpark)overlapRecords[" +(l-1)+"] = " + ltNeighbrStory.getInputLine());
 							cntNeighbrs++;	
 							cntLtNeighbrs++;
 						}
@@ -889,14 +876,11 @@ public class Aggregate extends GenRecord {
 						if(cntNeighbrs-cntLtNeighbrs == 0 && (Math.abs(rtNeighbrStory.startX - dataRect.x) <= dataRect.width + gap)) // if
 						{
 							rtStoryRecords[cntNeighbrs-cntLtNeighbrs] = rtNeighbrStory;
-							//System.out.println("hkpark)overlapRecords["+(l-1)+"] = " + rtNeighbrStory.getInputLine());
 							cntNeighbrs++;
 						}
 						else if(cntNeighbrs-cntLtNeighbrs-1>=0 && (Math.abs(rtNeighbrStory.startX - rtStoryRecords[cntNeighbrs-cntLtNeighbrs-1].startX) <= dataRect.width + gap))
 						{
-							//rtStoryRecords[l] = rtNeighbrStory;
 							rtStoryRecords[cntNeighbrs-cntLtNeighbrs] = rtNeighbrStory;
-							//System.out.println("hkpark)overlapRecords["+(l-1)+"] = " + rtNeighbrStory.getInputLine());
 							cntNeighbrs++;
 						}
 						else
@@ -923,27 +907,17 @@ public class Aggregate extends GenRecord {
 		{
 			for (int o = 0; o < cntLtNeighbrs; o++)
 			{
-				if(ltStoryRecords[cntLtNeighbrs-1-o] == null)
-					System.out.println("hkpark) no left neighbors??"); 
-				else
-					{
-						overlapRecords[o] = ltStoryRecords[cntLtNeighbrs-1-o];
-						//System.out.println("hkpark)L] overlapRecords[" +o+"] = " + overlapRecords[o].getInputLine());
-					}
-				
+				if(ltStoryRecords[cntLtNeighbrs-1-o] != null)
+					overlapRecords[o] = ltStoryRecords[cntLtNeighbrs-1-o];				
 			}
 		}
 		overlapRecords[cntLtNeighbrs] = tempStory;
 		curIndx = cntLtNeighbrs;
-		//System.out.println("hkpark)C] overlapRecords["+cntLtNeighbrs+"] = " + overlapRecords[cntLtNeighbrs].getInputLine());
 		if(cntNeighbrs-cntLtNeighbrs > 0)
 		{
 			int ii=0;
 			for (int p = cntLtNeighbrs+1; p <= cntNeighbrs; p++)
-			{
 				overlapRecords[p] = rtStoryRecords[ii++];
-				//System.out.println("hkpark)R] overlapRecords[" +p+"] = " + overlapRecords[p].getInputLine());
-			}
 		}
 		
 		leftMostIndx = indx - cntLtNeighbrs;
@@ -975,7 +949,6 @@ public class Aggregate extends GenRecord {
 		else if(dir == -1)
 		{
 			if(endIndx-1 >=0){
-				//overlapRecords = findOverlap(endIndx-1, true, false);
 				findOverlap(endIndx, true, false);
 				if(getNumRetrieved() > 1)
 					overlapRecords = findOverlap(endIndx-1, true, false);

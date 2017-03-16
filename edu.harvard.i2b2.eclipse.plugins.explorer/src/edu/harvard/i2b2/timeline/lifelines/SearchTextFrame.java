@@ -144,7 +144,6 @@ public class SearchTextFrame extends JFrame {
 		                opt=setSearchOption(case_CheckBox.isSelected(), whole_CheckBox.isSelected(), regExpr_CheckBox.isSelected());
 		        		jFindActionPerformed(find, opt);		        		
 		        		numFound = jTextArea2.getHighlighter().getHighlights().length;
-		        		//System.out.println("hkpark) "+numFound+" words are found.");
 		        		if(numFound==0 && find.equals(""))
 		        			foundMsg=" ";
 		        		else

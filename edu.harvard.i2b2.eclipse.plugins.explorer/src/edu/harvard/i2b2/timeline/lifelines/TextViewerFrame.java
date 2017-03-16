@@ -178,8 +178,6 @@ public class TextViewerFrame extends javax.swing.JFrame {
 				jTextArea2.setCaretPosition(0);
 				
 				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-				//setBounds(100, 15, 700, (int)screenSize.getHeight()-70);
-				//hkpark
 				setBounds(50, 0, 700, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);	
 				
 

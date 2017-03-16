@@ -141,7 +141,6 @@ public class InfoJFrame extends javax.swing.JFrame {
     }
     
     
-    //hkpark
     // added 'int selectedRow' to to instantly reflect 'star' tagging status in overlap list table (InfoJFrameOverlapRecs.class)
     public InfoJFrame(TimeLinePanel panel, ObservationType ob, GenRecord selectedRecord, int selectedRow) {
     	panel_ = panel;

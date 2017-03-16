@@ -22,37 +22,28 @@ import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 
 import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
-import edu.harvard.i2b2.timeline.excentric.LiteLabel;
 import edu.harvard.i2b2.timeline.lifelines.Aggregate;
 import edu.harvard.i2b2.timeline.lifelines.GenRecord;
 import edu.harvard.i2b2.timeline.lifelines.MyColor;
 import edu.harvard.i2b2.timeline.lifelines.PDOQueryClient;
-import edu.harvard.i2b2.timeline.lifelines.TextViewerFrame;
 
 public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 	
 	private TimeLinePanel panel_;
-//	private GenRecord thisRecord=null; 
 	public int tHeight;
 	private InfoJFrame infoFrame = null;
 	private String obKeys[][] = new String[10][6];
 	public String status[] = new String[10];
-	private int boundOriX;
-	private int boundOriY;
-	private String note = null;
-	private TextViewerFrame textFrame = null;
 	public boolean pin = false;
 	public GenRecord[] selRecs;
 	private int numRetrieved;
 	private int curIndx;
 	private int lMostIndx, rMostIndx;
 	private Aggregate cAggr;
-//	private JLayeredPane layeredPane;
 	 
 
 	public int getLeftMostIndx() {
@@ -98,10 +89,6 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 		jTable1.getColumnModel().getColumn(2).setPreferredWidth(w2);
 		jTable1.getColumnModel().getColumn(3).setPreferredWidth(w3);
 		jTable1.getColumnModel().getColumn(4).setPreferredWidth(w4);
-		
-		
-		
-		//jTable1.getColumnModel().getColumn(0).setCellRenderer(new RenderTableColor());
     }
 	
 	private void parseOverlapList() {
@@ -109,14 +96,14 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 		int crntTotalNumRow = dtm.getRowCount();
 		
 		if(crntTotalNumRow < numRetrieved)
-    		for(int i = crntTotalNumRow; i<10; i++)
+    		for(int i = crntTotalNumRow; i<numRetrieved; i++)
     			dtm.addRow(new String [] {"", "", "", "", ""});
     	
     	if(crntTotalNumRow > numRetrieved)
-    		for(int i = numRetrieved; i<10; i++)
+    		for(int i = crntTotalNumRow - 1; i>=numRetrieved; i--)
     			dtm.removeRow(i);
     	
-		for(int i=0; i< cAggr.getNumRetrieved(); i++)
+		for(int i=0; i< numRetrieved; i++)
         {
 	        if (selRecs[i] != null) {
 	        	
@@ -136,16 +123,9 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 				
 				// Tag ">>" to current record
 				if(i == curIndx)
-				{
-					//System.out.println("hkpark) >> i: "+i+", curIndx: "+ curIndx);
 					jTable1.setValueAt(">>", i, 0);
-				}
-				
 				else
-				{
-					//System.out.println("hkpark) i: "+i+", curIndx: "+ curIndx + "selRecs.length: "+cAggr.getNumRetrieved());
 					jTable1.setValueAt("", i, 0);
-				}
 				
 				// show status column (original tick color / read(gray) / starred (yellow)
 				MyColor tempColor = new MyColor(msgs[3]);
@@ -238,6 +218,7 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 		
 		TableColumn statCol = jTable1.getColumnModel().getColumn(1);
 		statCol.setCellRenderer(new ColorColumnRenderer(temp));
+		markOverlapTag();
 
 	}
 	
@@ -357,7 +338,6 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
             }
         });
         add(jCloseButton);
-        //jCloseButton.setBounds(381 - 105, 2, 40, 20);
         jCloseButton.setBounds(381 - 45, 2, 40, 20);
         
         // pin button
@@ -375,15 +355,11 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
         });
         add(jPinButton);
         jPinButton.setBounds(381 - 145, 2, 100, 20);
-
-    //    this.layeredPane = layeredPane;
-    //    layeredPane.add(this, new Integer(0));
-        
         
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        
-        
+
+        jTable1.setFont(new java.awt.Font("Helvetica", 0, 11));
+               
         jTable1.addMouseListener(new MouseAdapter() {               	
             public void mousePressed(MouseEvent e) {
             	javax.swing.JTable table =(javax.swing.JTable) e.getSource();
@@ -439,8 +415,6 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
             }
         });
 
-        //Font thisFont = new Font("Helvetica", Font.BOLD, 10);    
-        
         jLeftButton.setFont(thisFont);
         jLeftButton.setText("<<");
         jLeftButton.addActionListener(new java.awt.event.ActionListener() {
@@ -471,23 +445,34 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 			jRightButton.setEnabled(true);
         
     } 
-    
-    public void closeInfoJFrame()
+ 
+    // close detailed information pop up box
+    public void closeInfoJFrame()  
     {
-    	if(infoFrame != null) {
-    		//removeOverlapTag();
-			//infoFrame.setVisible(false);
-			infoFrame.dispose();
+    	if(infoFrame != null) 
+    	{
+    		infoFrame.dispose();
 			infoFrame = null;
 		}
+		
     }
 
+    public void closeOverlapPopup()
+    {
+    	closeInfoJFrame();
+    	
+    	pin = false;
+    	panel_.prev_a = -1;
+    	removeOverlapTag();
+        setVisible(false);
+        //dispose();
+        
+    }
     private void jPinButtonActionPerformed(java.awt.event.ActionEvent evt)
     {
     	if(pin == false)
     	{
     		pin = true;
-    	//	layeredPane.add(this, new Integer(400));
     		setAlwaysOnTop (true);
     		jPinButton.setText("Unpin [Alt+U]");    		
     		jPinButton.setMnemonic(KeyEvent.VK_U);
@@ -507,12 +492,14 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
     private void jCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	pin = false;
     	panel_.prev_a = -1;
+    	closeInfoJFrame();
     	removeOverlapTag();
         setVisible(false);
         dispose();
     }
     
     private void jLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	removeOverlapTag();
     	selRecs = cAggr.findNxtNeighbrsList(lMostIndx, -1);
     	if( selRecs != null)
 		{
@@ -523,6 +510,7 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
     }
     
     private void jRightButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	removeOverlapTag();
     	selRecs = cAggr.findNxtNeighbrsList(rMostIndx, 1);
     	if( selRecs != null)
 		{
@@ -543,27 +531,9 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
     			k++;
     		}
 		}
-    	System.out.println("hkpark) REMOVE: inside. chnged " +k+" times");
-		panel_.repaint();
+    	panel_.repaint();
     }
-    /*
-    public void removeOverlapTag(int crntLeftMostIndx, int crntRightMostIndx)
-    {
-    	int k=0;
-    	
-    	
-    	for(int i=crntLeftMostIndx; i<=crntRightMostIndx; i++)
-		{
-    		cAggr.element(i).mark_overlap = false;
-    		if(cAggr.element(i).mark_status.equalsIgnoreCase("O")) {
-    			cAggr.element(i).mark_status="N";  // change overlap to normal status, leave starred and read tags
-    			k++;
-    		}
-		}
-    	System.out.println("hkpark) REMOVE: inside. chnged " +k+" times");
-		panel_.repaint();
-    }
-  */
+    
 	 public void markOverlapTag()
 	 {
 	    	for(int i=0; i<numRetrieved; i++)
@@ -684,7 +654,6 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 	        	curIndx = row;
 	        	
 	       }
-	      //  setToolTipText(getValueAt(row, column).toString());
 	        
           return cell;
        }

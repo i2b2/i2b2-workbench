@@ -276,7 +276,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		add(theTabPanel); // snm comment out
 		theTabPanel.setBounds(0, 0, (int) getSize().width,
 				(int) (getSize().height));/* modified 12/02 - Partha */
-		//System.out.println("hkpark)Tab Panel/ width, height:"+(int) getSize().width+", "+(int) (getSize().height));
 		// tabpanel actually goes to www for data within timelinepanel, actually
 		// this
 		// method sets the applet for the timelinepanel (so can use showstatus,
@@ -444,7 +443,6 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		theTabPanel.setLayout(null);
 		add(theTabPanel); // snm comment out
 		theTabPanel.setBounds(0, 0, w, h);/* modified 12/02 - Partha */
-		//System.out.println("hkpark)Tab Panel/ width, height:"+(int) getSize().width+", "+(int) (getSize().height));
 		// tabpanel actually goes to www for data within timelinepanel, actually
 		// this
 		// method sets the applet for the timelinepanel (so can use showstatus,

@@ -47,6 +47,9 @@ public class Facet extends Panel {
 	//private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
 		// needed to implement finding next/previous neighboring overlapping ticks 
 	private Aggregate curntAggr;
+	
+	
+	
 	private int facetLnIndx, aggrIndx;
 	
 	public int getFacetLnIndx()
@@ -414,7 +417,6 @@ public class Facet extends Panel {
 					g.fillRect(currentRect.x, currentRect.y, currentRect.width,
 											currentRect.height);
 				    // Show data color rectangle before concept name
-					//hkpark hkpark
 					temp = (FacetLine) (facetLines.elementAt(0));
 					Aggregate tempAggr = (Aggregate) temp.getAggregates().elementAt(0);
 					StoryRecord tempStory = (StoryRecord) (tempAggr.getAllRecords().elementAt(0));
@@ -534,11 +536,7 @@ public class Facet extends Panel {
 					Rectangle labelRect = tempStory.getLabelArea();
 					if ((data && dataRect.contains(x, y))
 							|| (label && labelRect.contains(x, y)))
-					{
-						//hkpark to check. remove this line
-						//inOverlapRegion(x, y, data, label,distance);
 						return tempStory;
-					}
 					else {
 						int selectedX, selectedY;
 						if (Math.abs(dataRect.x - x) <= Math.abs(dataRect.x
@@ -568,28 +566,6 @@ public class Facet extends Panel {
 			return null;
 	}
 
-	
-	// find next neighboring overlap list
-	// endIndx is start point (leftMostIndx or rightMostIndx) of the previous overlap list
-	// if finding next neighboring overlap list, dir == 1
-	// if finding previous neighboring overlap list, dir == -1
-/*
-	public GenRecord[] findNxtOverlap(Aggregate tempAgg, int endIndx,int dir) 
-	{	
-		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
-		if(dir == 1)
-			overlapRecords = curntAggr.findOverlap(endIndx, false, true);
-			//overlapRecords = findOverlap(tempAgg, endIndx, false, true);
-		else if(dir == -1)
-			overlapRecords = curntAggr.findOverlap(endIndx, true, false);
-		return overlapRecords;
-
-	}
-	*/
-	
-	
-
-	//hkpark	
 	public GenRecord[] inOverlapRegion(int x, int y, boolean data, boolean label,
 			int distance) {
 		double minDis = Integer.MAX_VALUE;
