@@ -665,10 +665,7 @@ public class MainComposite extends Composite {
 				patientMaxNumText.setBounds(w - 92-gap, 5, 45, 24);
 				rightArrowButton.setBounds(w - 42-gap, 5, 37, 24);
 				refreshButton.setBounds(w+6-gap, 5, 50, 24); 
-				//System.out.println("hkpark)Refresh/ width, height:"+getBounds().width+", "+getBounds().height);
-				//System.out.println("hkpark)Refresh/ x, y:"+(int) getSize().x+", "+(int) getSize().y);
-		
-				
+						
 				refreshMiniVisualization(oAwtContainer, w-14, getBounds().height-86);
 			}
 		});
@@ -3657,7 +3654,6 @@ public class MainComposite extends Composite {
 	public void refreshMiniVisualization(final java.awt.Container poAwtContainer, final int w, final int h) {		
 		
 		try {
-			//SwingUtilities.invokeAndWait(new Runnable() {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					poAwtContainer.removeAll();

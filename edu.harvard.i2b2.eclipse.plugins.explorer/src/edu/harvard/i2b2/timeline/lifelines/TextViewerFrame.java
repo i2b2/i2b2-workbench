@@ -25,6 +25,7 @@ package edu.harvard.i2b2.timeline.lifelines;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -177,7 +178,8 @@ public class TextViewerFrame extends javax.swing.JFrame {
 				jTextArea2.setCaretPosition(0);
 				
 				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-				setBounds(100, 15, 700, (int)screenSize.getHeight()-70);				
+				setBounds(50, 0, 700, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);	
+				
 
 				class myTransferHandler extends TransferHandler {
 					protected myTransferHandler() {
@@ -347,6 +349,12 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {		
 		searchBox = new SearchTextFrame(this, jTextArea2);
+		int searchX = this.getBounds().x + this.getBounds().width + 10;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		if(searchX + 440 <= (int)screenSize.getWidth())
+			searchBox.setBounds(searchX, this.getBounds().y, 440, 170);
+		else
+			searchBox.setBounds((int)screenSize.getWidth() - 440 -10, this.getBounds().y + 5, 440, 170);
 		searchBox.setVisible(true);
 	}
 

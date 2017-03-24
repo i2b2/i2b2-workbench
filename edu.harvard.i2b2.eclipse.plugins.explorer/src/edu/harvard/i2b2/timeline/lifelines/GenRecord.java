@@ -28,11 +28,14 @@ public class GenRecord {
 	protected MyDate start_date;
 	protected MyDate end_date;
 	private String type;
-	// hkpark. to mark read/starred status and to display ticks in different color
+	// to mark read/starred status and to display ticks in different color
 	// "N": unread
+	// "O": unread in extracted overlapping ticks list
 	// "R": read (clicked)
-	// "S": starred 
+	// "S": starred
 	public String mark_status = "N";
+	public boolean mark_overlap = false; // mark if the data is selected overlap list
+											// this data is necessary for marking with a line above the selected overlap list, including read, starred ticks 
 	public static ConflictResolver xOverlap1 = null, xOverlap2 = null;
 	public boolean fit = false, beforefit = false, selected = true;
 	public int labelX, labelY;
