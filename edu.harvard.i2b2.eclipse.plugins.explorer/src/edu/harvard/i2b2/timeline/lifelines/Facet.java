@@ -39,11 +39,41 @@ public class Facet extends Panel {
 	private Vector rt_aggregates;
 	private Vector aggregates;
 	private String title;
+	private int maxNumNeighbrs = 9; // maximum number of neighbors to retrieve for pop up 
+	// can retrieve up to maxNumNeighbrs neighbor records, 
+	// thus showing 10 records in the pop up, including mouse hovered record
+	//	private int cntNeighbrs;
+	//private int curIndx;
+	//private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
+		// needed to implement finding next/previous neighboring overlapping ticks 
+	private Aggregate curntAggr;
+	
+	
+	
+	private int facetLnIndx, aggrIndx;
+	
+	public int getFacetLnIndx()
+	{
+		return facetLnIndx;
+	}
+	
 
+	public int getAggrIndx()
+	{
+		return aggrIndx;
+	}
+	
+	
+	
+	
 	public String title() {
 		return title;
 	}
-
+	
+	public Aggregate getCurntAggr() {
+		return curntAggr;
+	}
+	
 	private Checkbox open;
 	public Color backgroundColor; // added 1/12/98 dan: also added to
 	// constructor and in draw method
@@ -63,6 +93,12 @@ public class Facet extends Panel {
 	public Rectangle currentRect() {
 		return currentRect;
 	}
+	
+
+	public int maxNumNeighbrs(){
+		return maxNumNeighbrs;
+	}
+
 
 	public Facet(String token, Hashtable facetList, Color backgroundColor,
 			boolean openFacet) { // last part
@@ -373,17 +409,26 @@ public class Facet extends Panel {
 				    g2d.fill(new Rectangle(currentRect.x, currentRect.y, currentRect.width,currentRect.height));				
 					g.setColor(Color.white);
 					g.setFont(new Font(fontNm, Font.BOLD, fontSz));
+					g.drawString(fullName, 5, currentY + 12 + gap);
 				}
-				else
+				else // concept name display
 				{
 					g.setColor(dataBgColor);
-				    g.fillRect(currentRect.x, currentRect.y, currentRect.width,
-											currentRect.height);		
+					g.fillRect(currentRect.x, currentRect.y, currentRect.width,
+											currentRect.height);
+				    // Show data color rectangle before concept name
+					temp = (FacetLine) (facetLines.elementAt(0));
+					Aggregate tempAggr = (Aggregate) temp.getAggregates().elementAt(0);
+					StoryRecord tempStory = (StoryRecord) (tempAggr.getAllRecords().elementAt(0));
+					Color conceptColr = tempStory.getRectColor();				
+					g.setColor(conceptColr); 					
+					g.fillRect(currentRect.x, currentRect.y + 4, 10, 15);
+					
 					g.setColor(Color.black);
 					g.setFont(new Font(fontNm, Font.PLAIN, fontSz));
+					g.drawString(fullName, 14, currentY + 12 + gap);
 				}
-				g.drawString(fullName, 5, currentY + 12 + gap);
-
+				
 				// show labels even when
 				// open, loses some vertical space, maybe use abbreviation here
 				// eventually
@@ -521,6 +566,75 @@ public class Facet extends Panel {
 			return null;
 	}
 
+	public GenRecord[] inOverlapRegion(int x, int y, boolean data, boolean label,
+			int distance) {
+		double minDis = Integer.MAX_VALUE;
+		int gap=1; // maximum gap between two data bars to determine in the overlapped range 
+		int cntLtNeighbrs=0; // total number of neighbor records retrieved
+		//cntNeighbrs = 0;
+		
+		boolean findNxtLt = true, findNxtRt = true;
+		StoryRecord selectedRecord = null, rtNeighbrStory = null, ltNeighbrStory = null;
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
+		StoryRecord[] ltStoryRecords = new StoryRecord[maxNumNeighbrs];
+		StoryRecord[] rtStoryRecords = new StoryRecord[maxNumNeighbrs];
+		
+		
+		if (facetLines == null) {
+			return null;
+		}
+
+		for (int i = 0; i < facetLines.size(); i++) {
+			FacetLine tempFacetLine = (FacetLine) (facetLines.elementAt(i));
+			facetLnIndx = i;
+			String title = tempFacetLine.getTitle();
+			for (int j = 0; j < tempFacetLine.getAggregates().size(); j++) {
+				Aggregate tempAgg = (Aggregate) (tempFacetLine.getAggregates().elementAt(j));
+				aggrIndx = j;
+				for (int k = 0; k < tempAgg.getAllRecords().size(); k++) {
+					
+					StoryRecord tempStory = (StoryRecord) (tempAgg.getAllRecords().elementAt(k));
+					Rectangle dataRect = tempStory.getBarArea();
+					Rectangle labelRect = tempStory.getLabelArea();
+					if ((data && dataRect.contains(x, y))
+							|| (label && labelRect.contains(x, y)))
+					{
+						curntAggr = tempAgg;
+						overlapRecords = curntAggr.findOverlap(k, true, true);
+						return overlapRecords;			
+					}
+					else {
+						int selectedX, selectedY;
+						if (Math.abs(dataRect.x - x) <= Math.abs(dataRect.x
+								+ dataRect.width - x))
+							selectedX = dataRect.x;
+						else
+							selectedX = dataRect.x + dataRect.width;
+						if (Math.abs(dataRect.y - y) <= Math.abs(dataRect.y
+								+ dataRect.height - y))
+							selectedY = dataRect.y;
+						else
+							selectedY = dataRect.y + dataRect.height;
+						double dis = Math.sqrt((selectedX - x)
+								* (selectedX - x) + (selectedY - y)
+								* (selectedY - y));
+						if (dis < minDis) {
+							minDis = dis;
+							selectedRecord = tempStory;
+						}
+					}
+				}
+			}
+		}
+		if (minDis <= distance)
+			//return selectedRecord;
+			return null;
+		else
+			return null;
+	}
+
+	
+	
 	public GenRecord getSelected(int x, int y) {
 
 		FacetLine temp;

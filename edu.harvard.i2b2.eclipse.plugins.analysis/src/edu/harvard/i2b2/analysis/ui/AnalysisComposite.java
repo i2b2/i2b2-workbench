@@ -261,10 +261,9 @@ public class AnalysisComposite extends Composite {
 
 								int charWidth = pt.x / queryName.length();
 								int charNum = width / charWidth;
-								if (charNum > 6 )
-									label1.setText(queryName.substring(0, charNum - 6)+ "...");
-								else
-									label1.setText("");
+								label1.setText(queryName.substring(0,
+										charNum - 6)
+										+ "...");
 								// System.out.println("size: "+label1.getSize()
 								// + "; width"+width+
 								// " font width: "+pt.x+"char width: "+pt.x/

@@ -28,7 +28,6 @@ import edu.harvard.i2b2.timeline.labeling.LiteLabel;
  */
 public class FacetLine {
 	private Vector aggregates;
-	// private MyDate minDate;
 	private MyDate maxDate;
 	private int height = 0;
 	private String labelString;
@@ -46,12 +45,6 @@ public class FacetLine {
 	public String getTitle() {
 		return title;
 	}
-	/*
-	// added by hkpark
-	public String getFullTitle() {
-		return fullName;
-	}
-	*/
 
 	public FacetLine(String title, Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
