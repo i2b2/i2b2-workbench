@@ -158,11 +158,7 @@ public class LoginDialog extends Dialog {
 		setText(Messages.getString("LoginDialog.Text")+ System.getProperty("applicationName")); //$NON-NLS-1$ //$NON-NLS-2$
 		setTitle(Messages.getString("LoginDialog.Title")); //$NON-NLS-1$
 		setUserid(System.getProperty("user.name")); //$NON-NLS-1$
-		//setPassword(""); //$NON-NLS-1$
-		//hkpark. should be replaced to above sentence
-		setPassword("tiffha01"); //$NON-NLS-1$
-
-
+		setPassword(""); //$NON-NLS-1$
 	}
 
 	public static LoginDialog getInstance() {
