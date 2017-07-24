@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2012 Massachusetts General Hospital 
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -7,12 +7,15 @@
  * Contributors: 
  *   
  *     Wensong Pan
+ *     Heekyong Park (hpark25)
  *     
  */
 package edu.harvard.i2b2.explorer.ui;
 import com.cloudgarden.resource.SWTResourceManager;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +35,8 @@ import java.util.Comparator;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -156,6 +161,7 @@ public class MainComposite extends Composite {
 	private int curRowNumber = 0;
 	private ArrayList<ArrayList<ConceptTableRow>> rowData = null;
 	private java.awt.Container oAwtContainer;
+	private Button refreshButton; 
 	private Button rightArrowButton;
 	private Button leftArrowButton;
 
@@ -169,9 +175,8 @@ public class MainComposite extends Composite {
 	private FramedComposite oModelGroupComposite;
 
 	private int returnedNumber = -1;
-	
 	private int currentRGBlistindex = 0;
-
+	
 	public void returnedNumber(int i) {
 		returnedNumber = i;
 	}
@@ -214,11 +219,9 @@ public class MainComposite extends Composite {
 
 	private String lastResponseMessage;
 	private CCombo filterCCombo;
-	//private Combo combo1;
 	private Label label2;
-	private Combo filterCombo;
-	private Label label1;
 	private String filter = "none";
+	private String rsltStr;
 
 	public void lastRequestMessage(String msg) {
 		lastRequestMessage = msg;
@@ -320,9 +323,6 @@ public class MainComposite extends Composite {
 					patientMaxNumText.setText("10");
 				} else {
 					rightArrowButton.setEnabled(false);
-					// if(patientSetSize>0) {
-					// patientMaxNumText.setText(setSize);
-					// }
 				}
 			}
 		});
@@ -430,10 +430,22 @@ public class MainComposite extends Composite {
 		patientset.setText("Patient Set: ");
 		patientset.setBounds(5, 9, 60, 22);
 
+		// text box to show visualized query name
+		// e.g., Patient set for "Color--Cholest@00:10:07"
 		patientSetText = new Text(patientNumsComposite, SWT.SINGLE | SWT.BORDER);
 		patientSetText.setText("");
 		patientSetText.setEditable(false);
 		patientSetText.setBounds(70, 5, 300, 35);
+		
+		refreshButton = new Button(patientNumsComposite, SWT.PUSH);
+		refreshButton.setText("Refresh");
+		refreshButton.setEnabled(true);
+		refreshButton.setBounds(380, 5, 38, 22);
+		refreshButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				refreshMiniVisualization(oAwtContainer);					
+			}				
+		});
 
 		leftArrowButton = new Button(patientNumsComposite, SWT.PUSH);
 		leftArrowButton.setText("<<<");
@@ -525,11 +537,6 @@ public class MainComposite extends Composite {
 						rightArrowButton.setEnabled(false);
 					}
 
-					//if ((start - inc) > 1) {
-						//patientMinNumText.setText("" + (start - inc));
-					//} else {
-						//patientMinNumText.setText("1");
-					//}
 					PerformVisualizationQuery(oAwtContainer, patientRefId, min
 							- max, max - 1, bDisplayAllData);
 				}
@@ -628,7 +635,7 @@ public class MainComposite extends Composite {
 
 					PerformVisualizationQuery(oAwtContainer, "All", minPatient,
 							maxPatient, bDisplayAllData);
-				} else {
+				} else {					
 					int min = Integer.parseInt(patientMinNumText.getText());
 					int max = Integer.parseInt(patientMaxNumText.getText());
 					int start = new Integer(patientMinNumText.getText())
@@ -638,41 +645,33 @@ public class MainComposite extends Composite {
 					if (start + inc > patientSetSize) {
 						rightArrowButton.setEnabled(false);
 					}
-					//patientMinNumText.setText("" + (start + inc));
 					leftArrowButton.setEnabled(true);
 					PerformVisualizationQuery(oAwtContainer, patientRefId, min,
-							max - 1, bDisplayAllData);
+							max - 1, bDisplayAllData);					
+							
 				}
-				// getDisplay().syncExec(new Runnable() {
-				// public void run() {
-				// if(returnedNumber >= 0) {
-				// setIncrementNumber(returnedNumber);
-				// MessageBox mBox = new MessageBox(getShell(),
-				// SWT.ICON_INFORMATION
-				// | SWT.OK);
-				// mBox.setText("Please Note ...");
-				// mBox.setMessage(/*"Can't return all the requested "+
-				// requestIndex+" patients, */"Only "+returnedNumber+" patients
-				// returned");
-				// mBox.open();
-				// }
-				// }
-				// });
 			}
 		});
-
+		
 		addListener(SWT.Resize, new Listener() {
 			public void handleEvent(Event event) {
+				int gap = 65;
 				int w = getBounds().width;
-				patientSetText.setBounds(70, 5, w - 357, 24);
-				leftArrowButton.setBounds(w - 281, 5, 38, 24);
-				patNum1.setBounds(w - 239, 9, 31, 24);
-				patientMinNumText.setBounds(w - 204, 5, 45, 24);
-				patNum2.setBounds(w - 149, 9, 57, 24);
-				patientMaxNumText.setBounds(w - 92, 5, 45, 24);
-				rightArrowButton.setBounds(w - 42, 5, 37, 24);
+				patientSetText.setBounds(70, 5, w - 357 -gap, 24);
+				leftArrowButton.setBounds(w - 281-gap, 5, 38, 24);
+				patNum1.setBounds(w - 239-gap, 9, 31, 24);
+				patientMinNumText.setBounds(w - 204-gap, 5, 45, 24);
+				patNum2.setBounds(w - 149-gap, 9, 57, 24);
+				patientMaxNumText.setBounds(w - 92-gap, 5, 45, 24);
+				rightArrowButton.setBounds(w - 42-gap, 5, 37, 24);
+				refreshButton.setBounds(w+6-gap, 5, 50, 24); 
+						
+				refreshMiniVisualization(oAwtContainer, w-14, getBounds().height-86);
 			}
 		});
+		
+		
+		
 
 		verticalForm.setWeights(new int[] { 25, 3 });
 
@@ -685,11 +684,6 @@ public class MainComposite extends Composite {
 
 		GridLayout gridLayout = new GridLayout(2, false);
 
-		// gridLayout.marginHeight = 0;
-		// gridLayout.marginWidth = 0;
-		// gridLayout.verticalSpacing = 0;
-		// gridLayout.horizontalSpacing = 0;
-
 		gridLayout.marginTop = 2;
 		gridLayout.marginLeft = 0;
 		gridLayout.marginBottom = 2;
@@ -699,7 +693,6 @@ public class MainComposite extends Composite {
 
 		oModelQueryComposite = new FramedComposite(oModelComposite,
 				SWT.SHADOW_NONE);
-		// GridLayout gLq = new GridLayout(25, false);
 		oModelQueryComposite.setLayout(new GridLayout(25, false));
 		oModelQueryComposite.setForeground(oTheParent.getDisplay()
 				.getSystemColor(SWT.COLOR_BLACK));
@@ -715,7 +708,6 @@ public class MainComposite extends Composite {
 		queryNamemrnlistText.setLayoutData(new GridData(
 				GridData.FILL_HORIZONTAL));
 		queryNamemrnlistText.setText("Query Name: ");
-		// queryNamemrnlistText.setBounds(5, 4, 600, 20);
 
 		queryNamemrnlistText.addMouseTrackListener(new MouseTrackListener() {
 
@@ -747,13 +739,13 @@ public class MainComposite extends Composite {
 		oModelQueryComposite.addDragDetectListener(new DragDetectListener() {
 
 			public void dragDetected(DragDetectEvent arg0) {
-
 			}
 
 		});
+		
+		
 
 		Composite oGroupComposite = new Composite(oModelComposite, SWT.NONE);
-		// GridLayout gLq = new GridLayout(25, false);
 		oGroupComposite.setLayout(gridLayout);
 		GridData oGroupGridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL
 				| GridData.VERTICAL_ALIGN_FILL);
@@ -761,12 +753,10 @@ public class MainComposite extends Composite {
 		oGroupGridData.grabExcessVerticalSpace = true;
 		oGroupGridData.verticalIndent = 1;
 		oGroupGridData.verticalSpan = GridData.VERTICAL_ALIGN_FILL;
-		// oGroupGridData.verticalAlignment = GridData.VERTICAL_ALIGN_FILL;
 		oGroupComposite.setLayoutData(oGroupGridData);
 
 		oModelGroupComposite = new FramedComposite(oGroupComposite,
 				SWT.SHADOW_NONE);
-		// GridLayout gLq = new GridLayout(25, false);
 		oModelGroupComposite.setLayout(new GridLayout(25, false));
 		GridData oModelGroupButtonGridData = new GridData(
 				GridData.FILL_HORIZONTAL);
@@ -776,17 +766,12 @@ public class MainComposite extends Composite {
 		oModelGroupButtonGridData.verticalIndent = 5;
 		oModelGroupComposite.setLayoutData(oModelGroupButtonGridData);
 
-		// GridData gdAdd = new GridData(GridData.FILL_HORIZONTAL);
 		GridData gdDel1 = new GridData(GridData.FILL_HORIZONTAL);
 
 		groupNameText = new Label(oModelGroupComposite, SWT.NONE);
 		gdDel1.horizontalSpan = 4;
 		groupNameText.setLayoutData(gdDel1);
 		groupNameText.setText("Panel Name: ");
-		// groupNameText.setBounds(80, 8, 400, 24);
-		// groupNameText.setAlignment(SWT.CENTER);
-		// createDragSource(queryNamemrnlistText);
-		// createDropTarget(queryNamemrnlistText);
 
 		groupNameText.addMouseTrackListener(new MouseTrackListener() {
 
@@ -817,24 +802,16 @@ public class MainComposite extends Composite {
 		tableGridData.verticalIndent = 5;
 		table.setLayoutData(tableGridData);
 		table.setRowSelectionMode(true);
-		// table.setMultiSelectionMode(true);
-		// table.setModel(new KTableForModel());
 		table.setModel(new ConceptTableModel());
-		// table.getModel().setColumnWidth(0, oModelComposite.getBounds().width
-		// - 35);
 		table.addCellSelectionListener(new KTableCellSelectionListener() {
 			public void cellSelected(int col, int row, int statemask) {
 				log.debug("Cell [" + col + ";" + row + "] selected.");
-				// System.out.println("Cell [" + col + ";" + row +
-				// "] selected.");
 				table.selectedRow = row;
 				table.selectedColumn = col;
 			}
 
 			public void fixedCellSelected(int col, int row, int statemask) {
 				log.debug("Header [" + col + ";" + row + "] selected.");
-				// System.out.println("Header [" + col + ";" + row +
-				// "] selected.");
 			}
 
 		});
@@ -876,13 +853,11 @@ public class MainComposite extends Composite {
 		GridLayout gL = new GridLayout(25, false);
 		oModelAddDelButtonComposite.setLayout(gL);
 		GridData oModelAddDelButtonGridData = new GridData(
-				GridData.FILL_HORIZONTAL);// HORIZONTAL_ALIGN_FILL);// |
-		// GridData.VERTICAL_ALIGN_FILL);
+				GridData.FILL_HORIZONTAL);
 		oModelAddDelButtonGridData.grabExcessHorizontalSpace = false;
 		oModelAddDelButtonGridData.horizontalSpan = 2;
 		oModelAddDelButtonComposite.setLayoutData(oModelAddDelButtonGridData);
 
-		// GridData gdAdd = new GridData(GridData.FILL_HORIZONTAL);
 		GridData gdDel = new GridData(GridData.FILL_HORIZONTAL);
 
 		Button deleteArrowButton = new Button(oModelAddDelButtonComposite,
@@ -923,25 +898,9 @@ public class MainComposite extends Composite {
 					}
 					curRowNumber = rowData.size();
 					resetRowNumber();
-					// m_Model.deleteRow(selectedRow[0]);
 					((ConceptTableModel) table.getModel()).deleteAllRows();
 					((ConceptTableModel) table.getModel())
 							.populateTable(rowData);
-					/*
-					 * int newRow = 0; for(int i=0; i<rowData.size(); i++) {
-					 * ArrayList alist = (ArrayList) rowData.get(i); for(int
-					 * j=0; j<alist.size(); j++) { TableRow r = (TableRow)
-					 * alist.get(j); newRow++; r.rowId = newRow;
-					 * table.getModel().setContentAt(0, newRow, new
-					 * Integer(r.rowNumber).toString());
-					 * table.getModel().setContentAt(1, newRow, r.conceptName);
-					 * table.getModel().setContentAt(2, newRow, r.valueType);
-					 * table.getModel().setContentAt(3, newRow, r.valueText);
-					 * table.getModel().setContentAt(4, newRow, r.height);
-					 * table.getModel().setContentAt(5, newRow, r.color);
-					 * table.getModel().setContentAt(6, newRow, r.conceptXml); }
-					 * }
-					 */
 					table.redraw();
 					queryNamemrnlistText.setText("Query Name: ");
 					groupNameText.setText("Panel Name: ");
@@ -1011,8 +970,6 @@ public class MainComposite extends Composite {
 						.getModel();
 				int[] selectedRow = table.getRowSelection();
 				curRowNumber = 0;
-				// KTableI2B2Model m_Model = (KTableI2B2Model) table.getModel();
-				// int[] selectedRow = table.getRowSelection();
 				m_Model.fillDataFromTable(rowData);
 				int index = new Integer((String) (m_Model.getContentAt(0,
 						selectedRow[0]))).intValue() - 1;
@@ -1020,7 +977,6 @@ public class MainComposite extends Composite {
 					return;
 				}
 				if ((selectedRow != null) && (selectedRow.length > 0)) {
-					// m_Model.moveRow(selectedRow[0], selectedRow[0] -1);
 					ArrayList<ConceptTableRow> list = rowData.get(index);
 					rowData.remove(index);
 					rowData.add(index - 1, list);
@@ -1042,8 +998,6 @@ public class MainComposite extends Composite {
 						.getModel();
 				int[] selectedRow = table.getRowSelection();
 				curRowNumber = 0;
-				// KTableI2B2Model m_Model = (KTableI2B2Model) table.getModel();
-				// int[] selectedRow = table.getRowSelection();
 				m_Model.fillDataFromTable(rowData);
 				int index = new Integer((String) (m_Model.getContentAt(0,
 						selectedRow[0]))).intValue() - 1;
@@ -1051,7 +1005,6 @@ public class MainComposite extends Composite {
 					return;
 				}
 				if ((selectedRow != null) && (selectedRow.length > 0)) {
-					// m_Model.moveRow(selectedRow[0], selectedRow[0] -1);
 					ArrayList<ConceptTableRow> list = rowData.get(index);
 					rowData.remove(index);
 					rowData.add(index + 1, list);
@@ -1145,28 +1098,6 @@ public class MainComposite extends Composite {
 			filterCCombo.add("last");
 			filterCCombo.select(0);
 		}
-		{
-			//combo1 = new Combo(oModelCheckButtonComposite, SWT.NONE);
-		}
-		{
-			//label1 = new Label(oModelCheckButtonComposite, SWT.NONE);
-			//label1.setText("Filter: ");
-		}
-		/*{
-			filterCombo = new Combo(oModelCheckButtonComposite, SWT.NONE);
-			GridData filterComboLData = new GridData();
-			filterComboLData.widthHint = 28;
-			filterComboLData.heightHint = 21;
-			filterCombo.setLayoutData(filterComboLData);
-			filterCombo.add("max");
-			filterCombo.add("min");
-			filterCombo.add("first");
-			filterCombo.add("last");
-			filterCombo.select(0);
-			//filterCombo.set;
-			
-			//filterCombo.setText("combo1");
-		}*/
 
 		if (UserInfoBean.getInstance().getCellDataUrl("identity") != null) {
 			Composite oPatientSetComposite = new Composite(oModelComposite,
@@ -1212,13 +1143,10 @@ public class MainComposite extends Composite {
 					String username = UserInfoBean.getInstance().getUserName();
 					String password = UserInfoBean.getInstance()
 							.getUserPassword();
-					// log.debug("User name: "+username+" password: "+password);
 					String site = siteCombo.getText();
 					for (int i = 0; i < mrnArray.length; i++) {
-						// String[] tmps = new String[2];
 						String tmp = mrnArray[i].replaceAll(" ", "");
-						// tmps = tmp.split(":");
-
+						
 						String queryStr = "<?xml version=\"1.0\" standalone=\"yes\"?>\n"
 								+ "<search_by_local>"
 								+ "<match_id site=\""
@@ -1558,12 +1486,7 @@ public class MainComposite extends Composite {
 							e.printStackTrace();
 							return;
 						}
-					} /*
-					 * else { List conceptChildren = tableXml.getChildren();
-					 * parseDropConcepts(conceptChildren, event);
-					 * table.redraw(); }
-					 */
-
+					} 
 					event.detail = DND.DROP_NONE;
 				} catch (JDOMException e) {
 					System.err.println(e.getMessage());
@@ -1618,8 +1541,6 @@ public class MainComposite extends Composite {
 				totalOccurrences.setValue(1);
 				panelType.setTotalItemOccurrences(totalOccurrences);
 				panelType.setPanelNumber(0 + 1);
-				// panelType.setName(panelData.getItems().get(0).name() + "_"
-				// + generateMessageId().substring(0, 4));
 				panelType.setName("Panel-1");
 
 				// TO DO: get table rows and fill the panel object
@@ -1796,7 +1717,6 @@ public class MainComposite extends Composite {
 							}
 							nodeXmls.add(nodedata);
 						}
-						// event.detail = DND.DROP_NONE;
 					}
 					populateTable(nodeXmls);
 
@@ -2056,10 +1976,6 @@ public class MainComposite extends Composite {
 										.getQueryStatusType().getName();
 
 								if (status.equalsIgnoreCase("FINISHED")) {
-									// resultData.name("Patient Set - "+resultData
-									// .patientCount()+" Patients");
-									// QueryResultData resultData = new
-									// QueryResultData();
 									String setId = new Integer(
 											queryResultInstanceType
 													.getResultInstanceId())
@@ -2104,8 +2020,6 @@ public class MainComposite extends Composite {
 					} else {
 						List conceptChildren = tableXml.getChildren();
 						parseDropConcepts(conceptChildren, event);
-						// System.setProperty("XMLfrommodel",(String)
-						// event.data);
 						table.redraw();
 						queryNamemrnlistText.setText("Query Name: ");
 						groupNameText.setText("Panel Name: ");
@@ -2218,9 +2132,6 @@ public class MainComposite extends Composite {
 						patientMaxNumText.setText("10");
 					} else {
 						rightArrowButton.setEnabled(false);
-						// if(patientSetSize>0) {
-						// patientMaxNumText.setText(setSize);
-						// }
 					}
 
 					log.debug("Dropped set of: " + setSize + " patients"/*
@@ -2274,9 +2185,6 @@ public class MainComposite extends Composite {
 				Rectangle rect = table.getCellRect(3, getRowNumber());
 				Rectangle rect1 = table.getCellRect(5, 1);
 
-				// System.out.println("rect X and width: "+rect.x+","+rect.width)
-				// ;
-				// System.out.println("mouse X and Y: "+evt.x+","+evt.y);
 				if (evt.y < rect.y && evt.x > rect1.x
 						&& evt.x < rect1.x + rect1.width) {
 					table
@@ -2298,6 +2206,8 @@ public class MainComposite extends Composite {
 		oGridLayout0.marginWidth = 1;
 		oGridLayout0.marginHeight = 5;
 		comp2.setLayout(oGridLayout0);
+	
+		
 
 		if (false) {
 			Composite composite = new Composite(comp2, SWT.NO_BACKGROUND
@@ -2332,7 +2242,6 @@ public class MainComposite extends Composite {
 			log.debug("got to here");
 
 			Record record1 = new Record();
-			// record1.start();
 			record1.init();
 
 			JScrollPane scrollPane = new JScrollPane(record1);
@@ -2384,11 +2293,14 @@ public class MainComposite extends Composite {
 							tabFolder.setSelection(0);
 						}
 					});
-					MessageBox mBox = new MessageBox(table.getShell(),
-							SWT.ICON_INFORMATION | SWT.OK);
-					mBox.setText("Please Note ...");
-					mBox.setMessage("The set up table is empty.");
-					mBox.open();
+					if (tabFolder.getSelectionIndex() == 1) // if user is accessing the drawing tab
+					{
+						MessageBox mBox = new MessageBox(table.getShell(),
+								SWT.ICON_INFORMATION | SWT.OK);
+						mBox.setText("Please Note ...");
+						mBox.setMessage("The set up table is empty.");
+						mBox.open();
+					}
 					return;
 				}
 
@@ -2414,7 +2326,7 @@ public class MainComposite extends Composite {
 						try {
 							String minText = patientMinNumText.getText();
 							minPatient = Integer.parseInt(minText);
-						} catch (Exception e1) {
+							} catch (Exception e1) {
 							minPatient = -1;
 						}
 
@@ -2437,28 +2349,11 @@ public class MainComposite extends Composite {
 						if (start + inc - 1 > patientSetSize) {
 							rightArrowButton.setEnabled(false);
 						}
-						//patientMinNumText.setText("" + (start + inc));
 						leftArrowButton.setEnabled(true);
 
 						PerformVisualizationQuery(oAwtContainer, patientRefId,
 								min, max - 1, bDisplayAllData);
 					}
-
-					// getDisplay().syncExec(new Runnable() {
-					// public void run() {
-					// if(returnedNumber >= 0) {
-					// //setDecreaseNumber(returnedNumber);
-					// MessageBox mBox = new MessageBox(getShell(),
-					// SWT.ICON_INFORMATION
-					// | SWT.OK);
-					// mBox.setText("Please Note ...");
-					// mBox.setMessage(/*"Can't return all the requested "+
-					// requestIndex+" patients, */"Only "+returnedNumber+"
-					// patients returned");
-					// mBox.open();
-					// }
-					// }
-					// });
 				} else {
 					patientMinNumText.setText("1");
 					java.awt.EventQueue.invokeLater(new Runnable() {
@@ -2481,7 +2376,12 @@ public class MainComposite extends Composite {
 		return parent;
 	}
 
-	
+	Listener listenerComp = new Listener() {
+	   
+	    public void handleEvent(Event event) {
+	        System.out.println("Resize received on Comp, current size: ");
+	    }
+	};
 	
 	//=============================================================================================================
 	//=============================================================================================================
@@ -2691,7 +2591,6 @@ public class MainComposite extends Composite {
 
 				if (!isRawData) {
 					ConceptTableRow row = panelData.tableRow();
-					// row.rowNumber = curRowNumber;
 					if(panelData.isModifier()) {
 						row.conceptName = new String(cname)+" ["+((ModifierData)panelData).modifier_name()+"]";
 					}
@@ -2705,18 +2604,13 @@ public class MainComposite extends Composite {
 					// row.height = "Medium";
 					// row.color = new RGB(0, 0, 128);
 					row.conceptXml = new String(xmlOutput);
-					//QueryModel data = m_Model.parseXMLData(xmlOutput);
-					//m_Model.parseXMLData(panelData, xmlOutput);
 					panelData.hasValueSet(hasValueSet);
 					row.data(panelData);
 					if ((row.data.isModifier())) {
 						//ModifierData mdata = (ModifierData) panelData;
 						if ((((ModifierData)row.data).hasModifierValue())) {
-							//row.data.setValueConstrains(panelData.constrainByValue);
-
+							
 							if (((ModifierData)row.data).modifierValuePropertyData().hasEnumValue()) {
-								//((ModifierData)row.data).modifierValuePropertyData().useTextValue(
-								//		panelData.valueModel().useTextValue());
 								if (((ModifierData)row.data).modifierValuePropertyData().useTextValue()) {
 									String tmpStr1 = ((ModifierData)row.data).modifierValuePropertyData().value()
 											.replaceAll("'", "");
@@ -2728,21 +2622,17 @@ public class MainComposite extends Composite {
 										results.add(data1);
 									}
 
-									//((ModifierData)row.data).modifierValuePropertyData().selectedValues = results;
 									((ModifierData)row.data).modifier_display_name(((ModifierData)row.data).modifierValuePropertyData()
 											.getDisplayTexts());
-								} else {//if(((ModifierData)row.data).modifierValuePropertyData().useValueFlag()){
+								} else {
 									((ModifierData)row.data).modifier_display_name(" = Abnormal");
 								}
 							}
 						}
 						if (!((ModifierData)row.data).modifier_display_name().equalsIgnoreCase("")) {
 							row.modifierText = ((ModifierData)row.data).modifier_display_name();
-						} else {
-							//if (hasValueSet) {
+						} else 
 								row.modifierText = new String("All Values");
-							//}
-						}
 
 						if (((ModifierData)row.data).modifier_display_name().equalsIgnoreCase(" H")) {
 							row.valueText = new String(" = HIGH");
@@ -3106,7 +2996,6 @@ public class MainComposite extends Composite {
 
 		for (int i = 0; i < xmlContents.size(); i++) {
 			setupTable(xmlContents.get(i));
-			// parseListOfConcepts(xmlContents.get(i));
 		}
 		m_Model.populateTable(rowData);
 
@@ -3280,9 +3169,6 @@ public class MainComposite extends Composite {
 				cname = cname.substring(2).trim();
 			}
 
-			// org.jdom.Element fullnameXml = conTableXml.getChild("key");
-			// String cfullname = fullnameXml.getText();
-
 			curRowNumber = rowData.size();
 			ConceptTableModel m_Model = (ConceptTableModel) table.getModel();
 			m_Model.fillDataFromTable(rowData);
@@ -3309,7 +3195,6 @@ public class MainComposite extends Composite {
 				row.modifierText = "Not Applicable";
 				row.height = "Medium";
 				row.color = getRGBfromList(curRowNumber);//rgbList.get(curRowNumber);//new RGB(0, 0, 128);
-				//row.setColor();
 				row.conceptXml = new String(xmlOutput);
 				row.data(data);
 				alist.add(row);
@@ -3437,7 +3322,8 @@ public class MainComposite extends Composite {
 					String result = DBLib.getResultSetFromI2B2Xml(xmlContent,
 							minPatient, maxPatient, bDisplayAll, oConnection,
 							writeFile, bDisplayDemographics);
-
+					rsltStr = result; 
+					
 					DBLib.closeConnection(oConnection);
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3476,7 +3362,7 @@ public class MainComposite extends Composite {
 					log.error(e.getMessage());
 					bNoError = false;
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (1): " + new Date());
 			}
 		};
 
@@ -3549,7 +3435,7 @@ public class MainComposite extends Composite {
 					String result = DBLib.getResultSetFromI2B2Xml(xmlContent,
 							patientIds, bDisplayAll, oConnection, writeFile,
 							bDisplayDemographics);
-
+					rsltStr=result; 
 					DBLib.closeConnection(oConnection);
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3581,7 +3467,7 @@ public class MainComposite extends Composite {
 					log.error(e.getMessage());
 					bNoError = false;
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (2): " + new Date());
 			}
 		};
 
@@ -3624,6 +3510,16 @@ public class MainComposite extends Composite {
 
 					Properties properties = new Properties();
 					String writeFileStr = "";
+					/*
+					 * Content in "i2b2workbench.properties" 
+					 *  writeTimelineFile=yes
+						applicationName=i2b2
+						messageversion=1.1
+						demoUser=no
+						I2b2.1=i2b2demo,REST,http://services.i2b2.org/i2b2/services/PMService/
+						#I2b2.2=YourSite,REST,http://jbossHost:jbossPort/i2b2/services/PMService/
+
+					 */
 					String filename = "i2b2workbench.properties";
 					try {
 						properties.load(new FileInputStream(filename));
@@ -3647,6 +3543,7 @@ public class MainComposite extends Composite {
 							patientRefId, minPatient, minPatient + maxPatient,
 							bDisplayAll, writeFile, bDisplayDemographics,
 							explorer, filter);
+					rsltStr=result;
 
 					if (result != null) {
 						if (result.equalsIgnoreCase("memory error")) {
@@ -3687,7 +3584,7 @@ public class MainComposite extends Composite {
 					}
 
 					p.stop();
-					p.setVisible(false);
+					p.setVisible(false); //remove waiting image
 					if (result == null
 							|| result.equalsIgnoreCase("memory error")
 							|| result.equalsIgnoreCase("error")) {
@@ -3702,7 +3599,7 @@ public class MainComposite extends Composite {
 					bNoError = false;
 					e.printStackTrace();
 				}
-				log.info("after getResultSetAsi2b2XML: " + new Date());
+				log.info("after getResultSetAsi2b2XML (3): " + new Date());
 			}
 		};
 
@@ -3724,13 +3621,12 @@ public class MainComposite extends Composite {
 			log.info("Got to PerformMiniVisualization");
 			Record record1 = new Record();
 			poAwtContainer.add(record1);
-			// record1.start();
 			if (writeFile) {
 				record1.init();
 			} else {
 				record1.init(result);
 			}
-			theRecord = record1;
+			theRecord = record1.getRecord();
 			if (returnedNumber >= 0) {
 				getDisplay().syncExec(new Runnable() {
 					public void run() {
@@ -3749,7 +3645,47 @@ public class MainComposite extends Composite {
 			log.error("done"); //
 		}
 	}
+	
+	public void refreshMiniVisualization(java.awt.Container poAwtContainer) {		
+		PerformMiniVisualization(oAwtContainer, rsltStr,true);
+	}
 
+	
+	public void refreshMiniVisualization(final java.awt.Container poAwtContainer, final int w, final int h) {		
+		
+		try {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					poAwtContainer.removeAll();
+
+					log.info("Got to PerformMiniVisualization");
+					Record record1 = new Record();
+					poAwtContainer.add(record1);
+					record1.init(w, h);
+					theRecord = record1.getRecord();
+				}
+			});
+			
+			if (returnedNumber >= 0) {
+				getDisplay().syncExec(new Runnable() {
+					public void run() {
+
+						MessageBox mBox = new MessageBox(getShell(),
+								SWT.ICON_INFORMATION | SWT.OK);
+						mBox.setText("Please Note ...");
+						mBox.setMessage("Only " + (returnedNumber)
+								+ " patients returned");
+						mBox.open();
+					}
+				});
+			}
+
+		} catch (Exception e) {
+			//log.error("done"); //
+			e.printStackTrace();
+		}
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void DestroyMiniVisualization(final java.awt.Container poAwtContainer) {
 		try {
@@ -3784,41 +3720,24 @@ public class MainComposite extends Composite {
 		gridLayout.marginWidth = 0;
 		compositeQueryTree.setLayout(gridLayout);
 
-		// *Group compositeQueryTreeTop = new Group(compositeQueryTree,
-		// SWT.NULL);
-		// *compositeQueryTreeTop.setText("Query Items");
 		GridLayout gridLayoutTree = new GridLayout(1, false);
 		gridLayoutTree.numColumns = 1;
 		gridLayoutTree.marginHeight = 0;
-		// *compositeQueryTreeTop.setLayout(gridLayoutTree);
 		GridData fromTreeGridData = new GridData(GridData.FILL_BOTH);
 		fromTreeGridData.widthHint = 300;
-		// *compositeQueryTreeTop.setLayoutData(fromTreeGridData);
 		compositeQueryTree.setLayoutData(fromTreeGridData);
-
-		// TreeComposite dragTree = new TreeComposite(compositeQueryTree, 1,
-		// slm);
-		// TreeComposite dragTree = new TreeComposite(compositeQueryTree,
-		// 1,slm);
-		// dragTree.setLayoutData(new GridData (GridData.FILL_BOTH));
-		// dragTree.setLayout(gridLayout);
 
 		return compositeQueryTree;
 	}
 	
 	private void processPanels(PanelType panelType) {
-		//PanelType panelType = queryDefinitionType
-		//.getPanel().get(i);
-
 		for (int j = 0; j < panelType.getItem().size(); j++) {
 			ItemType itemType = panelType.getItem()
 					.get(j);
 			
-			///////////////////////////////////////
 			QueryModel nodedata = null;
 			if(itemType.getConstrainByModifier() != null) {
 				nodedata = new ModifierData();
-				//itemType.getConstrainByModifier().
 			}
 			else {
 				nodedata = new QueryModel();
@@ -3837,16 +3756,10 @@ public class MainComposite extends Composite {
 				nodedata.tableRow().color = ((ConceptTableModel) table
 						.getModel()).getColor(itemType
 						.getItemColor());
-				// nodedata.tableRow().rowNumber =
-				// Integer
-				// .parseInt(itemType
-				// .getItemRowNumber());
-				//nodedata.tableRow().rowNumber = conceptCount + 1;
 			} else {
 				nodedata.tableRow().height = "Medium";
 				nodedata.tableRow().color = new RGB(0,
 						0, 128);
-				//nodedata.tableRow().rowNumber = conceptCount + 1;
 			}
 		
 			nodedata.constrainByValue(itemType
@@ -3901,8 +3814,6 @@ public class MainComposite extends Composite {
 		
 				continue;
 			} else {
-				//nodeXmls.add(nodedata);
-				//conceptCount++;
 			}
 		}
 	}
@@ -3945,14 +3856,11 @@ public class MainComposite extends Composite {
 		System.setProperty("ApplicationConfigurationXML",
 				ssFakeApplicationConfigurationXML);
 		Display display = new Display();
-		Shell shell = new Shell(display);
+		final Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		shell.setText("ExplorerC Test");
 		shell.setSize(1000, 800);
-		// ExplorerC oExplorerC = new ExplorerC(shell);
-		// shell.pack();
 		shell.open();
-		// oExplorerC.run();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -4172,7 +4080,6 @@ public class MainComposite extends Composite {
 		}
 		else {
 			String num = patientMinNumText.getText();
-			//int inc = new Integer(patientMaxNumText.getText()).intValue();
 			int origin = Integer.parseInt(num) + number;// - inc;
 			patientMinNumText.setText("" + origin);
 		}
@@ -4187,7 +4094,6 @@ public class MainComposite extends Composite {
 		}
 		else {
 			String num = patientMinNumText.getText();
-			//int inc = new Integer(patientMaxNumText.getText()).intValue();
 			int origin = Integer.parseInt(num) - number;// + inc;
 			patientMinNumText.setText(""+origin);
 		}
@@ -4195,10 +4101,9 @@ public class MainComposite extends Composite {
 	
 	private RGB getRGBfromList(int n) {
 		RGB color = new RGB(0, 0, 128);
-		int index = rgbList.size()/2;// - (currentRGBlistindex/2);
+		int index = rgbList.size()/2;
 		
 		currentRGBlistindex = index;
-		//color = rgbList.get(index);
 		if(n%4 == 2) {
 			color = new RGB(0, 100, 0);
 		}
@@ -4206,10 +4111,9 @@ public class MainComposite extends Composite {
 			color = new RGB(178, 34, 34);
 		}
 		else if(n%4 == 0) {
-			color = new RGB(184, 134, 11);
+			color = new RGB(160,82,45);  
 		}
 		else {
-			//color = new RGB(0, 0, 128);
 		}
 		return color;
 	}
@@ -4251,7 +4155,6 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(245, 222, 179));
 		rgbList.add(new RGB(238, 232, 170));
 		rgbList.add(new RGB(211, 211, 211));
-		// rgbList.add(new RGB(211, 211, 211));
 		rgbList.add(new RGB(255, 182, 193));
 		rgbList.add(new RGB(176, 224, 230));
 		rgbList.add(new RGB(216, 191, 216));
@@ -4267,7 +4170,6 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(152, 251, 152));
 		rgbList.add(new RGB(218, 112, 214));
 		rgbList.add(new RGB(255, 105, 180));
-		// rgbList.add(new RGB(255, 105, 180));
 		rgbList.add(new RGB(255, 160, 122));
 		rgbList.add(new RGB(210, 180, 140));
 		rgbList.add(new RGB(255, 255, 0));
@@ -4299,7 +4201,6 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(0, 206, 209));
 		rgbList.add(new RGB(95, 158, 160));
 		rgbList.add(new RGB(154, 205, 50));
-		// rgbList.add(new RGB(119, 136, 153));
 		rgbList.add(new RGB(119, 136, 153));
 		rgbList.add(new RGB(138, 43, 226));
 		rgbList.add(new RGB(0, 250, 154));
@@ -4309,7 +4210,6 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(65, 105, 225));
 		rgbList.add(new RGB(205, 92, 92));
 		rgbList.add(new RGB(208, 32, 144));
-		// rgbList.add(new RGB(112, 128, 144));
 		rgbList.add(new RGB(112, 128, 144));
 		rgbList.add(new RGB(127, 255, 0));
 		rgbList.add(new RGB(0, 255, 127));
@@ -4324,7 +4224,6 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(255, 69, 0));
 		rgbList.add(new RGB(176, 48, 96));
 		rgbList.add(new RGB(105, 105, 105));
-		// rgbList.add(new RGB(105, 105, 105));
 		rgbList.add(new RGB(50, 205, 50));
 		rgbList.add(new RGB(160, 82, 45));
 		rgbList.add(new RGB(107, 142, 35));
@@ -4339,11 +4238,9 @@ public class MainComposite extends Composite {
 		rgbList.add(new RGB(139, 69, 19));
 		rgbList.add(new RGB(34, 139, 34));
 		rgbList.add(new RGB(47, 79, 79));
-		// rgbList.add(new RGB(47, 79, 79));
 		rgbList.add(new RGB(0, 0, 205));
 		rgbList.add(new RGB(25, 25, 112));
 		rgbList.add(new RGB(0, 0, 128));
-		// rgbList.add(new RGB(0,0,128));
 		rgbList.add(new RGB(0, 100, 0));
 		rgbList.add(new RGB(0, 0, 0));
 

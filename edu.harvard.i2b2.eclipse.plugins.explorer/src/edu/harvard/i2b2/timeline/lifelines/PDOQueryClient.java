@@ -19,9 +19,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.axiom.om.OMElement;
-
-import edu.harvard.i2b2.eclipse.UserInfoBean;
-
 import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.Constants;
@@ -35,16 +32,18 @@ import org.apache.axis2.transport.http.HttpTransportProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import edu.harvard.i2b2.eclipse.plugins.explorer.ontologyMessaging.*;
-import edu.harvard.i2b2.eclipse.plugins.explorer.utils.MessageUtil;
-import edu.harvard.i2b2.explorer.dataModel.PDOResponseMessageModel;
+import edu.harvard.i2b2.common.datavo.pdo.ObservationSet;
+import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.StatusType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.vdo.ConceptType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.vdo.ConceptsType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.vdo.MatchStrType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.vdo.VocabRequestType;
-import edu.harvard.i2b2.common.datavo.pdo.ObservationSet;
-import edu.harvard.i2b2.common.datavo.pdo.ObservationType;
+import edu.harvard.i2b2.eclipse.UserInfoBean;
+import edu.harvard.i2b2.eclipse.plugins.explorer.ontologyMessaging.GetCodeInfoResponseMessage;
+import edu.harvard.i2b2.eclipse.plugins.explorer.ontologyMessaging.OntServiceDriver;
+import edu.harvard.i2b2.eclipse.plugins.explorer.utils.MessageUtil;
+import edu.harvard.i2b2.explorer.dataModel.PDOResponseMessageModel;
 
 public class PDOQueryClient {
 	private static final Log log = LogFactory.getLog(PDOQueryClient.class);

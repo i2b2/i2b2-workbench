@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2010 Massachusetts General Hospital 
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -7,6 +7,7 @@
  * Contributors: 
  *   
  *     Wensong Pan
+ *     Heekyong Park (hpark25)
  *     
  */
 
@@ -53,16 +54,18 @@ import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 import edu.harvard.i2b2.explorer.ui.MainComposite;
 import edu.harvard.i2b2.smlib.Lib;
 
+
 public class TimelineFactory {
 
 	public String newline = System.getProperty("line.separator");
 
 	private static final Log log = LogFactory.getLog(TimelineFactory.class);
+
+	public String ptStr = "ID:_#";
+	private String ptInfo_colr="0x134261";
+	private String evntBgrndCol="0xF7FAFC";
 	
-	
-	/**
-	 * 
-	 */
+
 	public TimelineFactory() {
 	}
 
@@ -1012,14 +1015,15 @@ public class TimelineFactory {
 	}
 
 	/**
-	 * returns %facet,PERSON_#1...............,white,yes %c,comment %agg,
+	 * returns %facet,Person_#1...............,white,yes %c,comment %agg,
 	 * normal,1, no %-,2-15-1999,today,white,p1,.,chiempty.html,""
 	 */
 	public String getTimelinePatientString(String sPatient_num) {
-		String sFinished = newline + "%facet,Person_#" + sPatient_num
-				+ "................,white,yes" + newline + " %c,comment"
+		String sFinished = newline + "%facet," + ptStr + sPatient_num
+				//+ "................,skyblue,yes" + newline + " %c,comment"
+				+ "................,"+ptInfo_colr+",yes" + newline + " %c,comment"
 				+ newline + " %agg, normal,1, no" + newline
-				+ " %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,\"\""
+				+ " %-,2-15-1999 12:00,today,"+ptInfo_colr+",p1,.,chiempty.html,\"\""
 				+ newline;
 		return sFinished;
 	}
@@ -1031,33 +1035,33 @@ public class TimelineFactory {
 		sFinished = newline + "%facet,";
 
 		if (!System.getProperty("applicationName").equals("BIRN")) {
-			sFinished += "Person_#";
+			sFinished += ptStr;
 		}
 
-		sFinished += sPatient_num + ",white,yes" + newline + " %c,comment"
+		sFinished += sPatient_num + ","+ptInfo_colr+",yes" + newline + " %c,comment"
 				+ newline + " %agg, normal,1, no" + newline + " %-,"
 				+ ChangeRsDate(startDate)
-				+ ",today,white,p1,.,chiempty.html,\"\"" + newline;
+				+ ",today,"+ptInfo_colr+",p1,.,chiempty.html,\"\"" + newline;
 		return sFinished;
 	}
 
 	/**
-	 * returns %facet,PERSON_#1 gender: age: race: vital-status: ,white,yes
+	 * returns %facet,Person_#1 gender: age: race: vital-status: ,white,yes
 	 * %c,comment %agg, normal,1, no
 	 * %-,2-15-1999,today,white,p1,.,chiempty.html,""
 	 */
 	public String getTimelinePatientString(String sPatient_num,
 			PatientType record) {
-		String sFinished = newline + "%facet,Person_#" + sPatient_num
-				+ ",white,yes" + newline + " %c,comment" + newline
+		String sFinished = newline + "%facet," + ptStr + sPatient_num
+				+ ","+ptInfo_colr+",yes" + newline + " %c,comment" + newline
 				+ " %agg, normal,1, no" + newline
-				+ " %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,\"\""
+				+ " %-,2-15-1999 12:00,today,"+ptInfo_colr+",p1,.,chiempty.html,\"\""
 				+ newline;
 
 		PatientDemographics patientDemographics = new PatientDemographics();
 		patientDemographics.setParamData(record.getParam());
 
-		String age = patientDemographics.age() + "yrold";
+		String age = "Age:_" + patientDemographics.age() + "yrold";
 		String gender = "";
 		String race = "";
 
@@ -1072,38 +1076,38 @@ public class TimelineFactory {
 		}
 
 		if (patientDemographics.race().equalsIgnoreCase("")) {
-			race = "Unknown";
+			race = race+"Unknown";
 		} else {
 			if (patientDemographics.race().toUpperCase().startsWith("W")) {
-				race = "White";
+				race = race+"White";
 			} else if (patientDemographics.race().toUpperCase().startsWith("B")) {
-				race = "Black";
+				race = race+"Black";
 			} else if (patientDemographics.race().toUpperCase().startsWith("A")) {
-				race = "Asian";
+				race = race+"Asian";
 			} else if (patientDemographics.race().toUpperCase().startsWith("H")) {
-				race = "Hispanic";
+				race = race+"Hispanic";
 			} else if (patientDemographics.race().toUpperCase().startsWith("O")) {
 				if (patientDemographics.race().toUpperCase().indexOf("OR") >= 0) {
-					race = "Oriental";
+					race = race+"Oriental";
 				} else {
-					race = "Other";
+					race = race+"Other";
 				}
 			} else {
-				race = "Unknown";
+				race = race+"Unknown";
 			}
 		}
 
-		sFinished = newline + "%facet,Person_#" + sPatient_num + "__" + gender
-				+ "__" + age + "__" + race + ",white,yes" + newline
+		sFinished = newline + "%facet," + ptStr + sPatient_num + "___Gender:_" + gender
+				+ "___" + age + "___Race:_" + race + ","+ptInfo_colr+",yes" + newline
 				+ " %c,comment" + newline + " %agg, normal,1, no" + newline
-				+ " %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,\"\""
+				+ " %-,2-15-1999 12:00,today,"+ptInfo_colr+",p1,.,chiempty.html,\"\""
 				+ newline;
 
 		return sFinished;
 	}
 
 	/**
-	 * returns %facet,PERSON_#1 gender: age: race: vital-status: ,white,yes
+	 * returns %facet,Person_#1 gender: age: race: vital-status: ,white,yes
 	 * %c,comment %agg, normal,1, no
 	 * %-,2-15-1999,today,white,p1,.,chiempty.html,""
 	 */
@@ -1112,15 +1116,15 @@ public class TimelineFactory {
 		String sFinished;
 
 		if (record.age().equals("")) {
-			sFinished = newline + "%facet,Person_#" + sPatient_num
-					+ ",white,yes" + newline + " %c,comment" + newline
+			sFinished = newline + "%facet," + ptStr + sPatient_num
+					+ ","+ptInfo_colr+",yes" + newline + " %c,comment" + newline
 					+ " %agg, normal,1, no" + newline
-					+ " %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,\"\""
+					+ " %-,2-15-1999 12:00,today,"+ptInfo_colr+",p1,.,chiempty.html,\"\""
 					+ newline;
 			return sFinished;
 		}
 
-		String age = record.age() + "yrold";
+		String age = "Age:_" + record.age() + "yrold";
 		String gender = null;
 		String race = null;
 
@@ -1135,27 +1139,27 @@ public class TimelineFactory {
 		}
 
 		if (record.race().toUpperCase().startsWith("W")) {
-			race = "White";
+			race = race+"White";
 		} else if (record.race().toUpperCase().startsWith("B")) {
-			race = "Black";
+			race = race+"Black";
 		} else if (record.race().toUpperCase().startsWith("A")) {
-			race = "Asian";
+			race = race+"Asian";
 		} else if (record.race().toUpperCase().startsWith("H")) {
-			race = "Hispanic";
+			race = race+"Hispanic";
 		} else if (record.race().toUpperCase().startsWith("O")) {
 			if (record.race().toUpperCase().indexOf("OR") >= 0) {
-				race = "Oriental";
+				race = race+"Oriental";
 			} else {
-				race = "Other";
+				race = race+"Other";
 			}
 		} else {
-			race = "Unknown";
+			race = race+"Unknown";
 		}
 
-		sFinished = newline + "%facet,Person_#" + sPatient_num + "__" + gender
-				+ "__" + age + "__" + race + ",white,yes" + newline
+		sFinished = newline + "%facet," + ptStr + sPatient_num + "___Gender:_" + gender
+				+ "__" + age + "___Race:_" + race + ","+ptInfo_colr+",yes" + newline
 				+ " %c,comment" + newline + " %agg, normal,1, no" + newline
-				+ " %-,2-15-1999 12:00,today,white,p1,.,chiempty.html,\"\""
+				+ " %-,2-15-1999 12:00,today,"+ptInfo_colr+",p1,.,chiempty.html,\"\""
 				+ newline;
 
 		return sFinished;
@@ -1180,7 +1184,7 @@ public class TimelineFactory {
 			//sNewConcept = sNewConcept.substring(0, 15) + "...";
 		//}
 
-		return newline + "%facet," + sNewConcept + ",lightbrown," + "yes"
+		return newline + "%facet," + sNewConcept + "," + evntBgrndCol + "," + "yes"
 				+ newline + " %c,comment" + newline + " %agg, normal,"
 				+ Integer.toString(iNumConceptObservations) + ", no" + newline;
 
@@ -1213,7 +1217,7 @@ public class TimelineFactory {
 
 	public String getTimelineEmptyDateString() {
 		String sFinished = " %-,2-15-1999 12:00,2-15-1999 12:00"
-				+ ",lightbrown,p5, ,blank.htm,\"\"" + newline;
+				+ "," + evntBgrndCol + ",p5, ,blank.htm,\"\"" + newline;
 		return sFinished;
 	}
 

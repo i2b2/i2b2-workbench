@@ -1,0 +1,13 @@
+/org.eclipse.core.runtime/
+/org.eclipse.equinox.app/
+/org.eclipse.equinox.simpleconfigurator/
+/org.eclipse.osgi/
+/org.eclipse.update/
+/gensrc/
+/genlib/
+/bin/
+/i2b2.log
+/config.ini
+/dev.properties
+/i2b2log.html
+/.DS_Store

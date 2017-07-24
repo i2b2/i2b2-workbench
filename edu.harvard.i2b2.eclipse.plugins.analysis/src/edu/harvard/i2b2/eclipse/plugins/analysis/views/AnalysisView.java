@@ -12,12 +12,18 @@
  */
 package edu.harvard.i2b2.eclipse.plugins.analysis.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 //import org.eclipse.swt.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
@@ -55,6 +61,35 @@ public class AnalysisView extends ViewPart implements ICommonMethod {
 	
 	private AnalysisComposite analysis;
 	
+	
+	long lastEvent;
+	boolean isResizing = false;
+	ActionListener taskPerformer = new ActionListener() 
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
+            if ( (lastEvent + 1000) < System.currentTimeMillis() ) 
+            {
+            	isResizing = false;
+            	//System.err.println("taskPerformer actionPerformed! " + System.currentTimeMillis()/1000d );
+            	Display.getDefault().syncExec( new Runnable()
+            	{
+					public void run() 
+					{
+						analysis.redrawChart();						
+					}} );               
+            } 
+            else 
+            {
+              // this can be timed better
+	            Timer t = new Timer(1000, taskPerformer);
+	            t.setRepeats( false );
+	            t.start();
+            }			
+		}
+	};
+	
+
 	/**
 	 * The constructor.
 	 */
@@ -71,8 +106,25 @@ public class AnalysisView extends ViewPart implements ICommonMethod {
 	 * to create the viewer and initialize it.
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
-	    	analysis = new AnalysisComposite(parent, SWT.NONE);
+	public void createPartControl(Composite parent) 
+	{
+		// tdw9: added a system to disable charts before resizing, and redraw the chart 1 second after resizing is finished.
+	    parent.addControlListener(new ControlAdapter() {
+	        @Override
+	        public void controlResized(final ControlEvent e) 
+	        {		        	
+	            lastEvent = System.currentTimeMillis();
+	        	//System.err.println("RESIZE DETECTED! " + System.currentTimeMillis()/1000d );
+	        	if ( isResizing )
+	        		return;
+	        	isResizing = true;
+	            analysis.suspendChart();
+	            Timer t = new Timer(1000, taskPerformer);
+	            t.setRepeats( false );
+	            t.start();
+	        }
+	    });
+	    analysis = new AnalysisComposite(parent, SWT.NONE);
 
 		
 		// Setup help context

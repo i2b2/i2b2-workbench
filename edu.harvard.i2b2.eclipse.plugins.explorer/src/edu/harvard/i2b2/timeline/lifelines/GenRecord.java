@@ -1,18 +1,22 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
  *  Contributors:
  *  
  *  	Wensong Pan (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *		
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
 
@@ -24,6 +28,14 @@ public class GenRecord {
 	protected MyDate start_date;
 	protected MyDate end_date;
 	private String type;
+	// to mark read/starred status and to display ticks in different color
+	// "N": unread
+	// "O": unread in extracted overlapping ticks list
+	// "R": read (clicked)
+	// "S": starred
+	public String mark_status = "N";
+	public boolean mark_overlap = false; // mark if the data is selected overlap list
+											// this data is necessary for marking with a line above the selected overlap list, including read, starred ticks 
 	public static ConflictResolver xOverlap1 = null, xOverlap2 = null;
 	public boolean fit = false, beforefit = false, selected = true;
 	public int labelX, labelY;

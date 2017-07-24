@@ -11,7 +11,7 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
+import java.awt.Event;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 

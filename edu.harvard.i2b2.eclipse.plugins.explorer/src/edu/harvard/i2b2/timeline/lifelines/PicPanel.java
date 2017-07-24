@@ -11,8 +11,12 @@
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.net.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.Toolkit;
+import java.net.URL;
 
 
 public class PicPanel extends Panel {

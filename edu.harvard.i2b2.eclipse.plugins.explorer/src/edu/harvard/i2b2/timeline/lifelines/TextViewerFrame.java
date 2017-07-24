@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2010 Massachusetts General Hospital 
+ * Copyright (c) 2006-2017 Massachusetts General Hospital 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the i2b2 Software License v2.1 
  * which accompanies this distribution. 
@@ -7,6 +7,7 @@
  * Contributors: 
  *   	
  * 		Wensong Pan
+ * 		Heekyong Park (hpark25)
  *     
  */
 /*
@@ -20,8 +21,13 @@ package edu.harvard.i2b2.timeline.lifelines;
  *
  * @author  wp066
  */
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.MouseAdapter;
@@ -29,22 +35,47 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.swing.text.*;
-import javax.swing.JFileChooser;
-import java.io.*;
-
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
-import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
+
+import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
+
 
 public class TextViewerFrame extends javax.swing.JFrame {
 	private String note_ = null;
 	private String pdoData_ = null;
+	private int markStar; 
+	private GenRecord thisRecord=null; 
+	private TimeLinePanel tmLnDisplay;
+	private SearchTextFrame searchBox;
+	ImageIcon iconBlank, iconStarred;
+	
+	
+	
+	
+	
 	public static final String OS = System.getProperty("os.name").toLowerCase();
+	
 
 	/** Creates new form TextViewerFrame */
+	
 	public TextViewerFrame(String note, String pdoData) {
 		note_ = new String(note);
 		pdoData_ = new String(pdoData);
@@ -57,9 +88,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 		initComponents();
 		jTextArea2.setText(note.replaceAll("/n", "\n"));
-		// jTextArea2.setBackground(new Color(240,240,240));//Color.lightGray);
-		// Font currentFont = getFont();
-		Font thisFont = null;// new Font("Times New Roman", Font.PLAIN, 14);
+		Font thisFont = null;
 		if (OS.startsWith("mac"))
 			thisFont = new Font("Monaco", Font.PLAIN, 14);
 		else
@@ -67,10 +96,7 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 		jTextArea2.setFont(thisFont);
 
-		// jTextArea2.setSelectionColor(Color.YELLOW);
 		jTextArea2.select(0, 40);
-		// highlight(jTextArea2, "smoke");
-		// highlight(jTextArea2, 0, 40);
 		jTextArea2.setCaretPosition(0);
 		setBounds(100, 100, 600, 500);
 
@@ -109,9 +135,6 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				// jTextArea2.setSelectionStart(0);
-				// jTextArea2.setSelectionEnd(jTextArea2.getText().length()-1);
-
 				JComponent c = (JComponent) e.getSource();
 				TransferHandler th = c.getTransferHandler();
 				th.exportAsDrag(c, e, TransferHandler.COPY);
@@ -120,7 +143,90 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jTextArea2.addMouseMotionListener(mml);
 
 	}
+	
+	
+	public TextViewerFrame(String note, String pdoData, TimeLinePanel displayPanel, GenRecord selectedRecord) { //, int x, int y) {
+				thisRecord=selectedRecord;
+				tmLnDisplay=displayPanel;
+				
+		
+				if(thisRecord.mark_status.equalsIgnoreCase("S"))
+						markStar=1;
+				else
+					markStar=-1;
+		
+				note_ = new String(note);
+				pdoData_ = new String(pdoData);
 
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Exception e) {
+					System.out.println("Error setting native LAF: " + e);
+				}
+
+				initComponents();
+				jTextArea2.setText(note.replaceAll("/n", "\n"));
+				Font thisFont = null;
+				if (OS.startsWith("mac"))
+					thisFont = new Font("Monaco", Font.PLAIN, 14);
+				else
+					thisFont = new Font("Courier New", Font.PLAIN, 14);
+
+				jTextArea2.setFont(thisFont);
+
+				jTextArea2.select(0, 40);
+				jTextArea2.setCaretPosition(0);
+				
+				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				setBounds(50, 0, 700, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);	
+				
+
+				class myTransferHandler extends TransferHandler {
+					protected myTransferHandler() {
+						// Sets up new TransferHandler to initialise
+						// the mechanics
+						super("text");
+					}
+
+					@Override
+					protected Transferable createTransferable(JComponent c) {
+						// Creates a new Transferable object
+						// with the correct DataFlavors etc.
+						return new StringSelection(pdoData_);
+					}
+				}
+
+				jTextArea2.setTransferHandler(new myTransferHandler());
+
+				// Mouse click used as a Drag gesture recogniser
+				MouseListener ml = new MouseAdapter() {
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						jTextArea2.setSelectionStart(0);
+						jTextArea2.setSelectionEnd(jTextArea2.getText().length() - 1);
+
+						JComponent c = (JComponent) e.getSource();
+						TransferHandler th = c.getTransferHandler();
+						th.exportAsDrag(c, e, TransferHandler.COPY);
+					}
+				};
+
+				MouseMotionListener mml = new MouseMotionAdapter() {
+
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						JComponent c = (JComponent) e.getSource();
+						TransferHandler th = c.getTransferHandler();
+						th.exportAsDrag(c, e, TransferHandler.COPY);
+					}
+				};
+				jTextArea2.addMouseMotionListener(mml);
+	
+		
+	}
+	
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 */
@@ -131,12 +237,18 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jMenuBar = new javax.swing.JMenuBar();
 		jFileMenu = new javax.swing.JMenu();
 		jEditMenu = new javax.swing.JMenu();
+		jStarMenu = new javax.swing.JMenu(); 
 		jSaveMenuItem = new javax.swing.JMenuItem();
 		jSeparator1 = new javax.swing.JSeparator();
 		jExitMenuItem = new javax.swing.JMenuItem();
 		jSearchMenuItem = new javax.swing.JMenuItem();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				disposeTextViewerFrame();
+			}
+		}); 
+		
 		setTitle("Notes Viewer");
 		jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -148,6 +260,13 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jPanel1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
 		getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+		
+		java.awt.Image imgBlnkStar = this.getToolkit().getImage(
+				TextViewerFrame.class.getResource("/icons/outlinedStar.gif"));
+		iconBlank = new ImageIcon(imgBlnkStar);	
+		java.awt.Image imgStarred = this.getToolkit().getImage(
+				TextViewerFrame.class.getResource("/icons/yellowOutlinedStar.gif"));
+		iconStarred = new ImageIcon(imgStarred);	
 
 		jFileMenu.setText("File");
 		jFileMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -181,33 +300,62 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		jEditMenu.setText("Edit");
 
 		jSearchMenuItem.setText("Search ...");
+		jSearchMenuItem.setAccelerator(KeyStroke.getKeyStroke("control F"));
 		jSearchMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jSearchMenuItemActionPerformed(evt);
 			}
 		});
-
+		
+		
 		jEditMenu.add(jSearchMenuItem);
-
 		jMenuBar.add(jEditMenu);
+		
 
+		
+		if(markStar==1)
+			jStarMenu.setIcon(iconStarred);
+		else
+			jStarMenu.setIcon(iconBlank);		
+		jStarMenu.addMouseListener(new MouseListener() {
+
+		        public void mouseReleased(MouseEvent e) {}
+		        
+		        public void mousePressed(MouseEvent e) {}
+
+		        public void mouseExited(MouseEvent e) {}
+		        
+		        public void mouseEntered(MouseEvent e) {}
+		        
+		        public void mouseClicked(MouseEvent e) {
+	            	jStarMenuActionPerformed();
+		        }
+		    });			
+		jMenuBar.add(jStarMenu);
+		
 		setJMenuBar(jMenuBar);
-
 		pack();
 	}
 
 	private void jExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
+		disposeTextViewerFrame();				
+	}
+	
+	public void disposeTextViewerFrame() {
+		if(searchBox!=null)
+			searchBox.setVisible(false);
 		setVisible(false);
 	}
 
-	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
-		String find = JOptionPane.showInputDialog(this,
-				"Type in the string for searching: ");
-		if (find != null && !find.equals("")) {
-			int newCaretPosition = highlight(jTextArea2, find);
-			if (newCaretPosition != -1)
-				jTextArea2.setCaretPosition(newCaretPosition);
-		}
+	private void jSearchMenuItemActionPerformed(java.awt.event.ActionEvent evt) {		
+		searchBox = new SearchTextFrame(this, jTextArea2);
+		int searchX = this.getBounds().x + this.getBounds().width + 10;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		if(searchX + 440 <= (int)screenSize.getWidth())
+			searchBox.setBounds(searchX, this.getBounds().y, 440, 170);
+		else
+			searchBox.setBounds((int)screenSize.getWidth() - 440 -10, this.getBounds().y + 5, 440, 170);
+		searchBox.setVisible(true);
 	}
 
 	private void jSaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +387,28 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	private void jFileMenuActionPerformed(java.awt.event.ActionEvent evt) {
 
 	}
+	
+	private void jStarMenuActionPerformed() {
+		
+		markStar=markStar*-1;
+		if(markStar==1)
+			thisRecord.mark_status="S";
+		else
+			thisRecord.mark_status="R";
+		tmLnDisplay.repaint();
+		update_jStarMenuItem();
+		
+		
+	}
+	
+	private void update_jStarMenuItem()
+	{
+		if(markStar==1)
+			jStarMenu.setIcon(iconStarred);
+		else
+			jStarMenu.setIcon(iconBlank);
+		jStarMenu.updateUI();
+	}
 
 	/**
 	 * @param args
@@ -247,7 +417,6 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new TextViewerFrame(" ", "pdo xml string").setVisible(true);
 			}
 		});
 	}
@@ -263,13 +432,13 @@ public class TextViewerFrame extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JSeparator jSeparator1;
 	private javax.swing.JTextArea jTextArea2;
-
+	private javax.swing.JMenu jStarMenu;
 	// End of variables declaration
 
 	/**
 	 * Creates highlights around all occurrences of pattern in textComp
 	 */
-	public int highlight(JTextComponent textComp, String pattern) {
+	public int highlight(JTextComponent textComp, String pattern, int searchOpt) {
 		// First remove all old highlights
 		removeHighlights(textComp);
 		int firstPosition = -1;
@@ -278,17 +447,58 @@ public class TextViewerFrame extends javax.swing.JFrame {
 			Document doc = textComp.getDocument();
 			String text = doc.getText(0, doc.getLength());
 			int pos = 0;
-
-			// Search for pattern
-			while ((pos = text.toLowerCase()
+			switch(searchOpt){
+				case 0: //default: 0		
+					while ((pos = text.toLowerCase()
 					.indexOf(pattern.toLowerCase(), pos)) >= 0) {
-				// Create highlighter using private painter and apply around
-				// pattern
-				if (firstPosition == -1)
-					firstPosition = pos;
-				hilite.addHighlight(pos, pos + pattern.length(),
-						myHighlightPainter);
-				pos += pattern.length();
+						hilite.addHighlight(pos, pos + pattern.length(),
+								myHighlightPainter);
+						pos += pattern.length();
+					}
+					break;
+				case 1: // case sensitive: 1
+					while ((pos = text.indexOf(pattern, pos)) >= 0) {
+						hilite.addHighlight(pos, pos + pattern.length(),
+								myHighlightPainter);
+						pos += pattern.length();
+					}
+					break;
+				case 2: // case sensitive + whole word: 2
+				{
+					pattern="\\b"+pattern+"\\b";
+					Matcher matcher =Pattern.compile(pattern).matcher(text);
+					while (matcher.find()) {
+						hilite.addHighlight(matcher.start(), matcher.end(),
+								myHighlightPainter);
+						pos += pattern.length();
+					}
+					break;
+				}
+				case 3: // case insensitive + whole word: 3
+				{
+					pattern="\\b"+pattern+"\\b";
+					Matcher matcher =Pattern.compile(pattern, Pattern.CASE_INSENSITIVE).matcher(text);
+					while (matcher.find()) {
+						hilite.addHighlight(matcher.start(), matcher.end(),
+								myHighlightPainter);
+						pos += pattern.length();
+					}
+					break;
+				}
+				case 4: // regular expression: 4
+				{
+					try{
+						System.out.println("case sensitive + regular expression: 5");
+						
+						Matcher matcher =Pattern.compile(pattern).matcher(text);
+						while (matcher.find()) {
+							hilite.addHighlight(matcher.start(), matcher.end(),
+									myHighlightPainter);
+							pos += pattern.length();
+						}
+					} catch(Exception e) {System.out.println("Enter right expression!");}
+					break;
+				}
 			}
 
 		} catch (BadLocationException e) {
@@ -297,26 +507,146 @@ public class TextViewerFrame extends javax.swing.JFrame {
 		return firstPosition;
 	}
 
-	public void highlight(JTextComponent textComp, int start, int end) {
-		// First remove all old highlights
-		removeHighlights(textComp);
 
+	public void highlight(JTextComponent textComp, int start, int end) {
 		try {
 			Highlighter hilite = textComp.getHighlighter();
-			// Document doc = textComp.getDocument();
-			// String text = doc.getText(0, doc.getLength());
-			// int pos = 0;
-
-			// Search for pattern
-			// while ((pos = text.indexOf(pattern, pos)) >= 0) {
-			// Create highlighter using private painter and apply around pattern
-			hilite.addHighlight(start, end, myHighlightPainter);
-			// pos += pattern.length();
-			// }
+			hilite.addHighlight(start, end, curntHighlightPainter);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public int highlight(JTextComponent textComp, String pattern, int searchOpt, int pos) {
+		int firstPosition = -1;
+		// First remove all old highlights
+		removeHighlights(textComp);
+		
+		try {
+			Highlighter hilite = textComp.getHighlighter();
+			Document doc = textComp.getDocument();
+			String text = doc.getText(0, doc.getLength());
+
+			// Search for pattern
+			if(pos<text.length() && ((pos = text.toLowerCase()
+					.indexOf(pattern.toLowerCase(), pos)) >= 0))
+			{
+				// Remove previous highlight
+				hilite.addHighlight(pos, pos + pattern.length(),
+						curntHighlightPainter);
+				pos += pattern.length();
+			}
+			else
+				pos=-1;
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		return pos;
+	}
+	
+	public int highlightPrev(JTextComponent textComp, int cnt) {
+		int[] startPos;
+		int keywordLength=0, nFound=0;
+		
+		try {
+			Highlighter hilite = textComp.getHighlighter();
+			Highlighter.Highlight[] hilites = hilite.getHighlights();
+			
+			keywordLength = hilites[0].getEndOffset() - hilites[0].getStartOffset();
+			nFound = hilites.length;
+			startPos = new int[nFound];
+			for (int i = 0; i < nFound; i++) {
+				if (hilites[i].getPainter() instanceof MyHighlightPainter) 
+					startPos[i] = hilites[i].getStartOffset();		
+			}
+			removeHighlights(textComp);
+			if(cnt == -1 || cnt == 0)
+				cnt=nFound-1;
+			else
+				cnt--;
+			for (int i = 0; i < nFound; i++) {
+				if(i != cnt)
+					hilite.addHighlight(startPos[i], startPos[i]+keywordLength, myHighlightPainter);
+				else
+					hilite.addHighlight(startPos[i], startPos[i]+keywordLength, curntHighlightPainter);
+			}
+			
+			Rectangle viewRect = textComp.modelToView(hilites[cnt].getStartOffset());
+			textComp.scrollRectToVisible(viewRect);
+
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		return cnt;				
+	}
+	
+	public int highlightNext(JTextComponent textComp, int cnt) {
+		int[] startPos;
+		int keywordLength=0, nFound=0;
+		
+		try {
+			Highlighter hilite = textComp.getHighlighter();
+			Highlighter.Highlight[] hilites = hilite.getHighlights();
+			
+			keywordLength = hilites[0].getEndOffset() - hilites[0].getStartOffset();
+			nFound = hilites.length;
+			startPos = new int[nFound];
+			for (int i = 0; i < nFound; i++) {
+				if (hilites[i].getPainter() instanceof MyHighlightPainter) 
+					startPos[i] = hilites[i].getStartOffset();		
+			}
+			removeHighlights(textComp);
+			if(cnt == nFound-1)
+				cnt=0;
+			else
+				cnt++;
+			for (int i = 0; i < nFound; i++) {
+				if(i != cnt)
+					hilite.addHighlight(startPos[i], startPos[i]+keywordLength, myHighlightPainter);
+				else
+					hilite.addHighlight(startPos[i], startPos[i]+keywordLength, curntHighlightPainter);
+			}
+			
+			Rectangle viewRect = textComp.modelToView(hilites[cnt].getStartOffset());
+			textComp.scrollRectToVisible(viewRect);
+
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		return cnt;		
+
+	}
+	
+		public int highlight(JTextComponent textComp, String pattern, int searchOpt, int pos, int cntFound) {
+			try {
+				Highlighter hilite = textComp.getHighlighter();
+				Highlighter.Highlight[] hilites = hilite.getHighlights();
+				if (cntFound>0 && (hilites[cntFound-1].getPainter() instanceof MyHighlightPainter)) {
+					int start = hilites[cntFound-1].getStartOffset();
+					int end = hilites[cntFound-1].getEndOffset();
+					hilite.addHighlight(start, end, myHighlightPainter);
+						
+				}
+				
+				Document doc = textComp.getDocument();
+				String text = doc.getText(0, doc.getLength());
+	
+				// Search for pattern
+				if(pos<text.length() && ((pos = text.toLowerCase()
+						.indexOf(pattern.toLowerCase(), pos)) >= 0))
+				{
+					hilite.addHighlight(pos, pos + pattern.length(),
+							curntHighlightPainter);
+					pos += pattern.length();
+					cntFound++;
+				}
+				else
+					pos=-1;
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			}
+			return pos;
+		}
 
 	/**
 	 * Removes only private highlights
@@ -334,7 +664,9 @@ public class TextViewerFrame extends javax.swing.JFrame {
 
 	// An instance of the private subclass of the default highlight painter
 	Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(
-			Color.red);
+			Color.lightGray);
+	Highlighter.HighlightPainter curntHighlightPainter = new MyHighlightPainter(
+			Color.decode("0x2febbc"));
 
 	/**
 	 * A private subclass of the default highlight painter

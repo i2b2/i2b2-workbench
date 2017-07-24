@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
@@ -7,15 +7,21 @@
  *  
  *  	Wensong Pan (MGH)
  *  	Mike Mendis (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *		
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 
 /*
@@ -34,7 +40,6 @@ public class LoadRecord {
 	private Hashtable recordTable;
 	private Hashtable facetList;
 	String URLString;
-	// private MyDate max_date = new MyDate(1,1,0); // was there a year zero?
 	static private MyDate max_date = new MyDate(1, 1, 1, 0, 0);
 
 	static private MyDate min_date = new MyDate(12, 31, 9999, 0, 0);
@@ -80,7 +85,6 @@ public class LoadRecord {
 			if (fromParam)
 				file = new StringReader(dataString);
 
-			// if(!fromParam) {
 			d = new BufferedReader(file);
 
 			initLoadRecord(d, dataString);
@@ -102,7 +106,6 @@ public class LoadRecord {
 		// see below for older files
 
 		d = inputReader;
-		// today = new MyDate(9,17,1997); // just in case not read in.
 		today = new MyDate(9, 17, 2003, 0, 0); // just in case not read in. //
 		// snm0
 		max_date = new MyDate(1, 1, 1, 0, 0);
@@ -126,29 +129,9 @@ public class LoadRecord {
 			// first read the date, actually do this in the loop, hope that is
 			// read first
 
-			/*
-			 * line = d.readLine();
-			 * 
-			 * line_tokens = new StringTokenizer(line);
-			 * 
-			 * // read the "today"
-			 * 
-			 * token = line_tokens.nextToken();
-			 * 
-			 * if(!(token.equals("%today")))
-			 * System.out.println("today is not in expected place in file");
-			 * 
-			 * today = new MyDate(line_tokens.nextToken());
-			 * 
-			 * today.print();
-			 */
-
-			//
 
 			// set default value for today in case not read in correctly in
 			// file:
-
-			// today = new MyDate(1,1,1998);
 			today = new MyDate(1, 1, 2003, 0, 0); // snm0
 
 			// read one line
@@ -185,6 +168,10 @@ public class LoadRecord {
 						// comma
 
 						String name = readBlanks(line_tokens);
+						// convert '_' to a blank space for display
+				        // (currently, blank in LLD file is parsed as a delimiter)
+						name = name.replace('_', ' ');  
+								
 
 						if (useCommas)
 							token = line_tokens.nextToken(); // adding extra for
@@ -212,11 +199,7 @@ public class LoadRecord {
 						facetList = new Hashtable();
 						storyList = new Hashtable();
 						
-						String title = name;
-						if(name.indexOf("Person_#") < 0 && name.length() > 15) {
-							title = name.substring(0, 15) + "...";
-						}
-						currentFacet = new Facet(title, facetList,
+						currentFacet = new Facet(name, facetList,
 								backgroundColor.getColor(), open);
 						
 						currentFacet.fullName(name);
@@ -225,7 +208,6 @@ public class LoadRecord {
 						tupleID = 0;
 
 					} else if (token.equals("%c")) {
-						// while(!(token.equals("endcomment")))
 						token = line_tokens.nextToken("\n");
 
 					} else if (token.equals("%agg")) {
@@ -302,167 +284,7 @@ public class LoadRecord {
 			System.out.println("an exception " + e);
 		}
 	}
-
-	/*
-	 * public loadRecord(String theURLString,String dataString) {
-	 * 
-	 * record.yearFirst = true; // default, need to be reset each time load //
-	 * see below for older files
-	 * 
-	 * //today = new MyDate(9,17,1997); // just in case not read in. today = new
-	 * MyDate(9,17,2003); // just in case not read in. // snm0 max_date = new
-	 * MyDate(1,1,1); min_date = new MyDate(12,31,9999); URLString =
-	 * theURLString;
-	 * 
-	 * // the table to return recordTable = new Hashtable(); InputStream file=
-	 * null;
-	 * 
-	 * boolean fromParam = false;
-	 * 
-	 * int recID = 0; tupleID = 0;
-	 * 
-	 * int storyID = 0;
-	 * 
-	 * // tokenizer used to split key/value pairs StringTokenizer period; String
-	 * dose;
-	 * 
-	 * try { // try to get an input stream
-	 * 
-	 * boolean onWeb = true;
-	 * 
-	 * if(onWeb && !fromParam) {
-	 * 
-	 * URL theURL = new URL(URLString); file = theURL.openStream();
-	 * 
-	 * }
-	 * 
-	 * if(!onWeb && !fromParam) { file = new FileInputStream(URLString); } //
-	 * also need file of type "width.db" in record.java
-	 * 
-	 * if(fromParam) file = new StringBufferInputStream(dataString);
-	 * 
-	 * 
-	 * 
-	 * //if(!fromParam) { d = new DataInputStream(file); //} /* else { // d =
-	 * new StringBufferInputStream(dataString); }
-	 */
-
-	/*
-	 * String line;
-	 * 
-	 * String delimeter = new String("\t\n\r"); // didn't help too much (why?
-	 * does it really go back to default // unlike what api says?
-	 * 
-	 * //first read the date, actually do this in the loop, hope that is read
-	 * first
-	 * 
-	 * /*line = d.readLine();
-	 * 
-	 * line_tokens = new StringTokenizer(line);
-	 * 
-	 * // read the "today"
-	 * 
-	 * token = line_tokens.nextToken();
-	 * 
-	 * if(!(token.equals("%today")))
-	 * System.out.println("today is not in expected place in file");
-	 * 
-	 * today = new MyDate(line_tokens.nextToken());
-	 * 
-	 * today.print();
-	 */
-
-	//
-
-	// set default value for today in case not read in correctly in file:
-
-	// today = new MyDate(1,1,1998);
-	/*
-	 * today = new MyDate(1,1,2003); // snm0
-	 * 
-	 * 
-	 * // read one line while ((line = d.readLine()) != null) { // wait! this
-	 * just reads a line at time....
-	 * 
-	 * // is it a key/value pair??? // inputs are either key/value pairs or a
-	 * single term
-	 * 
-	 * if(!line.equals("")) { // don't want to read blank lines, fix indendation
-	 * sometime
-	 * 
-	 * if(useCommas) line_tokens = new StringTokenizer(line," ,",true); // also
-	 * loads in tokens, note the space // that is there before the comma in " ,"
-	 * else line_tokens = new StringTokenizer(line);
-	 * 
-	 * token = readBlanks(line_tokens);
-	 * 
-	 * if (token.equals("%facet")) { if(currentFacet != null) // 1/7/98
-	 * currentFacet.layout(); // doing layout for previous facet...
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken(); // adding extra for comma
-	 * 
-	 * String name = readBlanks(line_tokens);
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken(); // adding extra for comma
-	 * 
-	 * token = line_tokens.nextToken(); // reading facet color. Not presently
-	 * used. myColor backgroundColor = new myColor(token);
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken();
-	 * 
-	 * String openString = new String("yes"); if(line_tokens.hasMoreTokens()) {
-	 * openString = readBlanks(line_tokens); } boolean open;
-	 * 
-	 * if (openString.equals("yes")) open = true; else open = false;
-	 * 
-	 * facetList = new Hashtable(); storyList = new Hashtable(); currentFacet =
-	 * new facet(name,facetList,backgroundColor.getColor(),open);
-	 * 
-	 * recordTable.put(new Integer(recID++),currentFacet); tupleID = 0; storyID
-	 * = 0;
-	 * 
-	 * } else if (token.equals("%c")) { //while(!(token.equals("endcomment")))
-	 * token = line_tokens.nextToken("\n");
-	 * 
-	 * } else if (token.equals("%agg")) { load_aggregate(true); } else if
-	 * (token.equals("%today")) { if(useCommas) token = line_tokens.nextToken();
-	 * // adding extra for comma
-	 * 
-	 * today = new MyDate(readBlanks(line_tokens)); if(max_date.before(today))
-	 * max_date = new MyDate(today.getMonth(),today.getDay(),today.getYear()); }
-	 * else if (token.equals("%person")) { if(useCommas) token =
-	 * line_tokens.nextToken(" ,"); // adding extra for comma
-	 * 
-	 * name = new String(readBlanks(line_tokens,",")); // no blank to read names
-	 * with spaces
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken(); // adding extra for comma
-	 * 
-	 * gender = new String(readBlanks(line_tokens," ,")); // added blank back in
-	 * for readBlanks (age?)
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken(" ,"); // adding extra for
-	 * comma
-	 * 
-	 * age = (new Integer(readBlanks(line_tokens))).intValue();
-	 * 
-	 * if(useCommas) token = line_tokens.nextToken(); // adding extra for comma
-	 * 
-	 * // 3/28/98 moreinfo = new String(readBlanks(line_tokens,","));
-	 * if(useCommas) token = line_tokens.nextToken(" ,");
-	 * 
-	 * pictureFile = new String(readBlanks(line_tokens));
-	 * 
-	 * } else if (token.equals("%end")) { if (currentFacet!=null)
-	 * currentFacet.layout(); try {d.close();} catch (Exception e) {} break; }
-	 * else if (token.equals("%beforeSeptember1997")) record.yearFirst = false;
-	 * // for different date form in input file }
-	 * 
-	 * } // end "if" for blank lines }
-	 * 
-	 * catch (Exception e) { System.out.println("an exception "+e); } }
-	 */
-
+	
 	public Aggregate load_aggregate(boolean toplevel) { // toplevel
 		// distinguishes the
 		// aggregate from
@@ -697,7 +519,9 @@ public class LoadRecord {
 			token = line_tokens.nextToken(); // read blank spaces at beginning
 			// of line plus first token?
 		}
-		return token;
+		
+	    return token;
+          
 	}
 
 	public String readBlanks(StringTokenizer line_tokens, String delimeter) {
@@ -709,7 +533,7 @@ public class LoadRecord {
 			// beginning of line
 			// plus first token?
 		}
-		return token;
+	    return token;	    
 	}
 
 }

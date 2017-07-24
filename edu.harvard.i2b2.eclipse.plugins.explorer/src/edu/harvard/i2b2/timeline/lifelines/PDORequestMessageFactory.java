@@ -22,9 +22,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 //import edu.harvard.i2b2.querytool.datavo.JAXBUtil;
 import edu.harvard.i2b2.common.util.jaxb.DTOFactory;
 import edu.harvard.i2b2.common.util.jaxb.JAXBUtil;
-import edu.harvard.i2b2.eclipse.UserInfoBean;
-import edu.harvard.i2b2.explorer.data.Messages;
-import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.ApplicationType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.BodyType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.FacilityType;
@@ -38,10 +35,18 @@ import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.RequestMessageType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.i2b2message.SecurityType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.FactPrimaryKeyType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.GetObservationFactByPrimaryKeyRequestType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.GetObserverByPrimaryKeyRequestType; 
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.ObjectFactory;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.ObserverPrimaryKeyType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionListType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionNameType;
+import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionSelectType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.OutputOptionType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoQryHeaderType;
 import edu.harvard.i2b2.crcxmljaxb.datavo.pdo.query.PdoRequestTypeType;
+import edu.harvard.i2b2.eclipse.UserInfoBean;
+import edu.harvard.i2b2.explorer.data.Messages;
+import edu.harvard.i2b2.explorer.datavo.ExplorerJAXBUtil;
 
 public class PDORequestMessageFactory {
 
@@ -52,7 +57,8 @@ public class PDORequestMessageFactory {
 				.setRequestType(PdoRequestTypeType.GET_OBSERVATIONFACT_BY_PRIMARY_KEY);
 		return pdoHeader;
 	}
-
+	
+	
 	public GetObservationFactByPrimaryKeyRequestType buildFactRequestTypeByPrimaryKey(
 			String patientNum, String encounterNum, String concept_cd,
 			String providerId, String modifier_cd, String start_date) {
@@ -78,17 +84,16 @@ public class PDORequestMessageFactory {
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
-		// primaryKey.setStartDate(xmlCalendar);
-
+		
 		OutputOptionType outputOptionType = new OutputOptionType();
 		outputOptionType.setBlob(true);
 		outputOptionType.setOnlykeys(false);
-
+		
 		reqType.setFactOutputOption(outputOptionType);
 		reqType.setFactPrimaryKey(primaryKey);
 
 		return reqType;
-	}
+	}	
 
 	public String requestXmlMessage(String patientNum, String encounterNum,
 			String concept_cd, String providerId, String modifier_cd,

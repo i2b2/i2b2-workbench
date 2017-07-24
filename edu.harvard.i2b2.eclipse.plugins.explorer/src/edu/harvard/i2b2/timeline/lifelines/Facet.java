@@ -1,18 +1,27 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
  *  Contributors:
  *  
  *  	Wensong Pan (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *	
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.util.*;
-import java.awt.*;
+import java.awt.Checkbox;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Panel;
+import java.awt.Rectangle;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
@@ -30,11 +39,41 @@ public class Facet extends Panel {
 	private Vector rt_aggregates;
 	private Vector aggregates;
 	private String title;
+	private int maxNumNeighbrs = 9; // maximum number of neighbors to retrieve for pop up 
+	// can retrieve up to maxNumNeighbrs neighbor records, 
+	// thus showing 10 records in the pop up, including mouse hovered record
+	//	private int cntNeighbrs;
+	//private int curIndx;
+	//private int leftMostIndx, rightMostIndx; // Index of left/right most end of extracted overlap data
+		// needed to implement finding next/previous neighboring overlapping ticks 
+	private Aggregate curntAggr;
+	
+	
+	
+	private int facetLnIndx, aggrIndx;
+	
+	public int getFacetLnIndx()
+	{
+		return facetLnIndx;
+	}
+	
 
+	public int getAggrIndx()
+	{
+		return aggrIndx;
+	}
+	
+	
+	
+	
 	public String title() {
 		return title;
 	}
-
+	
+	public Aggregate getCurntAggr() {
+		return curntAggr;
+	}
+	
 	private Checkbox open;
 	public Color backgroundColor; // added 1/12/98 dan: also added to
 	// constructor and in draw method
@@ -54,11 +93,18 @@ public class Facet extends Panel {
 	public Rectangle currentRect() {
 		return currentRect;
 	}
+	
+
+	public int maxNumNeighbrs(){
+		return maxNumNeighbrs;
+	}
+
 
 	public Facet(String token, Hashtable facetList, Color backgroundColor,
 			boolean openFacet) { // last part
 		// of argumemt list added 1/12/98 by dan, note Color is used not MyColor
 		// (as in loadRecord)
+		
 		title = token;
 		this.backgroundColor = backgroundColor;
 		this.enabled = openFacet;
@@ -180,7 +226,6 @@ public class Facet extends Panel {
 							}
 							facetLines.addElement(temp);
 						} else if (Record.option[4]) { // agg_ordered
-							// System.out.println(addThis.getLabelString());
 							int size = facetLines.size();
 							int i = 0;
 							forloop: for (i = 0; i < size; i++) {
@@ -301,33 +346,33 @@ public class Facet extends Panel {
 				}
 
 				this.layout();
-				// System.out.println("re layout");
 			}
 
 			if (Record.searchoption_timeline[1]
 					&& MainPanel.theTimeLinePanel.search) {
 				this.layout();
-				// System.out.println("re layout");
 			}
 
 			FacetLine temp;
+			String fontNm="Tahoma"; 
+			int gap=3, fontSz=11;
 			Graphics g = displayPanel.getOfg();
+			Graphics2D g2d = (Graphics2D) g;		    
+		    GradientPaint gradient;
 			int[] xCoordinates = { 1, 5, 10 };
-			int[] yCoordinates = { currentY + 2, currentY + 12, currentY + 2 };
+			int[] yCoordinates = { currentY + 4 + gap, currentY + 12 + gap, currentY + 4 + gap };
 
 			if (facetLines == null) {
 				// 3/10/98 need to remove these codes after fitlabel function,
 				// height is determined by fitlabel()
 				currentRect = new Rectangle(0, currentY, displayPanel
 						.getFullWidth(), getHeight() + 12);
-				// +5 added to fill in the gap, but not yet exact dan 1/12/98
 				g.setColor(backgroundColor);
 				g.fillRect(currentRect.x, currentRect.y, currentRect.width,
 						currentRect.height);
 				g.setColor(Color.black);
-				g.fillPolygon(xCoordinates, yCoordinates, 3);
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
-				g.drawString(title, 15, currentY + 12);
+				g.setFont(new Font(fontNm, Font.PLAIN, fontSz));
+				g.drawString(fullName, 15, currentY + 12 + gap); 
 			} else {
 				if (relabeling || enabled_count == 0) { // || (record.
 					// searchoption_timeline
@@ -343,7 +388,6 @@ public class Facet extends Panel {
 						temp.fitlbl = temp.fitlabel(currentY, displayPanel,
 								false);
 					}
-					// System.out.println("finish relabeling");
 					enabled_count++;
 				}
 
@@ -351,15 +395,40 @@ public class Facet extends Panel {
 				// height is determined by fitlabel()
 				currentRect = new Rectangle(0, currentY, displayPanel
 						.getFullWidth(), getHeight() + 5);
-				// +5 added to fill in the gap, but not yet exact dan 1/12/98
-				g.setColor(backgroundColor);
-				g.fillRect(currentRect.x, currentRect.y, currentRect.width,
-						currentRect.height);
-				g.setColor(Color.black);
-
-				g.fillPolygon(xCoordinates, yCoordinates, 3);
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
-				g.drawString(title, 15, currentY + 12); // 1/13/98 by dan...
+				
+				Color idBgColor1, idBgColor2, dataBgColor;			
+				idBgColor1=Color.decode("0x6a87a2");
+				idBgColor2=Color.decode("0x0d2c48");
+				dataBgColor=Color.decode("0xf3f3f3");
+				
+				if(title.startsWith("ID"))
+				{
+					gradient = new GradientPaint(currentRect.x, currentRect.y, idBgColor1,
+					    			currentRect.x, currentRect.y + currentRect.height, idBgColor2);
+					g2d.setPaint(gradient);
+				    g2d.fill(new Rectangle(currentRect.x, currentRect.y, currentRect.width,currentRect.height));				
+					g.setColor(Color.white);
+					g.setFont(new Font(fontNm, Font.BOLD, fontSz));
+					g.drawString(fullName, 5, currentY + 12 + gap);
+				}
+				else // concept name display
+				{
+					g.setColor(dataBgColor);
+					g.fillRect(currentRect.x, currentRect.y, currentRect.width,
+											currentRect.height);
+				    // Show data color rectangle before concept name
+					temp = (FacetLine) (facetLines.elementAt(0));
+					Aggregate tempAggr = (Aggregate) temp.getAggregates().elementAt(0);
+					StoryRecord tempStory = (StoryRecord) (tempAggr.getAllRecords().elementAt(0));
+					Color conceptColr = tempStory.getRectColor();				
+					g.setColor(conceptColr); 					
+					g.fillRect(currentRect.x, currentRect.y + 4, 10, 15);
+					
+					g.setColor(Color.black);
+					g.setFont(new Font(fontNm, Font.PLAIN, fontSz));
+					g.drawString(fullName, 14, currentY + 12 + gap);
+				}
+				
 				// show labels even when
 				// open, loses some vertical space, maybe use abbreviation here
 				// eventually
@@ -373,7 +442,7 @@ public class Facet extends Panel {
 						// later, adjust timeline
 						temp.setSavedLabelXY();
 						if (data)
-							temp.drawData(currentY, displayPanel, false);
+							temp.drawData(currentY + 5, displayPanel, false); 
 						if (label)
 							temp.drawLabel(currentY, displayPanel, stream);
 
@@ -381,7 +450,11 @@ public class Facet extends Panel {
 						System.out.println("sorry no solution yet");
 					} else {
 						if (data)
-							temp.drawData(currentY, displayPanel, false);
+						{
+							if(title.startsWith("ID"))
+								continue;
+							temp.drawData(currentY + 5, displayPanel, false); 
+						}
 						if (label)
 							temp.drawLabel(currentY, displayPanel, stream);
 
@@ -400,14 +473,14 @@ public class Facet extends Panel {
 				for (int i = 0; i < facetLines.size(); i++) {
 					temp = (FacetLine) (facetLines.elementAt(i));
 					if (data)
-						temp.drawData(currentY, displayPanel, true);
+						temp.drawData(currentY + 5, displayPanel, true); 
 					currentY += Record.SILPIXEL;
 				}
 			}
 			g.setColor(Color.black);
 		}
 	}
-
+	
 	/**
 	 * Check weather any event contains the point (x,y)
 	 */
@@ -493,6 +566,75 @@ public class Facet extends Panel {
 			return null;
 	}
 
+	public GenRecord[] inOverlapRegion(int x, int y, boolean data, boolean label,
+			int distance) {
+		double minDis = Integer.MAX_VALUE;
+		int gap=1; // maximum gap between two data bars to determine in the overlapped range 
+		int cntLtNeighbrs=0; // total number of neighbor records retrieved
+		//cntNeighbrs = 0;
+		
+		boolean findNxtLt = true, findNxtRt = true;
+		StoryRecord selectedRecord = null, rtNeighbrStory = null, ltNeighbrStory = null;
+		GenRecord[] overlapRecords = new GenRecord[maxNumNeighbrs+1];
+		StoryRecord[] ltStoryRecords = new StoryRecord[maxNumNeighbrs];
+		StoryRecord[] rtStoryRecords = new StoryRecord[maxNumNeighbrs];
+		
+		
+		if (facetLines == null) {
+			return null;
+		}
+
+		for (int i = 0; i < facetLines.size(); i++) {
+			FacetLine tempFacetLine = (FacetLine) (facetLines.elementAt(i));
+			facetLnIndx = i;
+			String title = tempFacetLine.getTitle();
+			for (int j = 0; j < tempFacetLine.getAggregates().size(); j++) {
+				Aggregate tempAgg = (Aggregate) (tempFacetLine.getAggregates().elementAt(j));
+				aggrIndx = j;
+				for (int k = 0; k < tempAgg.getAllRecords().size(); k++) {
+					
+					StoryRecord tempStory = (StoryRecord) (tempAgg.getAllRecords().elementAt(k));
+					Rectangle dataRect = tempStory.getBarArea();
+					Rectangle labelRect = tempStory.getLabelArea();
+					if ((data && dataRect.contains(x, y))
+							|| (label && labelRect.contains(x, y)))
+					{
+						curntAggr = tempAgg;
+						overlapRecords = curntAggr.findOverlap(k, true, true);
+						return overlapRecords;			
+					}
+					else {
+						int selectedX, selectedY;
+						if (Math.abs(dataRect.x - x) <= Math.abs(dataRect.x
+								+ dataRect.width - x))
+							selectedX = dataRect.x;
+						else
+							selectedX = dataRect.x + dataRect.width;
+						if (Math.abs(dataRect.y - y) <= Math.abs(dataRect.y
+								+ dataRect.height - y))
+							selectedY = dataRect.y;
+						else
+							selectedY = dataRect.y + dataRect.height;
+						double dis = Math.sqrt((selectedX - x)
+								* (selectedX - x) + (selectedY - y)
+								* (selectedY - y));
+						if (dis < minDis) {
+							minDis = dis;
+							selectedRecord = tempStory;
+						}
+					}
+				}
+			}
+		}
+		if (minDis <= distance)
+			//return selectedRecord;
+			return null;
+		else
+			return null;
+	}
+
+	
+	
 	public GenRecord getSelected(int x, int y) {
 
 		FacetLine temp;
@@ -666,7 +808,6 @@ public class Facet extends Panel {
 	 * Mark all the events which contain the search string
 	 */
 	public void select(String searchString) {
-		// 3/28/98 Need to re_layout because facetLines only contain result set
 		if (Record.searchoption_timeline[1]) {
 			if (remove_count > 0) {
 				for (int v = 0; v < aggregates.size(); v++) {

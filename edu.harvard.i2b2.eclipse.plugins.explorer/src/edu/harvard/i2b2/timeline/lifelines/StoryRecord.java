@@ -1,21 +1,27 @@
 /*
- * Copyright (c)  2006-2007 University Of Maryland
+ * Copyright (c)  2006-2017 University Of Maryland
  * All rights  reserved.  
  * Modifications done by Massachusetts General Hospital
  *  
  *  Contributors:
  *  
  *  	Wensong Pan (MGH)
+ *  	Heekyong Park (hpark25) (MGH)
  *
  */
 
 package edu.harvard.i2b2.timeline.lifelines;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.util.Hashtable;
 
 import edu.harvard.i2b2.explorer.ui.MainPanel;
 import edu.harvard.i2b2.explorer.ui.TimeLinePanel;
+
 
 /**
  * storyRecord class defines event
@@ -231,7 +237,6 @@ public class StoryRecord extends GenRecord {
 		int rwinOffset = displayArea.getRwinOffset();
 		int fontTextHeight = displayArea.getFontTextHeight();
 
-		// Graphics g = displayArea.getGraphics(); // double buffer?
 		for (int i = 0; i < 3; i++)
 			lbloption[i] = Record.lbloption[i];
 
@@ -411,7 +416,6 @@ public class StoryRecord extends GenRecord {
 			// the
 			// lines
 
-			// g.setColor(currentColor);
 			if (diff1 <= 0)
 				diff1 = 1;
 
@@ -420,49 +424,47 @@ public class StoryRecord extends GenRecord {
 					diff2 = rwinWidth - 1;
 				if (!silhouette) {
 					if (rectWidth == 1 || (getInputLine().indexOf("Value") < 0)) {
-						g.setColor(currentColor);
-						g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
-								- diff1 + 3) : (diff2 - diff1), rectWidth); // was
-						// diff2-diff1
-						// +
-						// 1
-						// //
-						// and
-						// was
-						// diff2-diff1
-						// ==
-						// 0
-						currentBarArea.setBounds(startX, startY,
-								(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
-										: (diff2 - diff1), rectWidth);
+						
+						if (this.mark_status.equalsIgnoreCase("N")) 
+							g.setColor(currentColor);
+						else if(this.mark_status.equalsIgnoreCase("R"))		// read(clicked) note(R)
+							g.setColor(Color.GRAY);
+						else if(this.mark_status.equalsIgnoreCase("S"))		// starred note(S)
+							g.setColor(Color.decode("0xf9a51e")); 
+						else if(this.mark_status.equalsIgnoreCase("O"))		// selected overlap record
+						{
+								
+								/*
+								currentBarArea.setBounds(startX, startY,
+										(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
+												: (diff2 - diff1), rectWidth);
+												*/
+								g.setColor(Color.decode("0x2febbc"));
+						}
+						else
+							g.setColor(currentColor);
+											
+							g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
+									- diff1 + 3) : (diff2 - diff1), rectWidth);
+							currentBarArea.setBounds(startX, startY,
+									(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
+											: (diff2 - diff1), rectWidth);
+						if(this.mark_overlap == true)
+						{
+							g.setColor(Color.black);
+							g.fillRect(startX, startY-4, (diff2 - diff1) < 3 ? (diff2
+									- diff1 + 3) : (diff2 - diff1), 2);
+						}
+					
 
 					} else {
 						g.setColor(currentColor);
 						g.fillRect(startX, startY, (diff2 - diff1) < 3 ? (diff2
-								- diff1 + 3) : (diff2 - diff1), 22 - rectWidth); // was
-						// diff2-diff1
-						// +
-						// 1
-						// //
-						// and
-						// was
-						// diff2-diff1
-						// ==
-						// 0
-						// currentBarArea.setBounds(startX, startY, (diff2 -
-						// diff1) < 3?(diff2-diff1+3):(diff2-diff1),
-						// 22);
+								- diff1 + 3) : (diff2 - diff1), 22 - rectWidth); 
 						g.setColor(Color.BLACK);
 						g.fillRect(startX, startY + 22 - rectWidth,
 								(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
-										: (diff2 - diff1), rectWidth); // was
-						// diff2-diff1
-						// + 1
-						// //
-						// and
-						// was
-						// diff2-diff1
-						// == 0
+										: (diff2 - diff1), rectWidth); 
 						currentBarArea.setBounds(startX, startY,
 								(diff2 - diff1) < 3 ? (diff2 - diff1 + 3)
 										: (diff2 - diff1), 22);
@@ -490,8 +492,6 @@ public class StoryRecord extends GenRecord {
 		Graphics g = displayArea.getOfg();
 		int rwinWidth = displayArea.getRwinWidth();
 		String tempCause;
-		// int descent =
-		// record.theTabPanel.theTimeLinePanel.fontMetrics1.getMaxDescent();
 		int descent = 2;
 
 		if (label && ((Record.searchoption_label[1]) ? selected : true)) { // if
@@ -510,19 +510,13 @@ public class StoryRecord extends GenRecord {
 			// label_only_result
 			// option
 			tempCause = new String(cause);
-			// System.out.println("Label: " + tempCause);
-			// System.out.println(tempCause + " : " + selected);
 			if (selected && summaryrecord) {
-				// g.setColor(Color.blue);
 				g.setColor(textColor);
 				Font thisFont = MainPanel.theTimeLinePanel.fontMetrics1
 						.getFont();
-				// descent =
-				// Toolkit.getDefaultToolkit().getFontMetrics(thisFont).getMaxDescent();
 				g.setFont(new Font(thisFont.getName(), Font.BOLD, thisFont
 						.getSize()));
 			} else {
-				// g.setColor(selectedColor); // gray
 				g.setFont(MainPanel.theTimeLinePanel.fontMetrics1.getFont());
 				g.setColor(textColor);
 			}
@@ -624,12 +618,10 @@ public class StoryRecord extends GenRecord {
 	@Override
 	public void redraw() {
 		Rectangle r = getBarArea();
-		// System.out.println("original rect: "+r.x+","+r.y);
 		r.x = -1;
 		r.y = -1;
 		r.width = -1;
 		r.height = -1;
-		// System.out.println("set rect to: "+getBarArea().x+","+getBarArea().y);
 	}
 
 	@Override
