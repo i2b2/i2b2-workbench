@@ -91,7 +91,7 @@ public class LoadRecord {
 			d.close();
 			d = null;
 		} catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 
 	}
@@ -281,7 +281,7 @@ public class LoadRecord {
 		}
 
 		catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 	}
 	
@@ -459,7 +459,7 @@ public class LoadRecord {
 				facetList.put(new Integer(tupleID++), agg);
 			}
 		} catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 
 		return agg;

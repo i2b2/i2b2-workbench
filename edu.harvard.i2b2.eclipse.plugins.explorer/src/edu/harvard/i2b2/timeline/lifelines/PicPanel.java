@@ -36,7 +36,7 @@ public class PicPanel extends Panel {
 						+ pictureFile));
 
 		} catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 	}
 

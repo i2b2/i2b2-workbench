@@ -302,6 +302,7 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		// = hash
 		// i.e. above is the main data in a hashtable, each entry is actually a
 		// facet 1/13/98 dan
+		if ( recordTable == null) return;
 		n_key = recordTable.size();
 		keyLabels = new String[n_key];
 		Facet afacetRecord;
