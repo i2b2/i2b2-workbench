@@ -114,7 +114,7 @@ public class EventListManager implements DataChangedListener, IEventDataProvider
 		int oldSize = myEventPanels.size();
 		for ( int i = 0; i < number; i++)
 		{
-			EventExpandPanel panel = new EventExpandPanel( myParent, SWT.CENTER, UIConst.EVENT + " " + (oldSize + 1 + i) , this );
+			EventExpandPanel panel = new EventExpandPanel( myParent, SWT.NONE, UIConst.EVENT + " " + (oldSize + 1 + i) , this );
 			panel.addUIContentListener( this );
 			panel.addExpandControlListener( this.myEcListener );
 			panel.setLayoutData( makeLayoutData( previousControl, panel) );
@@ -133,7 +133,7 @@ public class EventListManager implements DataChangedListener, IEventDataProvider
 		for ( int i = 0; i < events.size(); i++)
 		{
 			Event event = events.get(i);
-			EventExpandPanel panel = new EventExpandPanel( myParent, SWT.CENTER, this ); // create an EventPanel without Event
+			EventExpandPanel panel = new EventExpandPanel( myParent, SWT.NONE, this ); // create an EventPanel without Event
 			panel.addUIContentListener( this );
 			panel.addExpandControlListener( this.myEcListener );
 			panel.setLayoutData( makeLayoutData( previousControl, panel) );

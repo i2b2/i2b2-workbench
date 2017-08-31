@@ -81,6 +81,7 @@ public class EventListControlPanel extends QueryToolPanelComposite implements UI
 	private void setupUI() 
 	{
 		this.setLayout( new FormLayout() );
+		this.setBackground( Colors.DARK_GRAY );
 		
 		titleComp = new Composite( this, SWT.BORDER );
 		titleComp.setLayout( new FormLayout() );
@@ -109,6 +110,7 @@ public class EventListControlPanel extends QueryToolPanelComposite implements UI
 		
 		myScroller.setExpandHorizontal( true );
 		myScroller.setExpandVertical( true );
+		myScroller.setBackground( Colors.DARK_GRAY );
 		myScroller.setContent( myEventComp );
 		
 		myEventListManager = new EventListManager( myEventComp, this, myEventSelectedDelegator );
@@ -144,7 +146,6 @@ public class EventListControlPanel extends QueryToolPanelComposite implements UI
 
 		// add one Event by default
 		myEventListManager.addPanels( 2 );
-		
 		updateAddPanelButtonLayout();
 
 		myScroller.setMinHeight( myEventComp.computeSize( SWT.DEFAULT, SWT.DEFAULT ).y );
@@ -159,7 +160,7 @@ public class EventListControlPanel extends QueryToolPanelComposite implements UI
 				myEventListManager.addPanels( 1 );
 			}
 		});
-		
+
 		DropTarget target = new DropTarget( myEventComp, UIConst.DND_DROP_OPS );
 		target.setTransfer( UIConst.DND_TRANSFER_TYPES );
 		target.addDropListener( new QueryDropHandler( this.myQueryDroppedDelegator ) );
