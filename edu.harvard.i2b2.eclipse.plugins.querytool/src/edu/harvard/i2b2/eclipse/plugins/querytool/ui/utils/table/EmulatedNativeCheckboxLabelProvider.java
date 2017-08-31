@@ -48,10 +48,17 @@ public abstract class EmulatedNativeCheckboxLabelProvider extends ColumnLabelPro
 	{
 		if (JFaceResources.getImageRegistry().getDescriptor(CHECKED_KEY) == null) 
 		{
-			JFaceResources.getImageRegistry().put(UNCHECK_KEY, makeShot(viewer.getControl(), false, false));
-			JFaceResources.getImageRegistry().put(CHECKED_KEY, makeShot(viewer.getControl(), false, true));
-			JFaceResources.getImageRegistry().put(DISABLED_UNCHECK_KEY, makeShot(viewer.getControl(), true, false));
-			JFaceResources.getImageRegistry().put(DISABLED_CHECKED_KEY, makeShot(viewer.getControl(), true, true));
+			if (System.getProperty("os.name").equalsIgnoreCase("linux"))
+			{
+				
+			}
+			else
+			{
+				JFaceResources.getImageRegistry().put(UNCHECK_KEY, makeShot(viewer.getControl(), false, false));
+				JFaceResources.getImageRegistry().put(CHECKED_KEY, makeShot(viewer.getControl(), false, true));
+				JFaceResources.getImageRegistry().put(DISABLED_UNCHECK_KEY, makeShot(viewer.getControl(), true, false));
+				JFaceResources.getImageRegistry().put(DISABLED_CHECKED_KEY, makeShot(viewer.getControl(), true, true));
+			}
 		}
 	}
 

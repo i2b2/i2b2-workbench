@@ -145,7 +145,9 @@ public class GroupPanelForTemporalEventAnchor extends GroupPanel
 		ArrayList<Object> contents = new ArrayList<Object>();
 		contents.add( DRAG_ONLOTOGY_TERMS_HERE1 );
 
-		myPreTreeLabel = new MixedTextIconPanel( myMainComposite, SWT.CENTER | SWT.WRAP, contents, Colors.GRAY, Colors.WHITE  );
+		//myPreTreeLabel = new MixedTextIconPanel( myMainComposite, SWT.CENTER | SWT.WRAP, contents, Colors.GRAY, Colors.WHITE  );
+		myPreTreeLabel = new Label(myMainComposite, SWT.CENTER | SWT.WRAP );
+		myPreTreeLabel.setText( DRAG_ONLOTOGY_TERMS_HERE1 );
 		Point labelSize = myPreTreeLabel.computeSize( SWT.DEFAULT, SWT.DEFAULT );
 		//myPreTreeLabel.setLayoutData( FormDataMaker.makeFormData( (Integer)null, 0, 100, -4, 20, 0, 80, 0));
 		myPreTreeLabel.setLayoutData( FormDataMaker.makeFormData( 50, -labelSize.y/2, (Integer)null, 0, 50, -labelSize.x/2, (Integer)null, 0));

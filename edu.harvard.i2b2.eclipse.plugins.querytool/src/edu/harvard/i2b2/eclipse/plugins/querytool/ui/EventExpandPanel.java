@@ -73,7 +73,7 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 		isExpanded = true;	// default state for EventExpandPanel is expanded
 		myUIContentListener = new ArrayList<UIManagerContentChangedListener>();
 		setupUI();
-		attachListeners();
+		//attachListeners();
 	}
 
 	// create an EventExpandPanel without an Event (to be set later)
@@ -84,7 +84,7 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 		isExpanded = true;	// default state for EventExpandPanel is expanded
 		myUIContentListener = new ArrayList<UIManagerContentChangedListener>();
 		setupUI();
-		attachListeners();
+		//attachListeners();
 	}
 
 	
@@ -119,7 +119,7 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 			myExpandLabel.setText(" > ");
 			myExpandLabel.setForeground( Colors.DARK_RED );
 		}
-		
+/*		
 		FormData imageLabelFD = FormDataMaker.makeFormData(0, 2, 100, -2, myExpandLabel ,2, (Integer)null, 0);
 		imageLabelFD.width = 16;
 		myColorLabel.setLayoutData( imageLabelFD );
@@ -149,8 +149,8 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 			myCloseLabel.setText(" X ");
 			myCloseLabel.setForeground( Colors.DARK_RED );
 		}
-
-		
+*/
+/*
 		myGroupPanelsPanel = new Composite( this, SWT.NONE );
 		myGroupPanelsPanel.setLayout( new FormLayout() );
 		myGroupPanelsPanel.setLayoutData( FormDataMaker.makeFormData( labelComposite, 100, 0, 100 ));
@@ -178,7 +178,7 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 			myAddPanelButton.setText( "+ " + ADD_GROUP );
 		}
 		updateAddPanelButtonLayout();
-		
+*/
 		contractedHeight 	= labelComposite.computeSize( SWT.DEFAULT, SWT.DEFAULT).y;
 		expandedHeight 	= this.computeSize( SWT.DEFAULT, SWT.DEFAULT).y;
 	}
