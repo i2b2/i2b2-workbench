@@ -173,12 +173,17 @@ public class LoginDialog extends Dialog {
 	public UserInfoBean open() {
 		// Create the dialog window
 		Shell shell = new Shell(getParent(), getStyle());
+		
 		shell.setText(getText());
 		shell.setSize(new Point(295, 238));
 		shell.setLocation(400, 200);	
 		createContents(shell);
 		shell.pack();
 		shell.open();
+		// tdw9: prevents unnecessary shell from showing up in Ubuntu.
+		if (System.getProperty("os.name").equalsIgnoreCase("Linux"))
+			((Shell)getParent()).setVisible( false ); 
+
 		Display display = getParent().getDisplay();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
