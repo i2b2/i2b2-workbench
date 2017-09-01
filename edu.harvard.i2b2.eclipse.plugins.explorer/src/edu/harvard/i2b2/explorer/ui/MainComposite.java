@@ -696,6 +696,8 @@ public class MainComposite extends Composite {
 		oModelQueryComposite.setLayout(new GridLayout(25, false));
 		oModelQueryComposite.setForeground(oTheParent.getDisplay()
 				.getSystemColor(SWT.COLOR_BLACK));
+		oModelQueryComposite.setBackground( oModelQueryComposite.getParent().getBackground() );
+		
 		GridData oModelQueryButtonGridData = new GridData(
 				GridData.FILL_HORIZONTAL);
 		oModelQueryButtonGridData.grabExcessHorizontalSpace = false;
@@ -708,7 +710,8 @@ public class MainComposite extends Composite {
 		queryNamemrnlistText.setLayoutData(new GridData(
 				GridData.FILL_HORIZONTAL));
 		queryNamemrnlistText.setText("Query Name: ");
-
+		queryNamemrnlistText.setBackground( oModelQueryComposite.getParent().getBackground() );
+		
 		queryNamemrnlistText.addMouseTrackListener(new MouseTrackListener() {
 
 			public void mouseEnter(MouseEvent arg0) {
@@ -765,6 +768,7 @@ public class MainComposite extends Composite {
 		oModelGroupButtonGridData.verticalAlignment = SWT.CENTER;
 		oModelGroupButtonGridData.verticalIndent = 5;
 		oModelGroupComposite.setLayoutData(oModelGroupButtonGridData);
+		oModelGroupComposite.setBackground( oModelGroupComposite.getParent().getBackground() );
 
 		GridData gdDel1 = new GridData(GridData.FILL_HORIZONTAL);
 
@@ -772,7 +776,8 @@ public class MainComposite extends Composite {
 		gdDel1.horizontalSpan = 4;
 		groupNameText.setLayoutData(gdDel1);
 		groupNameText.setText("Panel Name: ");
-
+		groupNameText.setBackground( groupNameText.getParent().getBackground() );
+		
 		groupNameText.addMouseTrackListener(new MouseTrackListener() {
 
 			public void mouseEnter(MouseEvent arg0) {
