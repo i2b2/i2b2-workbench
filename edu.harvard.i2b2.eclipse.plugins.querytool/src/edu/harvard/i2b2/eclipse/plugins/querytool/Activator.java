@@ -139,6 +139,12 @@ public class Activator extends AbstractUIPlugin {
         registry.put(Images.LEFT_ARROW_TRIMMED_BLACK,	ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.LEFT_ARROW_TRIMMED_BLACK_PATH), null) ));
         registry.put(Images.RETURN, ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.RETURN_PATH), null) ) );
 
+        // load linux (Ubuntu) checkbox images
+        registry.put(Images.LINUX_CB_AU, ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.LINUX_CB_AU_PATH), null) ) );
+        registry.put(Images.LINUX_CB_AC, ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.LINUX_CB_AC_PATH), null) ) );
+        registry.put(Images.LINUX_CB_IU, ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.LINUX_CB_IU_PATH), null) ) );
+        registry.put(Images.LINUX_CB_IC, ImageDescriptor.createFromURL( FileLocator.find(bundle, new Path(Images.LINUX_CB_IC_PATH), null) ) );
+        
         // load known animated gifs frame-by-frame
         initializeAnimatedGifs( registry );
     }

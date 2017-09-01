@@ -66,6 +66,11 @@ public class Images
 	public static final String RIGHT_ARROW_TRIMMED_BLACK= "right_arrow_trimmed_black";
 	public static final String LEFT_ARROW_TRIMMED_BLACK	= "left_arrow_trimmed_black";
 
+	public static final String LINUX_CB_AU				= "cb_active_unchecked";
+	public static final String LINUX_CB_AC				= "cb_active_checked";
+	public static final String LINUX_CB_IU				= "cb_inactive_unchecked";
+	public static final String LINUX_CB_IC				= "cb_inactive_checked";
+	
 	/* ================================================================
 	 * Keys for animated gif files to be loaded as ImageLoaders
 	 * ===============================================================*/
@@ -121,6 +126,11 @@ public class Images
 	public static final String LEFT_ARROW_TRIMMED_BLACK_PATH	= MISC_PATH + LEFT_ARROW_TRIMMED_BLACK + ".gif";
 	public static final String RETURN_PATH						= MISC_PATH + RETURN + ".gif";
 
+	public static final String LINUX_CB_AU_PATH 	= MISC_PATH + LINUX_CB_AU + ".png";
+	public static final String LINUX_CB_AC_PATH 	= MISC_PATH + LINUX_CB_AC + ".png";
+	public static final String LINUX_CB_IU_PATH 	= MISC_PATH + LINUX_CB_IU + ".png";
+	public static final String LINUX_CB_IC_PATH 	= MISC_PATH + LINUX_CB_IC + ".png";
+	
 	/*
 	 * Use the plugin activator's ImageRegistry, which is initialized in the Activator's initializeImageRegistry method
 	 * 
