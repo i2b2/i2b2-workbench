@@ -43,6 +43,8 @@ public class WaitPanel extends javax.swing.JPanel implements Runnable {
 		initComponents();
 		patientNum = patients;
 
+		// tdw9: removing out-dated time estimates
+		/* 
 		if (patientNum >= 1000) {
 			this.estimatedTimeStr = "00 : 20";
 		} else if ((patientNum < 1000) && (patientNum >= 500)) {
@@ -52,7 +54,8 @@ public class WaitPanel extends javax.swing.JPanel implements Runnable {
 		} else {
 			this.estimatedTimeStr = "00 : 02";
 		}
-
+		*/
+		
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentMoved(java.awt.event.ComponentEvent evt) {
@@ -127,12 +130,16 @@ public class WaitPanel extends javax.swing.JPanel implements Runnable {
 		 * secondLabel.setBounds(width+112, height+120, 25, 40);
 		 * secondLabel.setText("00"); secondLabel.setFont(thisFont);
 		 */
+		
+		// tdw9: removing out-dated time estimates
+		/*
 		estimateTimeLabel = new javax.swing.JLabel();
 		add(estimateTimeLabel);
 		estimateTimeLabel.setBounds(width - 50, height + 140, 250, 40);
 		estimateTimeLabel.setText("Estimated Time = " + this.estimatedTimeStr);
 		estimateTimeLabel.setFont(thisFont);
-
+		*/
+		
 		new Thread(this).start();
 	}
 

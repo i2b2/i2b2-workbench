@@ -262,7 +262,7 @@ public class DBXLib {
 	    try {
 	      //rs.last();
 		  rs.next();
-	      System.out.println("got here");
+	      //System.out.println("got here");
 	      return rs.getRow();
 	    }
 	    catch (SQLException e) {

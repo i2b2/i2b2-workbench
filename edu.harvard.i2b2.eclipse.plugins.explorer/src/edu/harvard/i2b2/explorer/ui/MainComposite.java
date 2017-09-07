@@ -3488,7 +3488,9 @@ public class MainComposite extends Composite {
 	public boolean PerformVisualizationQuery(
 			final java.awt.Container oAwtContainer, final String patientRefId,
 			final int minPatient, final int maxPatient,
-			final boolean bDisplayAll) {
+			final boolean bDisplayAll) 
+	{
+		oAwtContainer.removeAll();
 		bStillPerformingVisualizationQuery = true;
 		bNoError = true;
 
@@ -3503,7 +3505,7 @@ public class MainComposite extends Composite {
 		p.setVisible(true);
 
 		removelldFile();
-
+		
 		final MainComposite explorer = this;
 		visualizationQueryThread = new Thread() {
 			public void run() {
@@ -3607,13 +3609,13 @@ public class MainComposite extends Composite {
 				log.info("after getResultSetAsi2b2XML (3): " + new Date());
 			}
 		};
-
+		
 		try {
 			visualizationQueryThread.start();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-
+		
 		return bNoError;
 
 	}
