@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="i2b2 Workbench" application="edu.harvard.i2b2.eclipse.application" version="1.7.08" useFeatures="false" includeLaunchers="true">
+<product name="i2b2 Workbench" id="edu.harvard.i2b2.eclipse.product" application="edu.harvard.i2b2.eclipse.application" version="1.7.08" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif"/>
@@ -39,6 +39,7 @@ University of Maryland (HCIL) http://www.cs.umd.edu/hcil/
    <splash
       location="edu.harvard.i2b2.eclipse" />
    <launcher name="i2b2workbench">
+      <linux icon="/edu.harvard.i2b2.eclipse/icons/i2b2_128.xpm"/>
       <macosx icon="/edu.harvard.i2b2.eclipse/icons/Mac.icns"/>
       <solaris/>
       <win useIco="true">
