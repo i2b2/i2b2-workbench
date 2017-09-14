@@ -192,6 +192,8 @@ public class PDOQueryClient {
 			ObservationSet observationFactSet = factSets.get(0);
 			ObservationType obsFactType = observationFactSet.getObservation()
 					.get(0);
+			if (obsFactType.getObservationBlob() == null)
+				return null; // tdw9: not a note observation
 			String eNotes = (String) obsFactType.getObservationBlob()
 					.getContent().get(0);
 			// System.out.println("notes: "+eNotes);
