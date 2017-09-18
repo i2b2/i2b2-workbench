@@ -11,12 +11,16 @@
  */
 package edu.harvard.i2b2.eclipse;
 
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.part.IntroPart;
 
@@ -46,7 +50,41 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	@Override
 	public void postWindowOpen() {
 		super.postWindowOpen();
-		
+		/* tdw9: removing unwanted menu items. There is probably a better way to do this (via xml -- need plugin and component IDs). Should look into it in the future.*/
+	    try 
+	    {
+	        IWorkbenchWindow workbenchWindow =  PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+	        IContributionItem[] items = ((WorkbenchWindow)workbenchWindow).getMenuBarManager().getItems();
+	        for (IContributionItem item : items)
+	        {
+	        	// clear edit and navigate manu items
+	        	if (item.getId().equals("edit")) 		{ item.setVisible( false ); continue; }
+	        	if (item.getId().equals("navigate")) 	{ item.setVisible( false ); continue; } 
+	        	IContributionItem [] subItems = ((MenuManager)item).getItems();
+	        	for (IContributionItem subItem : subItems)
+	        	{
+	        		if (item.getId().equals("file"))
+	        		{
+	        			if (!subItem.getId().equals("quit"))  
+	        				subItem.setVisible( false ); 
+	        		}
+	        		else if (item.getId().equals("help"))
+	        		{
+	        			if (subItem.getId().equals("edu.harvard.i2b2.newUpdates")) subItem.setVisible( false );
+	        			else if (subItem.getId().equals("edu.harvard.i2b2.searchUpdates")) subItem.setVisible( false );
+	        			else if (subItem.toString().contains("org.eclipse.ui.actionSet.keyBindings") )subItem.setVisible( false );
+	        		}
+	        	}
+	            //item.setVisible(false);
+	        }
+	        //((WorkbenchWindow)workbenchWindow).getMenuBarManager().setVisible(false);
+	    } 
+	    catch (Exception e) 
+	    {
+	        //handle error
+	    }
+	    
+	    
 		if(!System.getProperty("os.name").toLowerCase().startsWith("mac")) {
 			return;
 		}
