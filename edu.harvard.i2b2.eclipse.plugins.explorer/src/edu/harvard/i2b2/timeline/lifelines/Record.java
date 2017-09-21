@@ -108,7 +108,7 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 	}
 
 	public void init(String recordData) {
-		System.out.println("got to init");
+		//System.out.println("got to init");
 		option[0] = getParm("default");
 		option[1] = getParm("quick_compact");
 		option[2] = getParm("slow_compact");
@@ -208,7 +208,7 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 				br.close();
 				br = null;
 			} catch (Exception e) {
-				System.out.println("an exception " + e);
+				//System.out.println("an exception " + e);
 			}
 		}
 		// does this one make a difference? All the others panels are in
@@ -287,7 +287,7 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 	}
 	
 	public void init(int w, int h) {
-		System.out.println("got to init");
+		//System.out.println("got to init");
 		option[0] = getParm("default");
 		option[1] = getParm("quick_compact");
 		option[2] = getParm("slow_compact");
@@ -634,7 +634,7 @@ public class Record extends JPanel implements NewApplet {// , Runnable{
 		if (requestedString.equalsIgnoreCase("height"))
 			return "685";
 
-		System.out.println("got here");
+		//System.out.println("got here");
 		return "false";
 	}
 

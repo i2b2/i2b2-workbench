@@ -302,7 +302,12 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 		// = hash
 		// i.e. above is the main data in a hashtable, each entry is actually a
 		// facet 1/13/98 dan
-		n_key = recordTable.size();
+		
+		if (recordTable == null )
+			n_key = 0;
+		else
+			n_key = recordTable.size();
+
 		keyLabels = new String[n_key];
 		Facet afacetRecord;
 		
@@ -1232,7 +1237,9 @@ public class TimeLinePanel extends ScrollingPanel implements ActionListener,
 	public void listen(MyDate validDateMin, MyDate validDateMax) {
 		this.validDateMin = validDateMin;
 		this.validDateMax = validDateMax;
-		aScale.setScale(validDateMin, validDateMax, today);
+		
+		if (aScale != null) // twd9: avoid NPE at startup
+			aScale.setScale(validDateMin, validDateMax, today);
 		relabeling = true;
 		slide = true;
 

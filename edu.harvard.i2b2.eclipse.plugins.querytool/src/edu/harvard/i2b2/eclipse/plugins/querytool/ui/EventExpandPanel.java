@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -28,6 +29,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import edu.harvard.i2b2.eclipse.plugins.querytool.QueryToolRuntime;
+import edu.harvard.i2b2.eclipse.plugins.querytool.ui.BasicQueryModePanel.PopulationSetType;
 import edu.harvard.i2b2.eclipse.plugins.querytool.ui.data.DefaultDateStruct;
 import edu.harvard.i2b2.eclipse.plugins.querytool.ui.data.Event;
 import edu.harvard.i2b2.eclipse.plugins.querytool.ui.data.Group;
@@ -90,23 +92,23 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 	
 	@Override
 	protected void setupUI()
-	{
-		//this.setBackground( Colors.GRAY );
-		this.setBackground( this.getParent().getBackground() );
+	{		
+		this.setBackground( Colors.DARK_GRAY );
 		this.setLayout( new FormLayout() );
 		
 		Composite labelComposite = new Composite( this, SWT.NONE );
 		labelComposite.setLayout( new FormLayout() );
 		labelComposite.setLayoutData( FormDataMaker.makeFormData(0, (Integer)null, 0, 100));
-
+		
 		myExpandLabel	= new Label( labelComposite, SWT.NONE );
 		myColorLabel	= new Label( labelComposite, SWT.NONE );
 		myTextLabel 	= new Label( labelComposite, SWT.NONE );
 		myCloseLabel 	= new Label( labelComposite, SWT.NONE );
-
+		
 		FormData expandLabelFD = FormDataMaker.makeFormData(0, 2, 100, -2, 0,2, (Integer)null, 0);
 		myExpandLabel.setLayoutData( expandLabelFD );
 		myExpandLabel.setBackground( labelComposite.getBackground() );
+		
 		if ( QueryToolRuntime.getInstance().isLaunchedFromWorkbench() )
 		{
 			if ( this.isExpanded )
@@ -140,6 +142,7 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 				
 		myCloseLabel.setLayoutData( FormDataMaker.makeFormData(0, 2, 100, -2, (Integer)null, 0, 100, 0) );
 		
+
 		if ( QueryToolRuntime.getInstance().isLaunchedFromWorkbench() )
 		{
 			myCloseLabel.setImage( Images.getEclipseImagesByKey( ISharedImages.IMG_ETOOL_DELETE_DISABLED ) );
@@ -149,7 +152,6 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 			myCloseLabel.setText(" X ");
 			myCloseLabel.setForeground( Colors.DARK_RED );
 		}
-
 		
 		myGroupPanelsPanel = new Composite( this, SWT.NONE );
 		myGroupPanelsPanel.setLayout( new FormLayout() );
@@ -178,7 +180,6 @@ public class EventExpandPanel extends ExpandBar implements UIManagerContentChang
 			myAddPanelButton.setText( "+ " + ADD_GROUP );
 		}
 		updateAddPanelButtonLayout();
-		
 		contractedHeight 	= labelComposite.computeSize( SWT.DEFAULT, SWT.DEFAULT).y;
 		expandedHeight 	= this.computeSize( SWT.DEFAULT, SWT.DEFAULT).y;
 	}

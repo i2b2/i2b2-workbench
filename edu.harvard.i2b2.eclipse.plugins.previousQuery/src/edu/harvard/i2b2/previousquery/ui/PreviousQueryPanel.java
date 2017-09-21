@@ -982,9 +982,9 @@ public class PreviousQueryPanel extends javax.swing.JPanel implements
         jPanel2.add(jStartTimeTextField, gridBagConstraints);
 
         jBackwardButton.setText("<");
-        jBackwardButton.setMaximumSize(new java.awt.Dimension(43, 22));
-        jBackwardButton.setMinimumSize(new java.awt.Dimension(43, 22));
-        jBackwardButton.setPreferredSize(new java.awt.Dimension(43, 22));
+        jBackwardButton.setMaximumSize(new java.awt.Dimension(45, 22));		//tdw9: changed width from 43->45 to ensure display of text in linux
+        jBackwardButton.setMinimumSize(new java.awt.Dimension(45, 22));
+        jBackwardButton.setPreferredSize(new java.awt.Dimension(45, 22));
         jBackwardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBackwardButtonActionPerformed(evt);
@@ -1001,9 +1001,9 @@ public class PreviousQueryPanel extends javax.swing.JPanel implements
         jPanel2.add(jBackwardButton, gridBagConstraints);
 
         jForwardButton.setText(">");
-        jForwardButton.setMaximumSize(new java.awt.Dimension(43, 22));
-        jForwardButton.setMinimumSize(new java.awt.Dimension(43, 22));
-        jForwardButton.setPreferredSize(new java.awt.Dimension(43, 22));
+        jForwardButton.setMaximumSize(new java.awt.Dimension(45, 22));		//tdw9: changed width from 43->45 to ensure display of text in linux
+        jForwardButton.setMinimumSize(new java.awt.Dimension(45, 22));
+        jForwardButton.setPreferredSize(new java.awt.Dimension(45, 22));
         jForwardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jForwardButtonActionPerformed(evt);
@@ -2517,9 +2517,9 @@ public class PreviousQueryPanel extends javax.swing.JPanel implements
 						// if (UserInfoBean.getInstance().isRoleInProject(
 						// "DATA_OBFSC")) {
 						// resultData.name(resultname + " - "
-						// + resultData.patientCount() + "± Patients");
+						// + resultData.patientCount() + "ï¿½ Patients");
 						// resultData.tooltip(resultData.patientCount()
-						// + "± Patients");
+						// + "ï¿½ Patients");
 						// } else {
 						if (queryResultInstanceType.getDescription() != null) {
 							resultname = queryResultInstanceType

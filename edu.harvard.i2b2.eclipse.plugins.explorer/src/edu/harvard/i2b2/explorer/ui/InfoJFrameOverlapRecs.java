@@ -332,18 +332,20 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
         // change to icon image?
         jCloseButton.setFont(thisFont);
         jCloseButton.setText("X");
+        jCloseButton.setToolTipText("Close"); // tdw9: added tooltip
         jCloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCloseButtonActionPerformed(evt);                
             }
         });
         add(jCloseButton);
-        jCloseButton.setBounds(381 - 45, 2, 40, 20);
+        jCloseButton.setBounds(381 - 45, 2, 50, 20); //tdw9: modified 40 -> 50 so 'x' shows up
         
         // pin button
         // change to icon image?
         jPinButton.setFont(thisFont);
         jPinButton.setText("Pin [Alt+P]");
+        jPinButton.setToolTipText("Toggle Pinning"); // tdw9: added tooltip
         jPinButton.setMnemonic(KeyEvent.VK_P);
 		
         
@@ -417,23 +419,25 @@ public class InfoJFrameOverlapRecs extends javax.swing.JFrame {
 
         jLeftButton.setFont(thisFont);
         jLeftButton.setText("<<");
+        jLeftButton.setToolTipText("Previous Page"); // tdw9: added tooltip
         jLeftButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jLeftButtonActionPerformed(evt);                
             }
         });
         add(jLeftButton);
-        jLeftButton.setBounds(10, 2, 45, 20);
+        jLeftButton.setBounds(10, 2, 50, 20); // tdw9: changed 45 -> 50 to let text on button show
 
         jRightButton.setFont(thisFont);
         jRightButton.setText(">>");
+        jRightButton.setToolTipText("Next Page"); // tdw9: added tooltip
         jRightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRightButtonActionPerformed(evt);   // search next up to 10 overlapped ticks              
             }
         });
         add(jRightButton);
-        jRightButton.setBounds(60, 2, 45, 20);
+        jRightButton.setBounds(60, 2, 50, 20); // tdw9: changed 45 -> 50 to let text on button show
         
         if(cAggr.getLeftMostIndx() == 0) // if current list is the left end of the data stream 
     		jLeftButton.setEnabled(false);

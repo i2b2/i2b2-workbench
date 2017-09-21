@@ -131,7 +131,7 @@ public class record extends Panel implements newApplet, Runnable{
     	init(null);
     }
     public void init(String recordData) {
-    	System.out.println("got to init");
+    	//System.out.println("got to init");
         option[0] = getParm("default");
         option[1] = getParm("quick_compact");
         option[2] = getParm("slow_compact");

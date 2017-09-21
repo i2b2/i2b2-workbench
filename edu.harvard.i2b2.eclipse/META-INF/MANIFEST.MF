@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: i2b2 Workbench
 Bundle-SymbolicName: edu.harvard.i2b2.eclipse; singleton:=true
-Bundle-Version: 1.7.08
+Bundle-Version: 1.7.09
 Bundle-Activator: edu.harvard.i2b2.eclipse.Activator
 Bundle-Vendor: i2b2.harvard.edu
 Bundle-Localization: plugin

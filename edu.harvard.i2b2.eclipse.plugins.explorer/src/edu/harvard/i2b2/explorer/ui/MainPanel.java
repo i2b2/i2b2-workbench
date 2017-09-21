@@ -12,6 +12,7 @@
 package edu.harvard.i2b2.explorer.ui;
 
 import java.awt.*;
+import java.util.Calendar;
 
 import edu.harvard.i2b2.timeline.lifelines.LoadRecord;
 import edu.harvard.i2b2.timeline.lifelines.LowerBar;
@@ -145,7 +146,10 @@ public class MainPanel extends Panel {
 
 		sliderWidth = theTimeLinePanel.getWidth() + 2 * thumbWidth;
 		sliderOffset = theTimeLinePanel.getOffset();
-
+		
+		if (today == null ) // if today is null, then this is called at initialization. Do not go any further
+			return;
+		
 		upBar = new UpperBar(theTimeLinePanel.getWidth(), 22, today);
 		add(upBar);
 		upBar.setBounds(sliderOffset + 10, 19, theTimeLinePanel.getWidth(), 20);

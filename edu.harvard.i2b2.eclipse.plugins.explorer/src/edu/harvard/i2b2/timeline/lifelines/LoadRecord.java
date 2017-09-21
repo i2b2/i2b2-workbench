@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
@@ -91,7 +92,7 @@ public class LoadRecord {
 			d.close();
 			d = null;
 		} catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 
 	}
@@ -281,7 +282,7 @@ public class LoadRecord {
 		}
 
 		catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 	}
 	
@@ -459,7 +460,7 @@ public class LoadRecord {
 				facetList.put(new Integer(tupleID++), agg);
 			}
 		} catch (Exception e) {
-			System.out.println("an exception " + e);
+			//System.out.println("an exception " + e);
 		}
 
 		return agg;
@@ -477,8 +478,13 @@ public class LoadRecord {
 		return max_date;
 	}
 
-	static public MyDate getToday() {
-
+	static public MyDate getToday() 
+	{
+		if (today == null)  // tdw9: avoid returning a null today because it causes a number of NPE and the waitint panel to not be functional
+		{
+			Calendar c = Calendar.getInstance();
+			today = new MyDate( c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.YEAR ), c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+		}
 		return today;
 
 	} // see below, protecting the data here...

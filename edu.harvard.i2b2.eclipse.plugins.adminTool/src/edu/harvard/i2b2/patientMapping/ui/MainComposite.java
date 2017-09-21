@@ -3654,7 +3654,7 @@ public class MainComposite extends Composite {
 		try {
 			poAwtContainer.removeAll();
 
-			log.info("Got to PerformMiniVisualization");
+			//log.info("Got to PerformMiniVisualization");
 			//Record record1 = new Record();
 			//poAwtContainer.add(record1);
 			// record1.start();

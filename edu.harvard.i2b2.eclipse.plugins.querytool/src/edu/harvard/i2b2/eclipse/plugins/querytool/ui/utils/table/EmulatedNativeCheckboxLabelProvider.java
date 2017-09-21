@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.harvard.i2b2.eclipse.plugins.querytool.ui.utils.Colors;
+import edu.harvard.i2b2.eclipse.plugins.querytool.ui.utils.Images;
 
 /*
  * 
@@ -48,10 +49,20 @@ public abstract class EmulatedNativeCheckboxLabelProvider extends ColumnLabelPro
 	{
 		if (JFaceResources.getImageRegistry().getDescriptor(CHECKED_KEY) == null) 
 		{
-			JFaceResources.getImageRegistry().put(UNCHECK_KEY, makeShot(viewer.getControl(), false, false));
-			JFaceResources.getImageRegistry().put(CHECKED_KEY, makeShot(viewer.getControl(), false, true));
-			JFaceResources.getImageRegistry().put(DISABLED_UNCHECK_KEY, makeShot(viewer.getControl(), true, false));
-			JFaceResources.getImageRegistry().put(DISABLED_CHECKED_KEY, makeShot(viewer.getControl(), true, true));
+			if (System.getProperty("os.name").equalsIgnoreCase("linux")) // Ubuntu is unable to generate a screenshot image of checkboxes, so we use pre-generated ones.
+			{
+				JFaceResources.getImageRegistry().put(UNCHECK_KEY, Images.getImageByKey(Images.LINUX_CB_AU));
+				JFaceResources.getImageRegistry().put(CHECKED_KEY, Images.getImageByKey(Images.LINUX_CB_AC));
+				JFaceResources.getImageRegistry().put(DISABLED_UNCHECK_KEY, Images.getImageByKey(Images.LINUX_CB_IU));
+				JFaceResources.getImageRegistry().put(DISABLED_CHECKED_KEY, Images.getImageByKey(Images.LINUX_CB_IC));
+			}
+			else
+			{
+				JFaceResources.getImageRegistry().put(UNCHECK_KEY, makeShot(viewer.getControl(), false, false));
+				JFaceResources.getImageRegistry().put(CHECKED_KEY, makeShot(viewer.getControl(), false, true));
+				JFaceResources.getImageRegistry().put(DISABLED_UNCHECK_KEY, makeShot(viewer.getControl(), true, false));
+				JFaceResources.getImageRegistry().put(DISABLED_CHECKED_KEY, makeShot(viewer.getControl(), true, true));
+			}
 		}
 	}
 
