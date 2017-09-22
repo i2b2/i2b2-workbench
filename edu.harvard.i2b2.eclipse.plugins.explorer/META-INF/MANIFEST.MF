@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Explorer Plug-in
 Bundle-SymbolicName: edu.harvard.i2b2.eclipse.plugins.explorer;singleton:=true
-Bundle-Version: 1.7.09
+Bundle-Version: 2.0.01
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
