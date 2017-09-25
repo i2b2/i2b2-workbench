@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="i2b2 Workbench" id="edu.harvard.i2b2.eclipse.product" application="edu.harvard.i2b2.eclipse.application" version="1.7.09" useFeatures="false" includeLaunchers="true">
+<product name="i2b2 Workbench" id="edu.harvard.i2b2.eclipse.product" application="edu.harvard.i2b2.eclipse.application" version="2.0.01" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif"/>
       <text>
          i2b2 Workbench
-Version: 1.7.06.0001
-Build id: 20150721
-(c) Copyright i2b2 contributors and others 2005-2015.  All rights reserved.
+Version: 2.0.01
+Build id: 20170922
+(c) Copyright i2b2 contributors and others 2005-2017.  All rights reserved.
 Visit http://www.i2b2.org/
 
 This product includes software developed by the following:
@@ -35,7 +35,7 @@ University of Maryland (HCIL) http://www.cs.umd.edu/hcil/
       </vmArgs>
    </launcherArgs>
 
-   <windowImages i16="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_16.gif" i32="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_32.gif" i48="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_48.gif" i64="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif" i128="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_128.gif"/>
+   <windowImages i16="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_16.gif" i32="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_32.gif" i48="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_48.gif" i64="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif" i128="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_128.gif" i256="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_256.gif"/>
 
    <splash
       location="edu.harvard.i2b2.eclipse" />

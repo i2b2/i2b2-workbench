@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="i2b2 Workbench" id="edu.harvard.i2b2.eclipse.product" application="edu.harvard.i2b2.eclipse.application" version="1.7.09" useFeatures="false" includeLaunchers="true">
+<product name="i2b2 Workbench" id="edu.harvard.i2b2.eclipse.product" application="edu.harvard.i2b2.eclipse.application" version="2.0.01" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/edu.harvard.i2b2.eclipse/icons/i2b2_hive_64.gif"/>

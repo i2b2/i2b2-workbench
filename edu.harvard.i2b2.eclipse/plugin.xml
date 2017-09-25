@@ -67,7 +67,7 @@
             name="i2b2 Workbench">
          <property
                name="windowImages"
-               value="icons/i2b2_hive_16.gif,icons/i2b2_hive_32.gif,icons/i2b2_hive_48.gif,icons/i2b2_hive_64.gif,icons/i2b2_hive_128.gif"/>
+               value="icons/i2b2_hive_16.gif,icons/i2b2_hive_32.gif,icons/i2b2_hive_48.gif,icons/i2b2_hive_64.gif,icons/i2b2_hive_128.gif,icons/i2b2_hive_256.gif"/>
          <property
                name="aboutText"
                value="i2b2 Workbench&#x0A;Version: 2.0.01&#x0A;Build id: 20170922&#x0A;(c) Copyright i2b2 contributors and others 2005-2017.  All rights reserved.&#x0A;Visit http://www.i2b2.org/&#x0A;&#x0A;This product includes software developed by the following:&#x0A;Apache Software Foundation http://www.apache.org/&#x0A;Eclipse Foundation  http://www.eclipse.org/&#x0A;JDOM Project  http://www.jdom.org/&#x0A;Sun Microsystems http://java.sun.com/&#x0A;University of Maryland (HCIL) http://www.cs.umd.edu/hcil/"/>
