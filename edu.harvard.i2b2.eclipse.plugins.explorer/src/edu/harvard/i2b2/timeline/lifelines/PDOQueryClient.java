@@ -255,8 +255,8 @@ public class PDOQueryClient {
 	public static void main(String[] args) throws Exception {
 		PDORequestMessageFactory pdoFactory = new PDORequestMessageFactory();
 
-		String xmlStr = pdoFactory.requestXmlMessage("29", "2002906454",
-				"LCS-I2B2:c1009c", "10020626", null, "3-18-2004 12:00");
+		String xmlStr = pdoFactory.requestXmlMessage("patientNum", "encounterNum",
+				"conceptCode", "providerID", null, "3-18-2004 12:00"); // tdw: concept code looks like LCS-I2B2:c1009c
 		String result = sendQueryRequestREST(xmlStr);
 
 		// FileWriter fwr = new FileWriter("c:\\testdir\\response.txt");
